@@ -25,3 +25,18 @@
     display: flex;
     flex-direction: column;
 }
+
+.welcome_row_image {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+
+  .welcome_row{
+      font-size: 1.25em;
+
+  }
+
+}
