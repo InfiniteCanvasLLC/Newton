@@ -32,6 +32,17 @@
     flex-direction: column;
 }
 
+.facebook_row {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 30px;
+}
+
+.btn-facebook {
+  width: 200px;
+}
+
 @media (max-width: 768px) {
 
   .welcome_row{

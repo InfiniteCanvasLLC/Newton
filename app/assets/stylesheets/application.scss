@@ -10,13 +10,15 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *= require_self
- *= require_tree .
 */
 
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
+@import "login_page";
+@import "bootstrap-social";
+@import 'font-awesome';
 
 body {
   font-family: 'Roboto', sans-serif;

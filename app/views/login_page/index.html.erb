@@ -43,4 +43,27 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-12 facebook_row">
+        <a class="btn btn-block btn-social btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+          <span class="fa fa-facebook"></span> Sign in with Facebook
+        </a>
+    </div>
+  </div>
+
+
 </div>
+
+<script>
+$(document).ready(function() {
+  $.ajaxSetup({ cache: true });
+  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+    FB.init({
+      appId: '1687092434877762',
+      version: 'v2.5' // or v2.0, v2.1, v2.2, v2.3
+    });     
+    $('#loginbutton,#feedbutton').removeAttr('disabled');
+    FB.getLoginStatus(updateStatusCallback);
+  });
+});
+</script>
