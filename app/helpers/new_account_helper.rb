@@ -1,0 +1,2 @@
+module NewAccountHelper
+end

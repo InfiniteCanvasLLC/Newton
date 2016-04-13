@@ -7,7 +7,7 @@ If you can see this, you have been invited to this private repo.  Please do not 
 You must first install Rails.  Follow the instructions at [http://installrails.com/](http://installrails.com/) to install a local copy
 
 ### Get the source
-Clone this repo.  And then run ```bundle install``` to install the Ruby Gems (libraries) and the various dependencies.
+Clone this repo.  And then run ```bundle install --without production``` to install the Ruby Gems (libraries) and the various dependencies.
 
 ### Setup environment variables
 You need to specify the Facebook App ID and Secret, the app pulls these from environment variables.  You can either set these in your bash_profile, or use [Figaro](https://github.com/laserlemon/figaro).
