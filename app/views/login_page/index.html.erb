@@ -14,7 +14,7 @@
 </div>
 
   <div class="row">
-    <div class="col-md-offset-4 col-md-5 text-center">
+    <div class="col-md-offset-3 col-md-6 text-center">
       <div class="welcome">
         Welcome to Newton
       </div>
@@ -22,7 +22,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-offset-4 col-md-5">
+    <div class="col-md-offset-3 col-md-6">
       <div class="welcome_subheading">
         Customized concert & music recommendations for <b>you</b> and <b>your friends</b> that you're all guaranteed to love
       </div>
@@ -58,11 +58,9 @@
 
   <div class="row">
     <div class="col-md-12 facebook_row">
-        <a class="btn btn-block btn-social btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+        <a class="btn btn-block btn-social btn-facebook" href="<%= signin_path %>">
           <span class="fa fa-facebook"></span> Sign in with Facebook
         </a>
-
-        <p><%= link_to 'Sign in with Facebook', signin_path %></p>
     </div>
   </div>
 
