@@ -18,6 +18,11 @@ The environment variables you need to define are ```FACEBOOK_KEY``` and ```FACEB
 
 **NOTE:** These only apply when running in development mode.  In production mode, the environment variables are pulled from the Heroku configuration.
 
+### Setup your local database
+You need to create the appropriate database tables in your local copy of the Newton app.  Run the following campaign:
+
+```bundle exec rake db:migrate```
+
 ### Run the web server
 If you want to develop locally (recommended), you should use the built in web server provided with Rails.  In the root directory of the app, simply run ```rails server``` and then connect to it from your web browser by navigating to ```localhost:3000```
 
