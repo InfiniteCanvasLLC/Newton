@@ -11,7 +11,11 @@ class SessionsController < ApplicationController
 
         session[:user_id] = user.id
         session[:fb_info] = auth.info
-
+        
+        if (session[:fb_info])["about"].nil?
+            (session[:fb_info])["about"] = "Something about yourself"
+        end
+        
         redirect_to controller: 'new_account'
     end
 
