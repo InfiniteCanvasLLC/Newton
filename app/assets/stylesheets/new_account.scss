@@ -1,3 +1,28 @@
 // Place all the styles related to the NewAccount controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.fb-profile img.fb-image-lg{
+    z-index: 0;
+    width: 100%;  
+    margin-bottom: 10px;
+}
+
+.fb-image-profile
+{
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 20%; 
+    border: 2px solid black;
+    padding: 0px;
+    background: linear-gradient(red, yellow);
+}
+
+@media (max-width:768px)
+{
+.fb-profile-text>h1
+{
+    font-weight: 700;
+    font-size:16px;
+}
+}
