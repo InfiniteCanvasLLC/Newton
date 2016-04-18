@@ -17,22 +17,22 @@
   </div>
   <div class="field">
     <%= f.label :question_type %><br>
-    <%= f.number_field :question_type %>
+    <%= f.select :question_type, [ ['Multiple Choice', '0'], ['Yes/No', '1'], ['Rating', '2'], ['Text', '3'] ] %>
   </div>
   <div class="field">
-    <%= f.label :metadata_one %><br>
+    <%= f.label "Answer 1" %><br>
     <%= f.text_field :metadata_one %>
   </div>
   <div class="field">
-    <%= f.label :metadata_two %><br>
+    <%= f.label "Answer 2" %><br>
     <%= f.text_field :metadata_two %>
   </div>
   <div class="field">
-    <%= f.label :metadata_three %><br>
+    <%= f.label "Answer 3" %><br>
     <%= f.text_field :metadata_three %>
   </div>
   <div class="field">
-    <%= f.label :metadata_four %><br>
+    <%= f.label "Answer 4" %><br>
     <%= f.text_field :metadata_four %>
   </div>
   <div class="actions">
