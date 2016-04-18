@@ -1,27 +1,12 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="container">
     <div class="fb-profile">
-        <!--img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example"/-->
         <%= image_tag("UserPage/concert-audience.jpg", align: "left", class: "fb-image-lg", alt: "Profile image example") %> 
-        <!--img align="left" class="fb-image-profile thumbnail" src="http://lorempixel.com/180/180/people/9/" alt="Profile image example"/-->
-        <!--%= image_tag("UserPage/User.png", align: "left", class: "fb-image-profile", alt: "Profile image example") %-->
         <img align="left" class="fb-image-profile thumbnail" src=<%= (session[:fb_info])["image"] %> alt="Profile image example"/> 
         <div class="fb-profile-text">
             <h1><%= (session[:fb_info])["name"] %></h1>
             <p><%= (session[:fb_info])["about"] %></p>
         </div>
     </div>
-</div> <!-- /container -->  
+</div>  
 
-<!--
-    
-  <%= image_tag("music_icon.jpg", class: "img-responsive") %>    
-    
-Welcome <span style="font-weight: 300; font-size: 2em"><%= (session[:fb_info])["name"] %></span>
-<p><br>
-
-Thanks for signing up for Newton.  You are awesome.
-<p><br>
-
-<img src="<%= (session[:fb_info])["image"] %>">
--->

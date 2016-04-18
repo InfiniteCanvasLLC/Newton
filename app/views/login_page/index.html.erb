@@ -1,71 +1,106 @@
-<div class="container">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <body id="page-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Newton (Alpha)</a>
+            </div>
 
-<ul>
-  <% flash.each do |key, msg| %>
-    <%= content_tag :li, msg, id: key %>
-  <% end %>
-</ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
 
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>Newton</h1>
+                <hr>
+                <h4>Customized concert deals and music recomendations for you and your friends.</h4>
+                <div class="service-box">
+                    <a href="#services" class="btn btn-primary btn-xl page-scroll">How Does It Work?</a>
+                </div>
+                <div class="service-box">
+                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                    <a class="btn btn-primary btn-xl btn-social btn-facebook" href="<%= signin_path %>"><span class="fa fa-facebook"></span> Sign in with Facebook</a></p>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">How Does It Work?</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-cloud text-primary"></i>
+                        <h3>Analyze your tastes</h3>
+                        <p class="text-muted">We'll learn about your musical preferences by looking at you and your friends Spotify listening history.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-music text-primary" data-wow-delay=".1s"></i>
+                        <h3>Recommend some tunes</h3>
+                        <p class="text-muted">Using our recomendation engine we'll send you new artists that you will enjoy.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 text-center">
+                    <div class="service-box">
+                        <i class="fa fa-4x fa-ticket text-primary" data-wow-delay=".2s"></i>
+                        <h3>Enjoy a live show</h3>
+                        <p class="text-muted">When you and your friends' favorite artists are in town, we'll send you a special group deal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div id="status">
-</div>
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Contact</h2>
+                    <hr class="primary">
+                    <p>Have a question or comment? We'd love to hear from you.</p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p><a href="mailto:feedback@newton.com">feedback@newton.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <div class="row">
-    <div class="col-md-offset-3 col-md-6 text-center">
-      <div class="welcome">
-        Welcome to Newton
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-offset-3 col-md-6">
-      <div class="welcome_subheading">
-        Customized concert & music recommendations for <b>you</b> and <b>your friends</b> that you're all guaranteed to love
-      </div>
-    </div>
-  </div>
-
-  <div class="row welcome_row">
-    <div class="col-md-offset-2 col-md-1 col-xs-2 welcome_row_image">
-      <%= image_tag("spotify.jpg", class: "img-responsive") %> 
-    </div>
-    <div class="col-md-8 col-xs-8 welcome_row_text">
-      1) We analyze you and your friends' Spotify music preferences
-    </div>
-  </div>
-
-  <div class="row welcome_row">
-    <div class="col-md-offset-2 col-md-1 col-xs-2 welcome_row_image">
-      <%= image_tag("music_icon.jpg", class: "img-responsive") %> 
-    </div>
-    <div class="col-md-8 col-xs-8 welcome_row_text">
-      2) We send you customized music recommendations once a week that you can vote yes/no on
-    </div>
-  </div>
-
-  <div class="row welcome_row">
-    <div class="col-md-offset-2 col-md-1 col-xs-2 welcome_row_image">
-      <%= image_tag("ticket.jpg", class: "img-responsive") %> 
-    </div>
-    <div class="col-md-8 col-xs-8 welcome_row_text">
-      3) When a band is in town that you AND your friends like. We let you know and get you the lowest price
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12 facebook_row">
-        <a class="btn btn-block btn-social btn-facebook" href="<%= signin_path %>">
-          <span class="fa fa-facebook"></span> Sign in with Facebook
-        </a>
-    </div>
-  </div>
-
-
-</div>
 
 <script>
 /*$(document).ready(function() {
@@ -80,3 +115,4 @@
   });
 });*/
 </script>
+</body>
