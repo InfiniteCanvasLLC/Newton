@@ -11,31 +11,51 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :text %><br>
-    <%= f.text_field :text %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :text %><br>
+      <%= f.text_field :text %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :question_type %><br>
-    <%= f.select :question_type, [ ['Multiple Choice', '0'], ['Yes/No', '1'], ['Rating', '2'], ['Text', '3'] ] %>
+
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :question_type %><br>
+      <%= f.select :question_type, [ ['Multiple Choice', '0'], ['Yes/No', '1'], ['Rating', '2'], ['Text', '3'] ] %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label "Answer 1" %><br>
-    <%= f.text_field :metadata_one %>
+
+  <div class="field row answer_field">
+    <div class="col-md-12">
+      <%= f.label "Answer 1" %><br>
+      <%= f.text_field :metadata_one %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label "Answer 2" %><br>
-    <%= f.text_field :metadata_two %>
+
+  <div class="field row answer_field">
+    <div class="col-md-12">
+      <%= f.label "Answer 2" %><br>
+      <%= f.text_field :metadata_two %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label "Answer 3" %><br>
-    <%= f.text_field :metadata_three %>
+
+  <div class="field row answer_field">
+    <div class="col-md-12">
+      <%= f.label "Answer 3" %><br>
+      <%= f.text_field :metadata_three %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label "Answer 4" %><br>
-    <%= f.text_field :metadata_four %>
+
+  <div class="field row answer_field">
+    <div class="col-md-12">
+      <%= f.label "Answer 4" %><br>
+      <%= f.text_field :metadata_four %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+
+  <div class="actions row">
+    <div class="col-md-12">
+      <%= f.submit :class => 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>
