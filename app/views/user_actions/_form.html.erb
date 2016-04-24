@@ -15,15 +15,15 @@
     <div class="col-md-6">
       <div class="field">
         <%= f.label :user_id %><br>
-        <%= f.text_field :user_id %>
+        <%= f.text_field :user_id, class: 'user_field'%>
       </div>
       <div class="field">
         <%= f.label :action_type %><br>
-        <%= f.number_field :action_type %>
+        <%= f.number_field :action_type, class: 'action_type' %>
       </div>
       <div class="field">
         <%= f.label :action_id %><br>
-        <%= f.number_field :action_id %>
+        <%= f.number_field :action_id, class: 'action_id' %>
       </div>
       <div class="actions">
         <%= f.submit %>
@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-md-6">
-      <table class="table user_table">
+      <table class="table user_table" style="display: none" >
 
         <thead>
           <tr>
@@ -43,7 +43,7 @@
         <tbody>
           <% @users.each do |cur_user| %>
           <tr class="clickable-row">
-            <td>
+            <td class="user_id">
               <%= cur_user.id %>
             </td>
             <td>
@@ -60,15 +60,36 @@
 
 <script>
 $(document).ready(function() {
+
   $('.user_table').on('click', '.clickable-row', function(event) {
     if($(this).hasClass('active'))
     {
-      $(this).removeClass('active'); 
+      $(this).removeClass('active');
+
+      $(".user_field").val("");
     }
     else
     {
       $(this).addClass('active').siblings().removeClass('active');
+
+      var user_id = $(this).find(".user_id").first().html().trim();
+
+      $(".user_field").val(user_id);
     }
   });
+
+
+  $(".user_field").focus(function () {
+    $(".user_table").css('display', 'table');
+  });
+
+  $(".action_type").focus(function () {
+    $(".user_table").css('display', 'none');
+  });
+
+  $(".action_id").focus(function () {
+    $(".user_table").css('display', 'none');
+  });
+
 });
 </script>
