@@ -46,7 +46,7 @@ Questions are stored in the ```Questions``` table.  The corresponding model is q
 The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLs
 
 | Command | URL | Operation |
-|-----|-----------|
+|-----|-----------|-----|
 | GET | http://localhost:3000/questions | List all questions |
 | GET | http://localhost:3000/questions/new | Form for creating a new question |
 | POST | http://localhost:3000/questions | Create a new question |
