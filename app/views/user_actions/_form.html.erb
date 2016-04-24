@@ -19,11 +19,11 @@
       </div>
       <div class="field">
         <%= f.label :action_type %><br>
-        <%= f.number_field :action_type, class: 'action_type' %>
+        <%= f.select :action_type, [ ['Question', '0'] ] %>
       </div>
       <div class="field">
         <%= f.label :action_id %><br>
-        <%= f.number_field :action_id, class: 'action_id' %>
+        <%= f.number_field :action_id, class: 'action_field' %>
       </div>
       <div class="actions">
         <%= f.submit %>
@@ -54,6 +54,31 @@
         </tbody>
 
       </table>
+
+      <table class="table questions_table" style="display: none" >
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Text</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @questions.each do |cur_question| %>
+          <tr class="clickable-row">
+            <td class="question_id">
+              <%= cur_question.id %>
+            </td>
+            <td>
+              <%= cur_question.text %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+
     </div>
   </div>
 <% end %>
@@ -78,17 +103,36 @@ $(document).ready(function() {
     }
   });
 
+  $('.questions_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".action_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var question_id = $(this).find(".question_id").first().html().trim();
+
+      $(".action_field").val(question_id);
+    }
+  });
+
 
   $(".user_field").focus(function () {
     $(".user_table").css('display', 'table');
+    $(".questions_table").css('display', 'none');
   });
 
   $(".action_type").focus(function () {
     $(".user_table").css('display', 'none');
   });
 
-  $(".action_id").focus(function () {
+  $(".action_field").focus(function () {
     $(".user_table").css('display', 'none');
+    $(".questions_table").css('display', 'table');
   });
 
 });

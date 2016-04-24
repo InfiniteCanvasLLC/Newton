@@ -18,10 +18,13 @@ class UserActionsController < ApplicationController
     @user_action = UserAction.new
 
     @users = User.all.to_a
+    @questions = Question.all.to_a
   end
 
   # GET /user_actions/1/edit
   def edit
+    @users = User.all.to_a
+    @questions = Question.all.to_a
   end
 
   # POST /user_actions

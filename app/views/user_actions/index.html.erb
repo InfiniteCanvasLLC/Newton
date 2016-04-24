@@ -2,9 +2,10 @@
 
 <h1>Listing User Actions</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
+      <th>User ID</th>
       <th>User</th>
       <th>Action type</th>
       <th>Action</th>
@@ -15,7 +16,8 @@
   <tbody>
     <% @user_actions.each do |user_action| %>
       <tr>
-        <td><%= user_action.user %></td>
+        <td><%= user_action.user.id %></td>
+        <td><%= user_action.user.name %></td>
         <td><%= user_action.action_type %></td>
         <td><%= user_action.action_id %></td>
         <td><%= link_to 'Show', user_action %></td>
