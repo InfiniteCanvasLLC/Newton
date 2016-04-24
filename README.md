@@ -31,5 +31,41 @@ The production version of the app is hosted at [http://canvasnewton.herokuapp.co
 
 If you want to deploy to Heroku, that is certainly fine.  Please ask Rishi to add you as a collaborator to the account.
 
+### Questions
+
+Questions are stored in the ```Questions``` table.  The corresponding model is question.rb, and corresponding controller is questions_controller.rb - as per the standard Rails conventions.
+
+#### Schema
+
+| Column Name | Description |
+| -------------- | ----------- |
+| text | The text shown to the user in the question |
+| question_type | An enumeration corresponding to question type.  The enumeration is not presently defined anywhere is is implicit.  Values are: <ul><li>0 - Multiple Choice <li>1 - Yes / No, <li>2 - Rating, <li>3 - Text (where the user types in a response)</ul>
+| metadata_one, metadata_two, metadata_three, metadata_four | Anything associated with the question, depends on the question type.  The intent is that these would represent answers for the multiple choice questions
+
+The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLs
+
+| Command | URL | Operation |
+|-----|-----------|-----|
+| GET | http://localhost:3000/questions | List all questions |
+| GET | http://localhost:3000/questions/new | Form for creating a new question |
+| POST | http://localhost:3000/questions | Create a new question |
+| GET | http://localhost:3000/questions/:id | Display a given question |
+| GET | http://localhost:3000/questions/:id/edit | Edit a question |
+| PUT | http://localhost:3000/questions/:id | Update a question |
+| DELETE | http://localhost:3000/questions/:id | Delete a question |
+
+The only URL you really have to visit is http://localhost:3000/questions to administer questions
+
+You can also take a look at the state of your database by doing
+
+```
+rails console
+
+> Question.all
+```
+
+Any questions or CRUD operations you've performed should reflect in your database.
+
 ### Conclusion
 This is still very early in development, there isn't much to say.  Please ask on the #newton channel with any questions or concerns.
