@@ -11,6 +11,31 @@
             <p><%= (session[:fb_info])["about"] %></p>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <span style="font-size: 2em">You have <%= @num_actions %> Actions</span>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Action Type</th>
+                        <th>Action Text</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% @display_actions.each do |cur_action| %>
+                    <tr>
+                        <td><%= cur_action["type"] %></td>
+                        <td><%= cur_action["text"] %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div> <!-- /container -->  
 
 <!--
