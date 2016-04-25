@@ -14,11 +14,3 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
-
-//= require ./login_page/js/classie
-//= require ./login_page/js/wow.min
-//= require ./login_page/js/cbpAnimatedHeader
-//=require  ./login_page/js/jquery.fittext
-//= require ./login_page/js/creative
-
-//= require_tree .
