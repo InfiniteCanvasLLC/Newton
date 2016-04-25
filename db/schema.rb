@@ -11,7 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414004401) do
+ActiveRecord::Schema.define(version: 20160424032850) do
+
+  create_table "questions", force: :cascade do |t|
+    t.string   "text"
+    t.integer  "question_type"
+    t.string   "metadata_one"
+    t.string   "metadata_two"
+    t.string   "metadata_three"
+    t.string   "metadata_four"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "user_actions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "action_type"
+    t.integer  "action_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "user_actions", ["user_id"], name: "index_user_actions_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"

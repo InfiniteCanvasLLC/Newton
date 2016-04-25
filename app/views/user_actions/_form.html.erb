@@ -1,0 +1,139 @@
+<%= form_for(@user_action) do |f| %>
+  <% if @user_action.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user_action.errors.count, "error") %> prohibited this user_action from being saved:</h2>
+
+      <ul>
+      <% @user_action.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="field">
+        <%= f.label :user_id %><br>
+        <%= f.text_field :user_id, class: 'user_field'%>
+      </div>
+      <div class="field">
+        <%= f.label :action_type %><br>
+        <%= f.select :action_type, [ ['Question', '0'] ] %>
+      </div>
+      <div class="field">
+        <%= f.label :action_id %><br>
+        <%= f.number_field :action_id, class: 'action_field' %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <table class="table user_table" style="display: none" >
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @users.each do |cur_user| %>
+          <tr class="clickable-row">
+            <td class="user_id">
+              <%= cur_user.id %>
+            </td>
+            <td>
+              <%= cur_user.name %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+
+      <table class="table questions_table" style="display: none" >
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Text</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @questions.each do |cur_question| %>
+          <tr class="clickable-row">
+            <td class="question_id">
+              <%= cur_question.id %>
+            </td>
+            <td>
+              <%= cur_question.text %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+
+    </div>
+  </div>
+<% end %>
+
+<script>
+$(document).ready(function() {
+
+  $('.user_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".user_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var user_id = $(this).find(".user_id").first().html().trim();
+
+      $(".user_field").val(user_id);
+    }
+  });
+
+  $('.questions_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".action_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var question_id = $(this).find(".question_id").first().html().trim();
+
+      $(".action_field").val(question_id);
+    }
+  });
+
+
+  $(".user_field").focus(function () {
+    $(".user_table").css('display', 'table');
+    $(".questions_table").css('display', 'none');
+  });
+
+  $(".action_type").focus(function () {
+    $(".user_table").css('display', 'none');
+  });
+
+  $(".action_field").focus(function () {
+    $(".user_table").css('display', 'none');
+    $(".questions_table").css('display', 'table');
+  });
+
+});
+</script>
