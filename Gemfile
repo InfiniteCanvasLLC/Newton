@@ -27,6 +27,9 @@ gem 'bootstrap-sass'
 gem 'omniauth-facebook'
 gem 'font-awesome-rails'
 
+gem 'frontend-generators'
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

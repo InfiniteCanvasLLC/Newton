@@ -60,6 +60,9 @@ GEM
       thor (~> 0.14)
     font-awesome-rails (4.5.0.1)
       railties (>= 3.2, < 5.1)
+    frontend-generators (0.1.1)
+      rainbow (= 2.0.0)
+      turf (= 0.0.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hashie (3.4.3)
@@ -134,6 +137,7 @@ GEM
       activesupport (= 4.2.5.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    rainbow (2.0.0)
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
@@ -161,6 +165,7 @@ GEM
     tilt (2.0.2)
     turbolinks (2.5.3)
       coffee-rails
+    turf (0.0.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -180,6 +185,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   figaro
   font-awesome-rails
+  frontend-generators
   jbuilder (~> 2.0)
   jquery-rails
   omniauth-facebook
