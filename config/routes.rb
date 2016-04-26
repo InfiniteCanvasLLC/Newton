@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/signin' => 'sessions#new', :as => :signin
 
+  get 'creatives/index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
