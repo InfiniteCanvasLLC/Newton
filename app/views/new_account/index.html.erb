@@ -17,16 +17,24 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Action Type</th>
-                        <th>Action Text</th>
+                        <th>Question Text</th>
+                        <th>Question Type</th>
+                        <th>Question Metadata 1</th>
+                        <th>Question Metadata 2</th>
+                        <th>Question Metadata 3</th>
+                        <th>Question Metadata 4</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <% @display_actions.each do |cur_action| %>
+                    <% @questions.each do |cur_question| %>
                     <tr>
-                        <td><%= cur_action["type"] %></td>
-                        <td><%= cur_action["text"] %></td>
+                        <td><%= cur_question["text"] %></td>
+                        <td><%= cur_question["question_type"] %></td>
+                        <td><%= cur_question["metadata_one"] %></td>
+                        <td><%= cur_question["metadata_two"] %></td>
+                        <td><%= cur_question["metadata_three"] %></td>
+                        <td><%= cur_question["metadata_four"] %></td>
                     </tr>
                     <% end %>
                 </tbody>
