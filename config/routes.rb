@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :parties
   resources :user_actions
   resources :questions
   get 'sessions/new'
