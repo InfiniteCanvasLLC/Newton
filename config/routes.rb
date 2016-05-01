@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   get 'creatives/index'
 
+  get 'administrator' => 'administrator#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

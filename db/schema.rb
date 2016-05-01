@@ -11,12 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160430222519) do
+ActiveRecord::Schema.define(version: 20160430235337) do
 
   create_table "parties", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "parties_users", id: false, force: :cascade do |t|
+    t.integer "user_id",  null: false
+    t.integer "party_id", null: false
   end
 
   create_table "questions", force: :cascade do |t|
