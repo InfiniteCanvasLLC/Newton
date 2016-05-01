@@ -110,5 +110,19 @@ You can see all the actions for a user by going to their dashboard at http://loc
 
 ![](docs/images/dashboard_actions.png)
 
+### Parties
+
+A party contains many users.  A user can also belong to many parties.  This is called a "Has and Belong To Many" relationship (HABTM) and is slightly more complex in any database system.  The pieces are:
+
+1. A Users table which stores the list of users as well as their attributes.  But no information about party membership is in this table since a user can be part of infinite parties.
+2. A Parties table which stores the list of parties as well as their attributes.  But no information about user membership is in this table since a party can contain infinite users.
+3. A User_Parties table which is called a join table.  This stores association between a user and parties.  Using this table, all parties that a user is part of can be obtained.  All users that a party contains can also be contained.
+
+#### Joining parties
+
+Right now it is only possible for an administrator (which for now is everyone) to assign a user to a party.  This is done by going to (http://localhost:3000/users) and editing a particular user.
+
+From that page, groups can be joined or left as desired.
+
 ### Conclusion
 This is still very early in development, there isn't much to say.  Please ask on the #newton channel with any questions or concerns.
