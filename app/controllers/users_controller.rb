@@ -4,4 +4,10 @@ class UsersController < ApplicationController
         @users = User.all
     end
 
+    def edit
+        @user = User.find(params[:id])
+        @all_parties = Party.all
+    end
+
+
 end

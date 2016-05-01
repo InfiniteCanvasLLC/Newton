@@ -1,0 +1,85 @@
+<div class="container">
+
+  <div class="row">
+    <h2>Member of Parties</h2>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-6">
+      <h2>Join a Party</h2>
+
+      <%= form_for(@user) do |f| %>
+        <%= f.label :party_id, "Enter a new party to join" %><br>
+        <%= f.text_field :party_id, class: 'party_field' %><br>
+        <%= f.submit %>
+
+      <% end %>
+    </div>
+
+    <div class="col-md-6">
+      <table class="table parties_table" style="display: none">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @all_parties.each do |party| %>
+            <tr class="clickable-row" data-party-id="<%= party.id %>">
+              <td><%= party.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+$(document).ready(function() {
+
+  $('.parties_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".party_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var party_id = $(this).attr("data-party-id");
+
+      $(".user_field").val(user_id);
+    }
+  });
+
+  $('.questions_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".action_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var question_id = $(this).find(".question_id").first().html().trim();
+
+      $(".action_field").val(question_id);
+    }
+  });
+
+
+  $(".party_field").focus(function () {
+    $(".parties_table").css('display', 'table');
+  });
+
+
+});
+</script>

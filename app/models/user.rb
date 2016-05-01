@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+
+  has_and_belongs_to_many :parties
   
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -9,6 +11,10 @@ class User < ActiveRecord::Base
         user.email = auth['info']['email'] || ""
       end
     end
+  end
+
+  def party_id
+      ""
   end
 
 end
