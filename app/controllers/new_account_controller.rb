@@ -14,6 +14,7 @@ class NewAccountController < ApplicationController
         actions_array = actions.to_a
 
         @questions = Array.new
+        @question_types = [ "Multiple Choice", "Yes/No", "Rating", "Text" ]
 
         actions_array.each do |cur_action|
 
