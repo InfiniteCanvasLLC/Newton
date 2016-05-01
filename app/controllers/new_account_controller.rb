@@ -7,6 +7,8 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         actions = UserAction.where("user_id = " + user_id.to_s)
 
+        @user = User.find(user_id)
+
         @num_actions = actions.count
 
         actions_array = actions.to_a

@@ -42,5 +42,27 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <span style="font-size: 2em">You are a member of <%= @user.parties.length %> parties</span>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% @user.parties.each do |party| %>
+                    <tr>
+                        <td><%= party.name %></td>
+                    </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </div> <!-- /container -->  
 
