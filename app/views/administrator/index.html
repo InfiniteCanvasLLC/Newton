@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Administration</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table">
+            <thead>
+              <tr>
+                <th class="col-md-2">Resource</th>
+                <th class="col-md-4">Actions</th>
+                <th class="col-md-6">Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Questions</td>
+
+                    <td>
+                        <%= link_to("Create a new question", new_question_path ) %><br>
+                        <%= link_to("View all questions", questions_path ) %>
+                    </td>
+
+                    <td>Questions that be assigned to users (via actions)</td>
+                </tr>
+
+                <tr>
+                    <td>User Actions</td>
+
+                    <td>
+                        <%= link_to("Create a new user action", new_user_action_path ) %><br>
+                        <%= link_to("View all user actions", user_actions_path ) %>
+                    </td>
+
+                    <td>Actions that are assigned to a user</td>
+                </tr>
+
+                <tr>
+                    <td>Parties</td>
+
+                    <td>
+                        <%= link_to("Create a new party", new_party_path ) %><br>
+                        <%= link_to("View all parties", parties_path ) %>
+                    </td>
+
+                    <td>Parties contain a group of user.  These links only allow you to create the parties themselves.  You cannot add or remove users from a party using these links.</td>
+                </tr>
+
+                <tr>
+                    <td>Users</td>
+
+                    <td>
+                        <%= link_to("View all users", users_path ) %>
+                    </td>
+
+                    <td>A user record exists for each unique user.  You can update party membership by editing a user record.</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
