@@ -9,5 +9,12 @@ class UsersController < ApplicationController
         @all_parties = Party.all
     end
 
+    def update
+        @user = User.find(params[:id])
+        @party = Party.find(params[:user][:party_id])
 
+        byebug
+        @user.parties << @party
+        byebug
+    end
 end
