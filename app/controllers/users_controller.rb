@@ -7,14 +7,15 @@ class UsersController < ApplicationController
     def edit
         @user = User.find(params[:id])
         @all_parties = Party.all
+        @user_parties = @user.parties;
     end
 
-    def update
+    def update        
         @user = User.find(params[:id])
         @party = Party.find(params[:user][:party_id])
 
-        byebug
         @user.parties << @party
-        byebug
+
+        redirect_to :action => 'index'
     end
 end

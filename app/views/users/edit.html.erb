@@ -1,7 +1,29 @@
 <div class="container">
 
   <div class="row">
-    <h2>Member of Parties</h2>
+
+    <div class="col-md-12">
+
+      <h2>Member of Parties</h2>
+
+      <table class="table member_parties_table">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @user_parties.each do |party| %>
+            <tr>
+              <td><%= party.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+
   </div>
 
   <div class="row">

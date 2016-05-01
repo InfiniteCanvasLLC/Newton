@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  has_and_belongs_to_many :parties
+  has_and_belongs_to_many :parties, :uniq => true
   
   def self.create_with_omniauth(auth)
     create! do |user|
