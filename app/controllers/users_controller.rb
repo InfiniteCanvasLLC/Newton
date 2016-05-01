@@ -18,4 +18,13 @@ class UsersController < ApplicationController
 
         redirect_to :action => 'index'
     end
+
+    def leave_group
+        @user = User.find(params[:user])
+        @party = Party.find(params[:party])
+
+        @user.parties.delete(@party)
+
+        redirect_to action: 'edit', id: @user.id
+    end
 end

@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :questions
   resources :users
   
+  post 'users/leave_group'
+
   get 'sessions/new'
 
   # The priority is based upon order of creation: first created -> highest priority.

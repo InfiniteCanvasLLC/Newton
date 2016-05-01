@@ -17,6 +17,8 @@
           <% @user_parties.each do |party| %>
             <tr>
               <td><%= party.name %></td>
+              <td><%= link_to 'Leave this group', {:user => @user.id, :party => party.id, :action => 'leave_group'}, method: :post %></td>
+              </td>
             </tr>
           <% end %>
         </tbody>
