@@ -1,68 +1,205 @@
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<div class="container">
-    <div class="fb-profile">
-        <%= image_tag("UserPage/concert-audience.jpg", align: "left", class: "fb-image-lg", alt: "Profile image example") %> 
-        <img align="left" class="fb-image-profile thumbnail" src=<%= (session[:fb_info])["image"] %> alt="Profile image example"/> 
-        <div class="fb-profile-text">
-            <h1><%= (session[:fb_info])["name"] %></h1>
-            <p><%= (session[:fb_info])["about"] %></p>
-        </div>
-    </div>
 
-</div>  
-    <div class="row">
-        <div class="col-md-12">
-            <span style="font-size: 2em">You have <%= @num_actions %> Actions</span>
+<div id="wrapper">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		
+		<!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+	        <a class="navbar-brand" href="#">Newton (alpha)</a>
+	     </div>
+	
+         <!-- Top Menu Items -->
+         <ul class="nav navbar-right top-nav">
+             <li class="dropdown">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i> <%= (session[:fb_info])["name"] %> <b class="caret"></b></a>
+                 <ul class="dropdown-menu">
+                     <li>
+                         <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                     </li>
+                     <li>
+                         <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                     </li>
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Question Text</th>
-                        <th>Question Type</th>
-                        <th>Question Metadata 1</th>
-                        <th>Question Metadata 2</th>
-                        <th>Question Metadata 3</th>
-                        <th>Question Metadata 4</th>
-                    </tr>
-                </thead>
+                     <li class="divider"></li>
+                     <li>
+                         <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                     </li>
+                 </ul>
+             </li>
+         </ul>
+	
+	    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+	    <div class="collapse navbar-collapse navbar-ex1-collapse">
+	        <ul class="nav navbar-nav side-nav">
+		        <li>
+	                <a href="#"><i class="fa fa-fw fa-home"></i> Home</a>
+	            </li>
+	            <li>
+	                <a href="#"><i class="fa fa-fw fa-calendar"></i> Music Calendar</a>
+	            </li>
+	            <li>
+	                <a href="#"><i class="fa fa-fw fa-bar-chart-o"></i> Stats</a>
+	            </li>
+	            <li>
+	                <a href="#"><i class="fa fa-fw fa-group"></i> Party</a>
+	            </li>
+	            <li>
+	                <a href="#"><i class="fa fa-fw fa-desktop"></i> Tell us what you think</a>
+	            </li>
+	        </ul>
+	    </div>
+	    <!-- /.navbar-collapse -->
+	</nav>
 
-                <tbody>
-                    <% @questions.each do |cur_question| %>
-                    <tr>
-                        <td><%= cur_question["text"] %></td>
-                        <td><%= cur_question["question_type"] %></td>
-                        <td><%= cur_question["metadata_one"] %></td>
-                        <td><%= cur_question["metadata_two"] %></td>
-                        <td><%= cur_question["metadata_three"] %></td>
-                        <td><%= cur_question["metadata_four"] %></td>
-                    </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <span style="font-size: 2em">You are a member of <%= @user.parties.length %> parties</span>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <% @user.parties.each do |party| %>
-                    <tr>
-                        <td><%= party.name %></td>
-                    </tr>
-                    <% end %>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div> <!-- /container -->  
-
+	
+	<div id="page-wrapper">
+		<div id="container-fluid">
+			<div class="row"> <!-- This needs to be re-worked, this looks absolutely terrible -->
+				<div class="col-lg-12">
+					<div class="panel panel-red">
+						<img class="party_image img-circle" src="http://placehold.it/120x120" alt="...">
+						<div class="btn-group">
+						   <button type="button" class="btn dropdown-toggle party_image" style="width:200px;" data-toggle="dropdown"> Space Jam (3 people) <span class="caret"></span>
+						   </button>
+							<ul class="dropdown-menu party_image" role="menu">
+						      <li><a href="#">Switch Party</a></li>
+						      <li class="divider"></li>
+						      <li><a href="#">Another Party action</a></li>
+						   </ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		
+			<div class="row" style="margin-top: 100px;">
+				<% @questions.each do |cur_question| %>
+				
+				<div class="col-lg-3 col-md-6">
+	                <div class="panel panel-primary">
+	                    <div class="panel-heading">
+	                        <div class="row">
+	                            <div class="col-xs-3">
+	                                <i class="fa fa-comments fa-5x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-right">
+	                                <div class="huge">1</div>
+	                                <div><%= @question_types[cur_question["question_type"]] %></div>
+	                            </div>
+	                        </div>
+	                    </div>
+						
+						 <div class="panel-body"> <%= cur_question["text"]%> </div>
+						
+	                    <a href="#">
+	                        <div class="panel-footer">
+	                            <span class="pull-left">View Details</span>
+	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </a>
+	                </div>
+	            </div>
+				
+				<% end %>
+				
+				<!--
+				<div class="col-lg-3 col-md-6">
+	                <div class="panel panel-primary">
+	                    <div class="panel-heading">
+	                        <div class="row">
+	                            <div class="col-xs-3">
+	                                <i class="fa fa-comments fa-5x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-right">
+	                                <div class="huge">26</div>
+	                                <div>New Comments!</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <a href="#">
+	                        <div class="panel-footer">
+	                            <span class="pull-left">View Details</span>
+	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </a>
+	                </div>
+	            </div>
+				<div class="col-lg-3 col-md-6">
+	                <div class="panel panel-green">
+	                    <div class="panel-heading">
+	                        <div class="row">
+	                            <div class="col-xs-3">
+	                                <i class="fa fa-tasks fa-5x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-right">
+	                                <div class="huge">12</div>
+	                                <div>New Actions!</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <a href="#">
+	                        <div class="panel-footer">
+	                            <span class="pull-left">View Details</span>
+	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </a>
+	                </div>
+	            </div>
+				<div class="col-lg-3 col-md-6">
+	                <div class="panel panel-yellow">
+	                    <div class="panel-heading">
+	                        <div class="row">
+	                            <div class="col-xs-3">
+	                                <i class="fa fa-shopping-cart fa-5x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-right">
+	                                <div class="huge">124</div>
+	                                <div>New Ticket recommendation!</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <a href="#">
+	                        <div class="panel-footer">
+	                            <span class="pull-left">View Details</span>
+	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </a>
+	                </div>
+	            </div>
+				<div class="col-lg-3 col-md-6">
+	                <div class="panel panel-red">
+	                    <div class="panel-heading">
+	                        <div class="row">
+	                            <div class="col-xs-3">
+	                                <i class="fa fa-support fa-5x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-right">
+	                                <div class="huge">13</div>
+	                                <div>Support Tickets!</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <a href="#">
+	                        <div class="panel-footer">
+	                            <span class="pull-left">View Details</span>
+	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                            <div class="clearfix"></div>
+	                        </div>
+	                    </a>
+	                </div>
+	            </div>
+				-->
+			</div>
+		
+		</div>
+	</div>
+</div>
