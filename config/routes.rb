@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'login_page#index'
   get 'NewAccount' => 'new_account#index'
+  post 'EnterAnswer' => 'new_account#enter_answer'
 
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signout' => 'sessions#destroy', :as => :signout

@@ -78,7 +78,7 @@
 		
 		
 			<div class="row" style="margin-top: 100px;">
-				<% @questions.each do |cur_question| %>
+				<% @questions.each_with_index do |cur_question, i| %>
 				
 				<div class="col-lg-3 col-md-6">
 	                <div class="panel panel-primary">
@@ -89,12 +89,31 @@
 	                            </div>
 	                            <div class="col-xs-9 text-right">
 	                                <div class="huge">1</div>
-	                                <div><%= cur_question.get_subtype_name(cur_question["question_type"]) %></div>
+	                                <div><%= cur_question.question.get_subtype_name(cur_question.question["question_type"]) %></div>
 	                            </div>
 	                        </div>
 	                    </div>
 						
-						 <div class="panel-body"> <%= cur_question["text"]%> </div>
+						 <div class="panel-body">
+                            <div question-index="<%= i %>"><%= cur_question.question["text"]%></div>
+                            <div answer-index="<%= i %>">
+
+                            <%= form_for cur_question.answer, url: {action: "enter_answer"} do |f| %>
+
+                                <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
+                                    <%= f.radio_button :answer_integer, '0' %>
+                                    <%= f.label cur_question.question.metadata_one %><br>
+                                    <%= f.radio_button :answer_integer, '1' %>
+                                    <%= f.label cur_question.question.metadata_two %><br>
+                                    <%= f.radio_button :answer_integer, '2' %>
+                                    <%= f.label cur_question.question.metadata_three %><br>
+                                    <%= f.radio_button :answer_integer, '3' %>
+                                    <%= f.label cur_question.question.metadata_four %><br>
+                                <% end %>
+
+                            <% end %>
+                            </div>
+                         </div>
 						
 	                    <a href="#">
 	                        <div class="panel-footer">

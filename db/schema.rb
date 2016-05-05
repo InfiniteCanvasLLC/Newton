@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501060442) do
+ActiveRecord::Schema.define(version: 20160505032829) do
 
   create_table "parties", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20160501060442) do
   end
 
   add_index "parties_users", ["user_id", "party_id"], name: "by_user_and_party", unique: true
+
+  create_table "question_answers", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "user_id"
+    t.integer  "answer_integer"
+    t.text     "answer_text"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "question_answers", ["question_id"], name: "index_question_answers_on_question_id"
+  add_index "question_answers", ["user_id"], name: "index_question_answers_on_user_id"
 
   create_table "questions", force: :cascade do |t|
     t.string   "text"
