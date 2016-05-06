@@ -80,7 +80,7 @@
 			<div class="row" style="margin-top: 100px;">
 				<% @questions.each_with_index do |cur_question, i| %>
 				
-				<div class="col-lg-3 col-md-6">
+				<div class="col-lg-3 col-md-6" id= <%= "question_" + cur_question.action_id.to_s %> >
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
 	                        <div class="row">
@@ -98,7 +98,7 @@
                             <div question-index="<%= i %>"><%= cur_question.question["text"]%></div>
                             <div answer-index="<%= i %>">
 
-                            <%= form_tag( { action: "enter_answer", method: "post" }, remote: true ) do %>
+                            <%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
 
                                 <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
                                     <%= radio_button_tag :answer_integer, '0' %>
@@ -225,3 +225,14 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+$(document).ready(function() {
+
+	$('.question_form').on('ajax:success', function(e, data, status, xhr) {
+		action_id = $(this).attr("action_id");
+		$('#question_' + action_id).remove();
+	});
+});
+</script>

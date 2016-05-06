@@ -47,6 +47,8 @@ class NewAccountController < ApplicationController
 
         questionAnswer.save
 
+        action.destroy
+
         render nothing: true
     end
 end
