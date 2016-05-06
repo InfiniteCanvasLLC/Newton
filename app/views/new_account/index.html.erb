@@ -98,18 +98,21 @@
                             <div question-index="<%= i %>"><%= cur_question.question["text"]%></div>
                             <div answer-index="<%= i %>">
 
-                            <%= form_for cur_question.answer, url: {action: "enter_answer"} do |f| %>
+                            <%= form_tag(action: "enter_answer", remote: true, method: "post") do %>
 
                                 <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
-                                    <%= f.radio_button :answer_integer, '0' %>
-                                    <%= f.label cur_question.question.metadata_one %><br>
-                                    <%= f.radio_button :answer_integer, '1' %>
-                                    <%= f.label cur_question.question.metadata_two %><br>
-                                    <%= f.radio_button :answer_integer, '2' %>
-                                    <%= f.label cur_question.question.metadata_three %><br>
-                                    <%= f.radio_button :answer_integer, '3' %>
-                                    <%= f.label cur_question.question.metadata_four %><br>
+                                    <%= radio_button_tag :answer_integer, '0' %>
+                                    <%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
+                                    <%= radio_button_tag :answer_integer, '1' %>
+                                    <%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
+                                    <%= radio_button_tag :answer_integer, '2' %>
+                                    <%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
+                                    <%= radio_button_tag :answer_integer, '3' %>
+                                    <%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
+                                    <%= hidden_field_tag(:action_id, cur_question.action_id) %>
                                 <% end %>
+
+                            <%= submit_tag "Submit", :class => 'btn btn-primary' %>
 
                             <% end %>
                             </div>

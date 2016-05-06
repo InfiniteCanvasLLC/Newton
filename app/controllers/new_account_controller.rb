@@ -1,6 +1,7 @@
 class QuestionAnswerPair
     attr_accessor :question
     attr_accessor :answer
+    attr_accessor :action_id
 end
 
 class NewAccountController < ApplicationController   
@@ -27,6 +28,7 @@ class NewAccountController < ApplicationController
 
                 qaPair.question = Question.find(cur_action.action_id)
                 qaPair.answer = QuestionAnswer.new
+                qaPair.action_id = cur_action.id
 
                 @questions << qaPair
             end
@@ -34,5 +36,15 @@ class NewAccountController < ApplicationController
     end
 
     def enter_answer
+        questionAnswer = QuestionAnswer.new
+
+        action = UserAction.find(params[:action_id])
+
+        questionAnswer.question_id = action.action_id
+        questionAnswer.user_id = session[:user_id]
+        questionAnswer.answer_integer = params[:answer_integer]
+        questionAnswer.answer_text = params[:answer_text]
+
+        questionAnswer.save
     end
 end
