@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
       ""
   end
 
+  def question_answers
+    QuestionAnswer.where("user_id = " + self.id.to_s)
+  end
+
 end

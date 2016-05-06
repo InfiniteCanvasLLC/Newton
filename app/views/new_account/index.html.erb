@@ -98,7 +98,7 @@
                             <div question-index="<%= i %>"><%= cur_question.question["text"]%></div>
                             <div answer-index="<%= i %>">
 
-                            <%= form_tag(action: "enter_answer", remote: true, method: "post") do %>
+                            <%= form_tag( { action: "enter_answer", method: "post" }, remote: true ) do %>
 
                                 <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
                                     <%= radio_button_tag :answer_integer, '0' %>

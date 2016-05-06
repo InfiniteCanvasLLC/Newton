@@ -46,5 +46,7 @@ class NewAccountController < ApplicationController
         questionAnswer.answer_text = params[:answer_text]
 
         questionAnswer.save
+
+        render nothing: true
     end
 end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-
+    layout "creative"
+    
     def index
         @users = User.all
     end

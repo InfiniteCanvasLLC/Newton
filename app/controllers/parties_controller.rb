@@ -1,4 +1,6 @@
 class PartiesController < ApplicationController
+  layout "creative"
+  
   before_action :set_party, only: [:show, :edit, :update, :destroy]
 
   # GET /parties
