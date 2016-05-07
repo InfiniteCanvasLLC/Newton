@@ -8,6 +8,11 @@ class NewAccountController < ApplicationController
         actions = UserAction.where("user_id = " + user_id.to_s)
 
         @user = User.find(user_id)
+        if @user.parties.empty? == true
+            @current_party_name = "<Default Party Name>"
+        else
+            @current_party_name = @user.parties[0].name;
+        end
 
         @num_actions = actions.count
 
