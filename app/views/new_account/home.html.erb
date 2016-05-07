@@ -38,26 +38,25 @@
 	                    </div>
 						
 						 <div class="panel-body">
-                            <div question-index="<%= i %>"><%= cur_question.question["text"]%></div>
-                            <div answer-index="<%= i %>">
+                            <div><%= cur_question.question["text"]%></div>
+                            <div>
+	                            <%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
 
-                            <%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
+	                                <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
+	                                    <%= radio_button_tag :answer_integer, '0' %>
+	                                    <%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
+	                                    <%= radio_button_tag :answer_integer, '1' %>
+	                                    <%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
+	                                    <%= radio_button_tag :answer_integer, '2' %>
+	                                    <%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
+	                                    <%= radio_button_tag :answer_integer, '3' %>
+	                                    <%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
+	                                    <%= hidden_field_tag(:action_id, cur_question.action_id) %>
+	                                <% end %>
 
-                                <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
-                                    <%= radio_button_tag :answer_integer, '0' %>
-                                    <%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
-                                    <%= radio_button_tag :answer_integer, '1' %>
-                                    <%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
-                                    <%= radio_button_tag :answer_integer, '2' %>
-                                    <%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
-                                    <%= radio_button_tag :answer_integer, '3' %>
-                                    <%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
-                                    <%= hidden_field_tag(:action_id, cur_question.action_id) %>
-                                <% end %>
+	                            <%= submit_tag "Submit", :class => 'btn btn-primary' %>
 
-                            <%= submit_tag "Submit", :class => 'btn btn-primary' %>
-
-                            <% end %>
+	                            <% end %>
                             </div>
                          </div>
 						

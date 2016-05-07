@@ -33,31 +33,16 @@ If you want to deploy to Heroku, that is certainly fine.  Please ask Rishi to ad
 
 ### Questions
 
-Questions are stored in the ```Questions``` table.  The corresponding model is question.rb, and corresponding controller is questions_controller.rb - as per the standard Rails conventions.
+See the [Questions](docs/Questions.md) article
 
-#### Schema
+### Actions
 
-Data is contained in the Questions table
+See the [Actions](docs/Actions.md) article
 
-| Column Name | Description |
-| -------------- | ----------- |
-| text | The text shown to the user in the question |
-| question_type | An enumeration corresponding to question type.  The enumeration is not presently defined anywhere is is implicit.  Values are: <ul><li>0 - Multiple Choice <li>1 - Yes / No, <li>2 - Rating, <li>3 - Text (where the user types in a response)</ul>
-| metadata_one, metadata_two, metadata_three, metadata_four | Anything associated with the question, depends on the question type.  The intent is that these would represent answers for the multiple choice questions
+### Parties
 
-The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLs
+See the [Parties](docs/Parties.md) article
 
-| Command | URL | Operation |
-|-----|-----------|-----|
-| GET | http://localhost:3000/questions | List all questions |
-| GET | http://localhost:3000/questions/new | Form for creating a new question |
-| POST | http://localhost:3000/questions | Create a new question |
-| GET | http://localhost:3000/questions/:id | Display a given question |
-| GET | http://localhost:3000/questions/:id/edit | Edit a question |
-| PUT | http://localhost:3000/questions/:id | Update a question |
-| DELETE | http://localhost:3000/questions/:id | Delete a question |
-
-The only URL you really have to visit is http://localhost:3000/questions to administer questions
 
 You can also take a look at the state of your database by doing
 
@@ -67,62 +52,6 @@ rails console
 > Question.all
 ```
 
-Any questions or CRUD operations you've performed should reflect in your database.
-
-### Actions
-
-An action is something that the user gets a notification for.  This could be a question they could answer, or another action such as linking up Spotify.
-
-#### Schema
-
-Data is contained in the UserActions table
-
-| Column Name | Description |
-|-------------|-------------|
-| user_id | User that this action is for |
-| action_type | The type of action.  Currently supported values are:<ul><li>0 - Question</ul> |
-| action_id | Specific to the type of action.  For questions, this is the ID of the question in the database |
-
-The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLS
-
-| Command | URL | Operation |
-|-----|-----------|-----|
-| GET | http://localhost:3000/user_actions | List all user actions (for all users) |
-| GET | http://localhost:3000/user_actions/new | Form for creating a new user action (for any user) |
-| POST | http://localhost:3000/user_actions | Create a new user action |
-| GET | http://localhost:3000/user_actions/:id | Display a given user action |
-| GET | http://localhost:3000/user_actions/:id/edit | Edit a user action |
-| PUT | http://localhost:3000/user_actions/:id | Update a user action |
-| DELETE | http://localhost:3000/user_actions/:id | Delete a user action |
-
-#### Assigning actions to a user
-
-For debugging, and for the time being, actions have to manually be assigned to a user by an administrator. For now, everyone is an administrator.
-
-Go to http://localhost:3000/user_actions/new to create a new user action.  You will need to select a user, and select a question to assign to them.
-
-![](docs/images/new_action.png)
-
-
-#### Viewing actions assigned to a user
-
-You can see all the actions for a user by going to their dashboard at http://localhost:3000/NewAccount - underneath the profile, their current actions will be displayed
-
-![](docs/images/dashboard_actions.png)
-
-### Parties
-
-A party contains many users.  A user can also belong to many parties.  This is called a "Has and Belong To Many" relationship (HABTM) and is slightly more complex in any database system.  The pieces are:
-
-1. A Users table which stores the list of users as well as their attributes.  But no information about party membership is in this table since a user can be part of infinite parties.
-2. A Parties table which stores the list of parties as well as their attributes.  But no information about user membership is in this table since a party can contain infinite users.
-3. A User_Parties table which is called a join table.  This stores association between a user and parties.  Using this table, all parties that a user is part of can be obtained.  All users that a party contains can also be contained.
-
-#### Joining parties
-
-Right now it is only possible for an administrator (which for now is everyone) to assign a user to a party.  This is done by going to (http://localhost:3000/users) and editing a particular user.
-
-From that page, groups can be joined or left as desired.
 
 ### Conclusion
 This is still very early in development, there isn't much to say.  Please ask on the #newton channel with any questions or concerns.
