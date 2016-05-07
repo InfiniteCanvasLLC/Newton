@@ -28,7 +28,7 @@ gem 'omniauth-facebook'
 gem 'font-awesome-rails'
 
 gem 'frontend-generators'
-
+gem 'spotify', '~> 12.6'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
