@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :user_actions
   resources :questions
   resources :users
-  
+
   post 'users/leave_group'
 
   get 'sessions/new'
@@ -13,7 +13,16 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'login_page#index'
-  get 'NewAccount' => 'new_account#index'
+
+  get 'Home'     => 'new_account#home',       :as => :home
+  get 'Calendar' => 'new_account#calendar',   :as => :calendar
+  get 'Stats'    => 'new_account#stats',      :as => :stats
+  get 'Party'    => 'new_account#party',      :as => :party_user_page
+  get 'Feedback' => 'new_account#feedback',   :as => :feedback
+
+  # Menu in the upper right hand part of the page (under user)
+  get 'Profile'  => 'new_account#profile',    :as => :profile
+  get 'Settings' => 'new_account#settings',   :as => :settings
 
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signout' => 'sessions#destroy', :as => :signout

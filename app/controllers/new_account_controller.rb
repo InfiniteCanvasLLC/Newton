@@ -1,9 +1,9 @@
-class NewAccountController < ApplicationController   
+class NewAccountController < ApplicationController
     def initialize
         super
     end
 
-    def index
+    def home
         user_id = session[:user_id]
         actions = UserAction.where("user_id = " + user_id.to_s)
 
@@ -22,4 +22,23 @@ class NewAccountController < ApplicationController
             end
         end
     end
+
+    def calendar
+    end
+
+    def stats
+    end
+
+    def party
+    end
+
+    def feedback
+    end
+
+    def profile
+    end
+
+    def settings
+    end
+
 end
