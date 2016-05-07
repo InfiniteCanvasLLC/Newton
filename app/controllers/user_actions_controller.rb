@@ -1,5 +1,8 @@
 
 class UserActionsController < ApplicationController
+
+  layout "creative"
+
   before_action :set_user_action, only: [:show, :edit, :update, :destroy]
 
   # GET /user_actions

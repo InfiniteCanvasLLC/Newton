@@ -33,96 +33,95 @@ If you want to deploy to Heroku, that is certainly fine.  Please ask Rishi to ad
 
 ### Questions
 
-Questions are stored in the ```Questions``` table.  The corresponding model is question.rb, and corresponding controller is questions_controller.rb - as per the standard Rails conventions.
+See the [Questions](docs/Questions.md) article
 
-#### Schema
+### Actions
 
-Data is contained in the Questions table
+See the [Actions](docs/Actions.md) article
 
-| Column Name | Description |
-| -------------- | ----------- |
-| text | The text shown to the user in the question |
-| question_type | An enumeration corresponding to question type.  The enumeration is not presently defined anywhere is is implicit.  Values are: <ul><li>0 - Multiple Choice <li>1 - Yes / No, <li>2 - Rating, <li>3 - Text (where the user types in a response)</ul>
-| metadata_one, metadata_two, metadata_three, metadata_four | Anything associated with the question, depends on the question type.  The intent is that these would represent answers for the multiple choice questions
+### Parties
 
-The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLs
+See the [Parties](docs/Parties.md) article
 
-| Command | URL | Operation |
-|-----|-----------|-----|
-| GET | http://localhost:3000/questions | List all questions |
-| GET | http://localhost:3000/questions/new | Form for creating a new question |
-| POST | http://localhost:3000/questions | Create a new question |
-| GET | http://localhost:3000/questions/:id | Display a given question |
-| GET | http://localhost:3000/questions/:id/edit | Edit a question |
-| PUT | http://localhost:3000/questions/:id | Update a question |
-| DELETE | http://localhost:3000/questions/:id | Delete a question |
+### Updating your database
 
-The only URL you really have to visit is http://localhost:3000/questions to administer questions
+When you do do a git pull and get a new database migration file that modifies the database schema, you will need to do a ```rake db:migrate``` to update your local database.  Otherwise you will likely get runtime errors when using the website.
 
-You can also take a look at the state of your database by doing
+#### Debugging your database
+
+You can download a database browser from http://sqlitebrowser.org/ and view your db/development.sqlite3 file.
+
+You can also take a look at the state of your database by opening the rails console and issuing commands.  Eg:
 
 ```
 rails console
 
-> Question.all
+2.2.1 :001 > user = User.find(1)
+  User Load (0.4ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
+ => #<User id: 1, provider: "facebook", uid: "10154129229729939", name: "Rishi Gupta", email: "rishig@mac.com", created_at: "2016-04-18 05:07:17", updated_at: "2016-04-18 05:07:17"> 
+
+2.2.1 :012 > UserAction.where("user_id=2")
+  UserAction Load (1.6ms)  SELECT "user_actions".* FROM "user_actions" WHERE (user_id=2)
+ => #<ActiveRecord::Relation [#<UserAction id: 13, user_id: 2, action_type: 0, action_id: 3, created_at: "2016-05-07 08:57:59", updated_at: "2016-05-07 08:57:59">]> 
+
+2.2.1 :014 > pp Question.all
+  Question Load (0.3ms)  SELECT "questions".* FROM "questions"
+[#<Question:0x007f80f4386f18
+  id: 1,
+  text: "Do you listen to vinyl?",
+  question_type: 1,
+  metadata_one: "",
+  metadata_two: "",
+  metadata_three: "",
+  metadata_four: "",
+  created_at: Mon, 18 Apr 2016 06:56:29 UTC +00:00,
+  updated_at: Sun, 24 Apr 2016 09:16:50 UTC +00:00>,
+ #<Question:0x007f80f4386d88
+  id: 2,
+  text: "What is your favorite ice cream flavor?",
+  question_type: 0,
+  metadata_one: "Salted Caramel",
+  metadata_two: "Pistachio",
+  metadata_three: "Mango",
+  metadata_four: "Malted Chocolate",
+  created_at: Mon, 18 Apr 2016 06:58:41 UTC +00:00,
+  updated_at: Mon, 18 Apr 2016 06:58:41 UTC +00:00>,
+ #<Question:0x007f80f4386ba8
+  id: 3,
+  text: "Rate Lady Gaga's previous album",
+  question_type: 2,
+  metadata_one: "",
+  metadata_two: "",
+  metadata_three: "",
+  metadata_four: "",
+  created_at: Sun, 24 Apr 2016 08:16:07 UTC +00:00,
+  updated_at: Sun, 24 Apr 2016 09:17:45 UTC +00:00>,
+ #<Question:0x007f80f4386a40
+  id: 4,
+  text: "What is your favorite TV show?",
+  question_type: 0,
+  metadata_one: "Family Guy",
+  metadata_two: "American Dad",
+  metadata_three: "Simpsons",
+  metadata_four: "South Park",
+  created_at: Fri, 06 May 2016 09:48:37 UTC +00:00,
+  updated_at: Fri, 06 May 2016 09:48:37 UTC +00:00>,
+ #<Question:0x007f80f4386838
+  id: 5,
+  text: "How much does the Weeknd suck?",
+  question_type: 0,
+  metadata_one: "A lot",
+  metadata_two: "A massive amount",
+  metadata_three: "A planet sized amount",
+  metadata_four: "More than Windows 3.1",
+  created_at: Sat, 07 May 2016 06:49:44 UTC +00:00,
+  updated_at: Sat, 07 May 2016 06:49:44 UTC +00:00>]
+ => #<ActiveRecord::Relation [#<Question id: 1, text: "Do you listen to vinyl?", question_type: 1, metadata_one: "", metadata_two: "", metadata_three: "", metadata_four: "", created_at: "2016-04-18 06:56:29", updated_at: "2016-04-24 09:16:50">, #<Question id: 2, text: "What is your favorite ice cream flavor?", question_type: 0, metadata_one: "Salted Caramel", metadata_two: "Pistachio", metadata_three: "Mango", metadata_four: "Malted Chocolate", created_at: "2016-04-18 06:58:41", updated_at: "2016-04-18 06:58:41">, #<Question id: 3, text: "Rate Lady Gaga's previous album", question_type: 2, metadata_one: "", metadata_two: "", metadata_three: "", metadata_four: "", created_at: "2016-04-24 08:16:07", updated_at: "2016-04-24 09:17:45">, #<Question id: 4, text: "What is your favorite TV show?", question_type: 0, metadata_one: "Family Guy", metadata_two: "American Dad", metadata_three: "Simpsons", metadata_four: "South Park", created_at: "2016-05-06 09:48:37", updated_at: "2016-05-06 09:48:37">, #<Question id: 5, text: "How much does the Weeknd suck?", question_type: 0, metadata_one: "A lot", metadata_two: "A massive amount", metadata_three: "A planet sized amount", metadata_four: "More than Windows 3.1", created_at: "2016-05-07 06:49:44", updated_at: "2016-05-07 06:49:44">]> 
+2.2.1 :015 > 
+
+
 ```
 
-Any questions or CRUD operations you've performed should reflect in your database.
-
-### Actions
-
-An action is something that the user gets a notification for.  This could be a question they could answer, or another action such as linking up Spotify.
-
-#### Schema
-
-Data is contained in the UserActions table
-
-| Column Name | Description |
-|-------------|-------------|
-| user_id | User that this action is for |
-| action_type | The type of action.  Currently supported values are:<ul><li>0 - Question</ul> |
-| action_id | Specific to the type of action.  For questions, this is the ID of the question in the database |
-
-The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLS
-
-| Command | URL | Operation |
-|-----|-----------|-----|
-| GET | http://localhost:3000/user_actions | List all user actions (for all users) |
-| GET | http://localhost:3000/user_actions/new | Form for creating a new user action (for any user) |
-| POST | http://localhost:3000/user_actions | Create a new user action |
-| GET | http://localhost:3000/user_actions/:id | Display a given user action |
-| GET | http://localhost:3000/user_actions/:id/edit | Edit a user action |
-| PUT | http://localhost:3000/user_actions/:id | Update a user action |
-| DELETE | http://localhost:3000/user_actions/:id | Delete a user action |
-
-#### Assigning actions to a user
-
-For debugging, and for the time being, actions have to manually be assigned to a user by an administrator. For now, everyone is an administrator.
-
-Go to http://localhost:3000/user_actions/new to create a new user action.  You will need to select a user, and select a question to assign to them.
-
-![](docs/images/new_action.png)
-
-
-#### Viewing actions assigned to a user
-
-You can see all the actions for a user by going to their dashboard at http://localhost:3000/NewAccount - underneath the profile, their current actions will be displayed
-
-![](docs/images/dashboard_actions.png)
-
-### Parties
-
-A party contains many users.  A user can also belong to many parties.  This is called a "Has and Belong To Many" relationship (HABTM) and is slightly more complex in any database system.  The pieces are:
-
-1. A Users table which stores the list of users as well as their attributes.  But no information about party membership is in this table since a user can be part of infinite parties.
-2. A Parties table which stores the list of parties as well as their attributes.  But no information about user membership is in this table since a party can contain infinite users.
-3. A User_Parties table which is called a join table.  This stores association between a user and parties.  Using this table, all parties that a user is part of can be obtained.  All users that a party contains can also be contained.
-
-#### Joining parties
-
-Right now it is only possible for an administrator (which for now is everyone) to assign a user to a party.  This is done by going to (http://localhost:3000/users) and editing a particular user.
-
-From that page, groups can be joined or left as desired.
 
 ### Conclusion
-This is still very early in development, there isn't much to say.  Please ask on the #newton channel with any questions or concerns.
+This is still very early in development, please ask questions on the #newton channel on Slack.

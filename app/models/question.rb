@@ -1,4 +1,7 @@
 class Question < ActiveRecord::Base
+
+  has_many :question_answers
+
   def get_subtype_name(subtype_id)
     case subtype_id
     when 0

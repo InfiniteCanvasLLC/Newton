@@ -21,9 +21,9 @@
 		
 		
 			<div class="row" style="margin-top: 100px;">
-				<% @questions.each do |cur_question| %>
+				<% @questions.each_with_index do |cur_question, i| %>
 				
-				<div class="col-lg-3 col-md-6">
+				<div class="col-lg-3 col-md-6" id= <%= "question_" + cur_question.action_id.to_s %> >
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
 	                        <div class="row">
@@ -32,52 +32,33 @@
 	                            </div>
 	                            <div class="col-xs-9 text-right">
 	                                <div class="huge">1</div>
-	                                <div><%= cur_question.get_subtype_name(cur_question["question_type"]) %></div>
+	                                <div><%= cur_question.question.get_subtype_name(cur_question.question["question_type"]) %></div>
 	                            </div>
 	                        </div>
 	                    </div>
 						
-						 <div class="panel-body"> <%= cur_question["text"]%> 
-						 <% if    cur_question["question_type"] == 0 %>
-							<%= form_for cur_question do |f| %>
-								<div>
-							    	<%= radio_button_tag("Yes", :metadata_one) %>
-									<%= label_tag(cur_question["metadata_one"]) %>
-								</div>
-								<div>
-							    	<%= radio_button_tag("Yes", :metadata_two) %>
-									<%= label_tag(cur_question["metadata_two"]) %>
-								</div>
-								<div>
-							    	<%= radio_button_tag("Yes", :metadata_three) %>
-									<%= label_tag(cur_question["metadata_three"]) %>
-								</div>
-								<div>
-							    	<%= radio_button_tag("Yes", :metadata_four) %>
-									<%= label_tag(cur_question["metadata_four"]) %>
-								</div>
-							<% end %>
-						 <% elsif cur_question["question_type"] == 1 %>
-							<%= form_for cur_question do |f| %>
-								<div>
-							    	<%= radio_button_tag("Yes", :metadata_one) %>
-									<%= label_tag("Yes") %>
-								</div>
-								<div>
-									<%= radio_button_tag("Yes", :metadata_two) %>
-									<%= label_tag("No") %>
-								</div>
-							<% end %>
-						 <% elsif cur_question["question_type"] == 2 %>
-							<div>
-						 		<%= number_field_tag :my_number_field, nil, min: 0, max: 10 %>
-							</div>
-						 <% elsif cur_question["question_type"] == 3 %>
-							<div>
-								<%= text_field_tag :my_text_field, nil %>
-							</div>
-						 <% end %>
-						 </div>
+						 <div class="panel-body">
+                            <div><%= cur_question.question["text"]%></div>
+                            <div>
+	                            <%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
+
+	                                <% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
+	                                    <%= radio_button_tag :answer_integer, '0' %>
+	                                    <%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
+	                                    <%= radio_button_tag :answer_integer, '1' %>
+	                                    <%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
+	                                    <%= radio_button_tag :answer_integer, '2' %>
+	                                    <%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
+	                                    <%= radio_button_tag :answer_integer, '3' %>
+	                                    <%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
+	                                    <%= hidden_field_tag(:action_id, cur_question.action_id) %>
+	                                <% end %>
+
+	                            <%= submit_tag "Submit", :class => 'btn btn-primary' %>
+
+	                            <% end %>
+                            </div>
+                         </div>
 						
 	                    <a href="#">
 	                        <div class="panel-footer">
@@ -91,100 +72,22 @@
 				
 				<% end %>
 				
-				<!--
-				<div class="col-lg-3 col-md-6">
-	                <div class="panel panel-primary">
-	                    <div class="panel-heading">
-	                        <div class="row">
-	                            <div class="col-xs-3">
-	                                <i class="fa fa-comments fa-5x"></i>
-	                            </div>
-	                            <div class="col-xs-9 text-right">
-	                                <div class="huge">26</div>
-	                                <div>New Comments!</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <a href="#">
-	                        <div class="panel-footer">
-	                            <span class="pull-left">View Details</span>
-	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-	                            <div class="clearfix"></div>
-	                        </div>
-	                    </a>
-	                </div>
-	            </div>
-				<div class="col-lg-3 col-md-6">
-	                <div class="panel panel-green">
-	                    <div class="panel-heading">
-	                        <div class="row">
-	                            <div class="col-xs-3">
-	                                <i class="fa fa-tasks fa-5x"></i>
-	                            </div>
-	                            <div class="col-xs-9 text-right">
-	                                <div class="huge">12</div>
-	                                <div>New Actions!</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <a href="#">
-	                        <div class="panel-footer">
-	                            <span class="pull-left">View Details</span>
-	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-	                            <div class="clearfix"></div>
-	                        </div>
-	                    </a>
-	                </div>
-	            </div>
-				<div class="col-lg-3 col-md-6">
-	                <div class="panel panel-yellow">
-	                    <div class="panel-heading">
-	                        <div class="row">
-	                            <div class="col-xs-3">
-	                                <i class="fa fa-shopping-cart fa-5x"></i>
-	                            </div>
-	                            <div class="col-xs-9 text-right">
-	                                <div class="huge">124</div>
-	                                <div>New Ticket recommendation!</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <a href="#">
-	                        <div class="panel-footer">
-	                            <span class="pull-left">View Details</span>
-	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-	                            <div class="clearfix"></div>
-	                        </div>
-	                    </a>
-	                </div>
-	            </div>
-				<div class="col-lg-3 col-md-6">
-	                <div class="panel panel-red">
-	                    <div class="panel-heading">
-	                        <div class="row">
-	                            <div class="col-xs-3">
-	                                <i class="fa fa-support fa-5x"></i>
-	                            </div>
-	                            <div class="col-xs-9 text-right">
-	                                <div class="huge">13</div>
-	                                <div>Support Tickets!</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <a href="#">
-	                        <div class="panel-footer">
-	                            <span class="pull-left">View Details</span>
-	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-	                            <div class="clearfix"></div>
-	                        </div>
-	                    </a>
-	                </div>
-	            </div>
-				-->
 			</div>
 		
 		</div>
-	</div>	
-	
+
+	</div>
+</div>
+
+
+<script>
+$(document).ready(function() {
+
+	$('.question_form').on('ajax:success', function(e, data, status, xhr) {
+		action_id = $(this).attr("action_id");
+		$('#question_' + action_id).remove();
+	});
+});
+</script>
+
 <% end %>
-	

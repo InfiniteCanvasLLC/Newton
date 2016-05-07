@@ -1,4 +1,11 @@
-class NewAccountController < ApplicationController
+class QuestionAnswerPair
+    attr_accessor :question
+    attr_accessor :answer
+    attr_accessor :action_id
+end
+
+class NewAccountController < ApplicationController   
+
     def initialize
         super
     end
@@ -17,9 +24,32 @@ class NewAccountController < ApplicationController
         actions_array.each do |cur_action|
 
             if (cur_action.action_type == 0)
-                @questions << Question.find(cur_action.action_id)
+                qaPair = QuestionAnswerPair.new
+
+                qaPair.question = Question.find(cur_action.action_id)
+                qaPair.answer = QuestionAnswer.new
+                qaPair.action_id = cur_action.id
+
+                @questions << qaPair
             end
         end
+    end
+
+    def enter_answer
+        questionAnswer = QuestionAnswer.new
+
+        action = UserAction.find(params[:action_id])
+
+        questionAnswer.question_id = action.action_id
+        questionAnswer.user_id = session[:user_id]
+        questionAnswer.answer_integer = params[:answer_integer]
+        questionAnswer.answer_text = params[:answer_text]
+
+        questionAnswer.save
+
+        action.destroy
+
+        render nothing: true
     end
 
     def calendar
@@ -39,5 +69,5 @@ class NewAccountController < ApplicationController
 
     def settings
     end
-
+    
 end

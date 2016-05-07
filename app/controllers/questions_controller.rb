@@ -1,4 +1,7 @@
 class QuestionsController < ApplicationController
+
+  layout "creative"
+
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   # GET /questions

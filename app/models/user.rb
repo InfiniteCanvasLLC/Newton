@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   has_and_belongs_to_many :parties, :uniq => true
+  has_many :question_answers
   
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -15,6 +16,10 @@ class User < ActiveRecord::Base
 
   def party_id
       ""
+  end
+
+  def question_answers
+    QuestionAnswer.where("user_id = " + self.id.to_s)
   end
 
   def party_at_index(party_index)
