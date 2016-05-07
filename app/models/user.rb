@@ -22,4 +22,12 @@ class User < ActiveRecord::Base
     QuestionAnswer.where("user_id = " + self.id.to_s)
   end
 
+  def party_at_index(party_index)
+    if parties.empty? == true
+      return "<Default Party Name>"
+    else
+      return parties[party_index].name;
+    end
+  end
+
 end
