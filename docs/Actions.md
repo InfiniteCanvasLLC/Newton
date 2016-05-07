@@ -40,6 +40,6 @@ You can also go to the administrator page at http://localhost:3000/administrator
 
 #### Viewing actions assigned to a user
 
-You can see all the actions for a user by going to their dashboard at http://localhost:3000/NewAccount - underneath the profile, their current actions will be displayed
+You can see all the actions for a user by going to their dashboard at http://localhost:3000/Home - underneath the profile, their current actions will be displayed
 
 ![](images/dashboard_actions.png)
