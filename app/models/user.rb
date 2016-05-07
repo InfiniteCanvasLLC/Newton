@@ -17,4 +17,12 @@ class User < ActiveRecord::Base
       ""
   end
 
+  def party_at_index(party_index)
+    if parties.empty? == true
+      return "<Default Party Name>"
+    else
+      return parties[party_index].name;
+    end
+  end
+
 end
