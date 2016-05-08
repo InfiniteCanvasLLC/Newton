@@ -1,0 +1,51 @@
+<div id="feedback_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title">Feedback</h3>
+      </div>
+      
+      <div class="modal-body">
+        <form role="form">
+          <div class="form-group">
+            <label for="experience_type">How was your experience?</label>
+            <br />
+            <input class="sentiment" type="radio" name="experience" value="good" id="sentiment_good">
+            <label class="sentiment-happy" for="sentiment_good"></label>            
+            
+            <input class="sentiment" type="radio" name="experience" value="bad" id="sentiment_bad">
+            <label class="sentiment-sad" for="sentiment_bad"></label>
+          </div>
+          
+          <div class="form-group">
+            <label for="issue_typet">Issue type</label>
+            <br />
+            <select name="issue" id="issue_typet">
+              <option value="bug">Bug</option>
+              <option value="feature_request">Feature Request</option>
+              <option value="other" selected>Other</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email <small><em class"help-block">(Optional)</em></small></label>
+            <input type="email" class="form-control" id="email">
+          </div>
+          
+          <div class="form-group">
+            <label for="more">Tell us more...</label>
+            <textarea class="form-control" rows="5" id="more"></textarea>
+          </div>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-success">Send</button>
+      </div>
+    </div>
+
+  </div>
+</div>
