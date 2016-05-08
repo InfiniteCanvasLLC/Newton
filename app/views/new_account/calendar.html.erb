@@ -1,6 +1,40 @@
 <%= render :layout => 'navigation' do %>
-	
+
+<style>
+	body {
+		margin: 70px 10px;
+		padding: 0;
+	}
+
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+</style>
+
+<!-- Right now using: https://github.com/bokmann/fullcalendar-rails -->
 <!-- Calendar page specific code -->
-	
+<div id='calendar' style="background-color: grey">
+</div>
+
+  <script>
+$(document).ready(function() {
+    // page is now ready, initialize the calendar...
+
+    $('#calendar').fullCalendar({
+        // put your options and callbacks here
+        
+     header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+      
+    })
+
+});
+</script>
+
 <% end %>
 	
