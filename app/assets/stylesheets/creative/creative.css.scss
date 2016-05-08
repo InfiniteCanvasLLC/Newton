@@ -45,6 +45,10 @@ h6 {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 
+h4 {
+    margin-bottom: 30px;
+}
+
 p {
     margin-bottom: 20px;
     font-size: 16px;
@@ -447,6 +451,16 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-xl {
     padding: 15px 30px;
+}
+
+@media (max-width: 992px) {
+    .row-btn + .row-btn {
+        margin-top: 10px;
+    }
+}
+
+.row-btn .btn {
+    max-width: 300px;
 }
 
 ::-moz-selection {
