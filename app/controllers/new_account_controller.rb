@@ -20,6 +20,7 @@ class NewAccountController < ApplicationController
         actions_array = actions.to_a
 
         @questions = Array.new
+        @current_nav_selection = "nav_home"
 
         actions_array.each do |cur_action|
 
@@ -53,21 +54,27 @@ class NewAccountController < ApplicationController
     end
 
     def calendar
+        @current_nav_selection = "nav_calendar"
     end
 
     def stats
+        @current_nav_selection = "nav_stats"
     end
 
     def party
+        @current_nav_selection = "nav_party"
     end
 
     def feedback
+        @current_nav_selection = "nav_feedback"
     end
 
     def profile
+        @current_nav_selection = ""
     end
 
     def settings
+        @current_nav_selection = ""
     end
     
 end
