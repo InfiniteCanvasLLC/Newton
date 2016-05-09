@@ -7,7 +7,7 @@
 					<div class="panel panel-red">
 						<img class="party_image img-circle" src="http://placehold.it/120x120" alt="...">
 						<div class="btn-group">
-						   <button type="button" class="btn dropdown-toggle party_image" style="width:200px;" data-toggle="dropdown"> <%= @user.party_at_index(0) %> <span class="caret"></span>
+						   <button type="button" class="btn dropdown-toggle party_image" style="width:200px;" data-toggle="dropdown"> <%= @user.party_at_index(0) == nil ? "<Default party name>" : @user.party_at_index(0).name %> <span class="caret"></span>
 						   </button>
 							<ul class="dropdown-menu party_image" role="menu">
 						      <li><a href="#">Switch Party</a></li>
