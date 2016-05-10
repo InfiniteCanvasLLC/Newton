@@ -14,6 +14,8 @@
 
 <!-- Right now using: https://github.com/bokmann/fullcalendar-rails -->
 <!-- Calendar page specific code -->
+<h1>Your music calendar with <%= @current_party.name %> </h1>
+
 <div id='calendar' style="background-color: grey">
 </div>
 
@@ -29,8 +31,23 @@ $(document).ready(function() {
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
-			editable: true,
+			editable: false,
+			events: [
+
+				<% @current_party.events.each do |event| %>
+				{
+						title  : '<%= event.description %>',
+						start  : '<%= event.start.to_datetime%>',
+						allDay : false,
+						url    : 'http://canvasnewton.herokuapp.com/' //for now (not needed at all)
+				},
+				<% end %>
+			],
       
+	  dayClick: function(date, jsEvent, view) {
+        //do something when user click on a day?
+    }
+
     })
 
 });

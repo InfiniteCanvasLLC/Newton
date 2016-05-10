@@ -54,6 +54,10 @@ class NewAccountController < ApplicationController
     end
 
     def calendar
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+        @current_party = @user.party_at_index(0); #eventually will be the current party for this user (party 0 is a hack)
+
         @current_nav_selection = "nav_calendar"
     end
 
