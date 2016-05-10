@@ -20,6 +20,16 @@
   </tbody>
 </table>
 
+
+<h2>Register for Event</h2>
+<%= form_for(@party) do |f| %>
+  <%= f.label :event_id, "Enter an event to register for" %><br>
+  <%= f.text_field :event_id, class: 'event_field' %><br>
+  <%= f.submit %>
+<% end %>
+
+
+
 <table class="table parties_table" style="display: none">
     <thead>
         <tr>
