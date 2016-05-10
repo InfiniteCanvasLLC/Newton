@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  resources :events
+  resources :events
   resources :parties
   resources :user_actions
   resources :questions
   resources :users
 
   post 'users/leave_group'
+  post 'parties/unregister_event'
 
   get 'sessions/new'
 
