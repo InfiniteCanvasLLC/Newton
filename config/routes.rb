@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :events
-  resources :events
   resources :parties
   resources :user_actions
   resources :questions
