@@ -39,10 +39,12 @@ $(document).ready(function() {
 						title  : '<%= event.description %>',
 						start  : '<%= event.start.to_datetime%>',
 						allDay : false,
-						url    : 'http://canvasnewton.herokuapp.com/' //for now (not needed at all)
+						url    : 'http://canvasnewton.herokuapp.com/', //for now (not needed at all)
+						//In the future: set the color of event based on user commitment (or other params) -->  color  : '#F6546A'
 				},
 				<% end %>
 			],
+			eventColor: '#20647F',
       
 	  dayClick: function(date, jsEvent, view) {
         //do something when user click on a day?
