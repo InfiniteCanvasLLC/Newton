@@ -59,9 +59,8 @@ class NewAccountController < ApplicationController
     def switch_party
         user_id = session[:user_id]
         @user = User.find(user_id)
-
-        @party_name = @user.party_at_index( params[:party_index].to_i )
-
+        @user.current_party_index = params[:party_index]
+        @user.save
         redirect_to action: 'home'
     end
 
