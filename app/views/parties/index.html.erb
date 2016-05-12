@@ -7,6 +7,7 @@
     <tr>
       <th>Name</th>
       <th>Members</th>
+      <th>Events</th>
     </tr>
   </thead>
 
@@ -19,6 +20,14 @@
             <%= user.name %><br>
           <% end %>
         </td>
+
+        <td>
+          <% party.events.each do |event| %>
+            <%= event.description %><br>
+          <% end %>
+        </td>
+
+
         <td><%= link_to 'Show', party %></td>
         <td><%= link_to 'Edit', edit_party_path(party) %></td>
         <td><%= link_to 'Destroy', party, method: :delete, data: { confirm: 'Are you sure?' } %></td>

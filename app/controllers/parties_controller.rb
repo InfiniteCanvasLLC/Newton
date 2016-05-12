@@ -21,13 +21,26 @@ class PartiesController < ApplicationController
 
   # GET /parties/1/edit
   def edit
+     @all_events = Event.all
+     #@party_events = @party.events.to_a #Event.all.to_a
+     #party = Party.find(params[:id])
+     #@party.events << Event.find(1)
   end
+
+  def unregister_event
+     @party = Party.find(params[:party])
+     @event = Event.find(params[:event])
+
+     @party.events.delete(@event)
+
+     redirect_to action: 'edit', id: @party.id
+  end
+
 
   # POST /parties
   # POST /parties.json
   def create
     @party = Party.new(party_params)
-
     respond_to do |format|
       if @party.save
         format.html { redirect_to @party, notice: 'Party was successfully created.' }
@@ -42,6 +55,15 @@ class PartiesController < ApplicationController
   # PATCH/PUT /parties/1
   # PATCH/PUT /parties/1.json
   def update
+    if params[:party][:event_id].nil? == false
+      @event = Event.find(params[:party][:event_id])
+
+      #prevents double insert
+      if @party.events.exists?( @event.id ) == false
+        @party.events << @event
+      end
+    end
+
     respond_to do |format|
       if @party.update(party_params)
         format.html { redirect_to @party, notice: 'Party was successfully updated.' }

@@ -43,6 +43,10 @@ See the [Actions](docs/Actions.md) article
 
 See the [Parties](docs/Parties.md) article
 
+### Events
+
+See the [Events](docs/Events.md) article
+
 ### Updating your database
 
 When you do do a git pull and get a new database migration file that modifies the database schema, you will need to do a ```rake db:migrate``` to update your local database.  Otherwise you will likely get runtime errors when using the website.
