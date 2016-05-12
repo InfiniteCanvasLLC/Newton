@@ -41,12 +41,19 @@
                 <h1>Newton</h1>
                 <hr>
                 <h4>Customized concert deals and music recomendations for you and your friends.</h4>
-                <div class="service-box">
-                    <a href="#services" class="btn btn-primary btn-xl page-scroll">How Does It Work?</a>
-                </div>
-                <div class="service-box">
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
-                    <a class="btn btn-primary btn-xl btn-social btn-facebook" href="<%= signin_path %>"><span class="fa fa-facebook"></span> Sign in with Facebook</a></p>
+                <div class="row">
+                    <div class="col-md-4 text-center row-btn">
+                        <a href="" class="btn btn-primary btn-xl page-scroll center-block">Sign Up</a>
+                    </div>
+                    
+                    <div class="col-md-4 text-center row-btn">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                    </div>
+                    
+                    <div class="col-md-4 text-center row-btn">
+                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block">How Does It Work?</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,20 +95,19 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="bg-primary">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Contact</h2>
-                    <hr class="primary">
+                    <hr class="light">
                     <p>Have a question or comment? We'd love to hear from you.</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                    <p><a href="mailto:feedback@newton.com">feedback@newton.com</a></p>
+                    <a class="btn btn-default btn-xl" data-toggle="modal" data-target="#feedback_modal">Send Feedback</a>
                 </div>
             </div>
         </div>
     </section>
-
+    <%= render 'feedback_dialog' %>
 </body>
