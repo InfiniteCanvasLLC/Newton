@@ -2,7 +2,9 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @party.name %>
+  <%= @party.name %><br>
+  <strong>Number of events:</strong>
+  <%= @party.events.count %>
 </p>
 
 <%= link_to 'Edit', edit_party_path(@party) %> |
