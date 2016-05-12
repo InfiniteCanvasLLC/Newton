@@ -2,5 +2,82 @@
 
 <%= render 'form' %>
 
+<h2>Events for the Party</h2>
+<table class="table member_parties_table">
+  <thead>
+    <tr>
+    <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @party.events.each do |event| %>
+      <tr>
+      <td><%= event.description %></td>
+      <td><%= link_to 'Unregister for this event', {:party => @party.id, :event => event.id, :action => 'unregister_event'}, method: :post %></td>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h2>Register for Event</h2>
+<%= form_for(@party) do |f| %>
+  <%= f.label :event_id, "Enter an event to register for" %><br>
+  <%= f.text_field :event_id, class: 'event_field' %><br>
+  <%= f.submit %>
+<% end %>
+
+
+
+<table class="table parties_table" style="display: none">
+    <thead>
+        <tr>
+        <th>Name</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @all_events.each do |event| %>
+        <tr class="clickable-row" data-event-id="<%= event.id %>">
+            <td><%= event.description %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+
+
 <%= link_to 'Show', @party %> |
 <%= link_to 'Back', parties_path %>
+
+
+
+</div>
+
+<script>
+$(document).ready(function() {
+
+  $('.parties_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".event_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var event_id = $(this).attr("data-event-id");
+
+      $(".event_field").val(event_id);
+    }
+  });
+
+  $(".event_field").focus(function () {
+    $(".parties_table").css('display', 'table');
+  });
+
+
+});
+</script>
