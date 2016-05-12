@@ -45,6 +45,10 @@ h6 {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 
+h4 {
+    margin-bottom: 30px;
+}
+
 p {
     margin-bottom: 20px;
     font-size: 16px;
@@ -449,6 +453,16 @@ fieldset[disabled] .btn-primary.active {
     padding: 15px 30px;
 }
 
+@media (max-width: 992px) {
+    .row-btn + .row-btn {
+        margin-top: 10px;
+    }
+}
+
+.row-btn .btn {
+    max-width: 300px;
+}
+
 ::-moz-selection {
     text-shadow: none;
     color: #fff;
@@ -473,4 +487,37 @@ img::-moz-selection {
 
 body {
     webkit-tap-highlight-color: #222;
+}
+
+input.sentiment[type="radio"] {
+    display: none
+}
+
+.sentiment-happy,
+.sentiment-sad {
+    border-style: solid;
+    border-color: transparent; 
+    border-width: 1px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: inline-block;
+    height: 28px;
+    width: 28px;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+}
+
+.sentiment-happy {
+	background-image: asset-data-url('happy.svg');
+}
+
+.sentiment-sad {
+	background-image: asset-data-url('sad.svg');
+}
+
+input.sentiment[type="radio"]:checked + label {
+    border-width: 1px;
+    border-color: #f05f40;
 }
