@@ -8,10 +8,12 @@ class SessionsController < ApplicationController
         auth = request.env["omniauth.auth"]
         user = User.where(  :provider => auth['provider'],
                             :uid => auth['uid']).first || User.create_with_omniauth(auth)
+        if user.current_party_index.nil?
+            user.current_party_index = 0
+        end
 
         session[:user_id] = user.id
         session[:fb_info] = auth.info
-        session[:user_current_party] = 0
 
         if (session[:fb_info])["about"].nil?
             (session[:fb_info])["about"] = "Something about yourself"

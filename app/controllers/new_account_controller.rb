@@ -22,7 +22,7 @@ class NewAccountController < ApplicationController
         @questions = Array.new
         @current_nav_selection = "nav_home"
 
-        @current_user_party = @user.party_at_index( session[:user_current_party] )
+        @current_user_party = @user.party_at_index(  @user.current_party_index.to_i )
         @current_user_party_name = @current_user_party.nil? ? "<Default party name>" : @current_user_party.name;
 
         actions_array.each do |cur_action|
@@ -59,7 +59,7 @@ class NewAccountController < ApplicationController
     def calendar
         user_id = session[:user_id]
         @user = User.find(user_id)
-        @current_party = @user.party_at_index( session[:user_current_party] );
+        @current_party = @user.party_at_index( @user.current_party_index.to_i );
 
         @current_nav_selection = "nav_calendar"
     end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510052154) do
+ActiveRecord::Schema.define(version: 20160512033022) do
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
@@ -78,8 +78,9 @@ ActiveRecord::Schema.define(version: 20160510052154) do
     t.string   "uid"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "current_party_index"
   end
 
 end
