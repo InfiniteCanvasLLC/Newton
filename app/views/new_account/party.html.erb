@@ -1,5 +1,4 @@
 <%= render :layout => 'navigation' do %>
-	
 <!-- Party page specific code -->
 <div class="row"><br>
     <div class="col-lg-8">
@@ -13,7 +12,7 @@
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <a href="#" class="list-group-item">
                             <i class="fa fa-female fa-fw"></i> <%= @user.name %><!-- Male/Female is not available for the moment -->
-                            <span class="pull-right text-muted small"><em>Last seen 4 minutes ago</em><!-- Optional information regaring the perso -->
+                            <span class="pull-right text-muted small"><em>Last seen 4 minutes ago</em><!-- Optional information regaring the user -->
                             </span>
                         </a>
                     <% end %>
@@ -21,8 +20,43 @@
             </div>
             <!-- /.panel-body -->
         </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-music fa-fw"></i> Your parties
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @user.parties.each do |party| %>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-group fa-fw"></i> <%= party.name %><!-- Male/Female is not available for the moment -->
+                            <span class="pull-right text-muted small"><em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
+                            </span>
+                        </a>
+                    <% end %>
+               </div>
+               <a class="btn btn-default btn-block" id="create-party-button">Create party</a>
+            </div>
+            <!-- /.panel-body -->
+
+        </div>
     </div>
 </div>
-
-
 <% end %>
+
+<%= render 'party_edit_form' %>
+<%= render :partial => 'user_notification' %>
+
+<script>
+$(function(){
+    document.getElementById('create-party-button').onclick = function() {
+        <% if @user.parties.count < 5 %>
+            $('#party_modal').modal('show');
+        <% else %>
+            $('#notification_modal').modal('show');
+        <% end %>
+    }
+});
+</script>

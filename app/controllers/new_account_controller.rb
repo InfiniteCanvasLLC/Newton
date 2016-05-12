@@ -64,6 +64,20 @@ class NewAccountController < ApplicationController
         redirect_to action: 'home'
     end
 
+    def create_party
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+
+        party = Party.new
+        party.name = params[:name]
+        party.save
+
+        #since the user created it, they are part of it
+        @user.parties << party
+
+        redirect_to action: 'party'
+    end
+
     def calendar
         user_id = session[:user_id]
         @user = User.find(user_id)
