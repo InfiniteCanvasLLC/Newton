@@ -79,7 +79,7 @@ class NewAccountController < ApplicationController
     def party
         user_id = session[:user_id]
         @user = User.find(user_id)
-        @current_user_party = @user.party_at_index(0);#for now
+        @current_user_party = @user.party_at_index( @user.current_party_index.to_i );
 
         @current_nav_selection = "nav_party"
     end
