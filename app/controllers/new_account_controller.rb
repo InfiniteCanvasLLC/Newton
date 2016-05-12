@@ -52,6 +52,15 @@ class NewAccountController < ApplicationController
         render nothing: true
     end
 
+    def switch_party
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+
+        @party_name = @user.party_at_index( params[:party_index].to_i )
+
+        redirect_to action: 'home'
+    end
+
     def calendar
     end
 
@@ -59,6 +68,9 @@ class NewAccountController < ApplicationController
     end
 
     def party
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+        @current_user_party = @user.party_at_index(0);#for now
     end
 
     def feedback

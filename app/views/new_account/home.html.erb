@@ -10,9 +10,9 @@
 						   <button type="button" class="btn dropdown-toggle party_image" style="width:200px;" data-toggle="dropdown"> <%= @user.party_at_index(0) %> <span class="caret"></span>
 						   </button>
 							<ul class="dropdown-menu party_image" role="menu">
-						      <li><a href="#">Switch Party</a></li>
-						      <li class="divider"></li>
-						      <li><a href="#">Another Party action</a></li>
+							  <% @user.parties.each_with_index do |party, i| %>
+							    <li><%= link_to party.name, {:party_index => i, :party_id => party.id, :action => 'switch_party'}, method: :post %></li>
+							  <% end %>
 						   </ul>
 						</div>
 					</div>

@@ -1,5 +1,28 @@
 <%= render :layout => 'navigation' do %>
 	
 <!-- Party page specific code -->
-	
+<div class="row"><br>
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-group fa-fw"></i> People in <%= @current_user_party.name %>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @current_user_party.users.each_with_index do |user, i| %>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-female fa-fw"></i> <%= @user.name %><!-- Male/Female is not available for the moment -->
+                            <span class="pull-right text-muted small"><em>Last seen 4 minutes ago</em><!-- Optional information regaring the perso -->
+                            </span>
+                        </a>
+                    <% end %>
+               </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
+
+
 <% end %>

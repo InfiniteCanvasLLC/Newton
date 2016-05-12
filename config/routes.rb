@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users
 
   post 'users/leave_group'
-
+  post 'new_account/switch_party'
   get 'sessions/new'
 
   # The priority is based upon order of creation: first created -> highest priority.
