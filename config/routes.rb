@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'login_page#index'
 
+  post 'login_page/submit_user_signup'
   post 'login_page/submit_user_feedback'
   
   post 'EnterAnswer' => 'new_account#enter_answer'
