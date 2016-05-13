@@ -124,6 +124,9 @@ $(document).click(function(event) {
         <% if @user.parties.count < 5 %>
             $('#party_create_modal').modal('show');
         <% else %>
+            //var note = "You can only create up to 5 parties";
+            //var theTag = $('#notification_modal').find("#notification-field");
+            //theTag.val(note);
             $('#notification_modal').modal('show');
         <% end %>
     }
