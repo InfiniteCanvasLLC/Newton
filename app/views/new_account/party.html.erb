@@ -21,16 +21,21 @@
                         </p>
                     <% end %>
                </div>
-               <% if @current_user_party.owner_user_id == @user.id%>
                <div class="row">
+                <% if @user.parties.count > 1 %>
+                    <div class="col-sm-3">
+                        <a class="btn btn-default btn-block" id="leave-party-button" party="<%= @current_user_party.id %>" >Leave party</a>
+                    </div>
+                <% end %>
+                <% if @current_user_party.owner_user_id == @user.id%>
                     <div class="col-sm-3">
                         <a class="btn btn-default btn-block" id="edit-party-button" party="<%= @current_user_party.id %>" >Edit party</a>
                     </div>
                     <div class="col-sm-3">
                         <a class="btn btn-default btn-block" id="invite-member-button">Invite</a>
                     </div>
+                <% end %>
                </div>
-               <% end %>
             </div>
             <!-- /.panel-body -->
         </div>
@@ -121,6 +126,20 @@ $(document).click(function(event) {
         <% else %>
             $('#notification_modal').modal('show');
         <% end %>
+    }
+
+    //leave party button
+    else if(id == 'leave-party-button')
+    {
+        var party_id = parseInt( $(event.target).attr('party'), 10);
+
+        $.ajax({
+            url: '/new_account/leave_party',
+            type: 'POST',
+            data: $.param({ party: party_id, user: <%= @user.id %> })
+            });
+
+        location.reload();
     }
 });
 

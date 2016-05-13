@@ -64,6 +64,13 @@ class NewAccountController < ApplicationController
         redirect_to action: 'home'
     end
 
+    def leave_party
+        @user = User.find(params[:user])
+        @party = Party.find(params[:party])
+        @user.current_party_index = [0, @user.current_party_index - 1].max
+        @user.parties.delete(@party)
+        @user.save
+    end
 
     def create_party
     #@TODO: Check for param validity (is there a party with the same name?)
