@@ -72,6 +72,7 @@ class NewAccountController < ApplicationController
 
         party = Party.new
         party.name = params[:name]
+        party.description = params[:description]
         party.owner_user_id = user_id
         party.save
 
@@ -85,6 +86,7 @@ class NewAccountController < ApplicationController
         #get and modify the party
         party = Party.find(params[:party_id])
         party.name = params[:name]
+        party.description = params[:description]
         party.save
 
         redirect_to action: 'party'

@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Description</th>
       <th>Owner</th>
       <th>Members</th>
       <th>Events</th>
@@ -16,6 +17,7 @@
     <% @parties.each do |party| %>
       <tr>
         <td><%= party.name %></td>
+        <td><%= party.description %></td>
         <td><%= party.owner_user_id %></td>
         <td>
           <% party.users.each do |user| %>

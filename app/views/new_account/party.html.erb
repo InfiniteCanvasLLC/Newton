@@ -8,6 +8,10 @@
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
+                <p>
+                    <%= @current_user_party.description %>
+                </p>
+
                 <div class="list-group">
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <p class="list-group-item">
