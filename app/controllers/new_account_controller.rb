@@ -70,6 +70,7 @@ class NewAccountController < ApplicationController
 
         party = Party.new
         party.name = params[:name]
+        party.owner_user_id = user_id
         party.save
 
         #since the user created it, they are part of it

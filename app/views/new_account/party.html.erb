@@ -30,11 +30,20 @@
             <div class="panel-body">
                 <div class="list-group">
                     <% @user.parties.each do |party| %>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-group fa-fw"></i> <%= party.name %><!-- Male/Female is not available for the moment -->
-                            <span class="pull-right text-muted small"><em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
+                        <% if party.owner_user_id == @user.id%>
+                        <a class="list-group-item">
+                        <% else %>
+                        <p class="list-group-item">
+                        <% end %>
+                            <i class="<%= party.owner_user_id == @user.id ? 'fa fa-edit fa-fw' : 'fa fa-group fa-fw' %>"></i> <%= party.name %><!-- Male/Female is not available for the moment -->
+                            <span class="pull-right text-muted small">
+                                <em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
                             </span>
+                        <% if party.owner_user_id == @user.id%>
                         </a>
+                        <% else %>
+                        </p>
+                        <% end %>
                     <% end %>
                </div>
                <a class="btn btn-default btn-block" id="create-party-button">Create party</a>

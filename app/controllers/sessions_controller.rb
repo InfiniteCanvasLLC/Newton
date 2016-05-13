@@ -8,6 +8,7 @@ class SessionsController < ApplicationController
         auth = request.env["omniauth.auth"]
         user = User.where(  :provider => auth['provider'],
                             :uid => auth['uid']).first || User.create_with_omniauth(auth)
+
         if user.current_party_index.nil?
             user.current_party_index = 0
         end
@@ -16,6 +17,7 @@ class SessionsController < ApplicationController
         if user.parties.count == 0
            default_party = Party.new
            default_party.name = user.name + "'s Party"
+           default_party.owner_user_id = user.id
            default_party.save
            user.parties << default_party
         end
