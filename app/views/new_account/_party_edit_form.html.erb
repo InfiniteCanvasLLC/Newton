@@ -1,4 +1,4 @@
-<div id="party_modal" class="modal fade" role="dialog">
+<div id="party_edit_modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
@@ -7,36 +7,32 @@
         <h3 class="modal-title">Party</h3>
       </div>
       
-      <%= form_tag({action: "create_party", method: "post"}, {role: "form", id: "party_form"}) do %>
+      <%= form_tag({action: "edit_party", method: "post"}, {role: "form", id: "party_form"}) do %>
         <div class="modal-body">
           
           <div class="form-group">
-            <%= label_tag(:name, "Name your party") %>
+            <%= label_tag(:name, "Change your party's name") %>
             <br />
             <%= text_field_tag(:name, nil, :class => 'form-control') %>
           </div> 
           
           <div class="form-group">
-            <%= label_tag(:capacity, "Set the party capacity") %>
-            <br />
-            <%= number_field_tag(:capacity, nil, :class => 'form-control', min:1, max: 10) %>
-          </div> 
-          
-          <div class="form-group">
-            <%= label_tag(:description, "What is your party all about?") %>
+            <%= label_tag(:description, "Change what is your party all about") %>
             <br />
             <%= text_area_tag(:description, nil, :class => 'form-control', :rows => 5) %>
-          </div> 
+          </div>
+
+          <%= hidden_field_tag(:party_id) %>
         </div>
       
         <div class="modal-footer bg-dark">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <%= submit_tag("Go", class: 'btn btn-success') %>
+          <%= submit_tag("Apply", class: 'btn btn-success') %>
         </div>
       <% end %>
       
       <script>
-        $("#party_modal").on("show.bs.modal",
+        $("#party_edit_modal").on("show.bs.modal",
           function ()
           {
             $("#name").val('');
@@ -45,7 +41,7 @@
         $("#party_form").submit(
           function (event)
           {
-            $("#party_modal").modal('hide');
+            $("#party_edit_modal").modal('hide');
           });
       </script>
     </div>

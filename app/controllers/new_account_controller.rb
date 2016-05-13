@@ -64,7 +64,9 @@ class NewAccountController < ApplicationController
         redirect_to action: 'home'
     end
 
+
     def create_party
+    #@TODO: Check for param validity (is there a party with the same name?)
         user_id = session[:user_id]
         @user = User.find(user_id)
 
@@ -75,6 +77,15 @@ class NewAccountController < ApplicationController
 
         #since the user created it, they are part of it
         @user.parties << party
+
+        redirect_to action: 'party'
+    end
+
+    def edit_party
+        #get and modify the party
+        party = Party.find(params[:party_id])
+        party.name = params[:name]
+        party.save
 
         redirect_to action: 'party'
     end
@@ -95,7 +106,6 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         @user = User.find(user_id)
         @current_user_party = @user.party_at_index( @user.current_party_index.to_i );
-
         @current_nav_selection = "nav_party"
     end
 

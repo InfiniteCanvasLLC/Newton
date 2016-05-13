@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'users/leave_group'
   post 'new_account/switch_party'
   post 'new_account/create_party'
+  post 'new_account/edit_party'
   post 'parties/unregister_event'
 
   get 'sessions/new'
