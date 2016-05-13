@@ -25,4 +25,17 @@ class LoginPageController < ApplicationController
     
     render nothing: true
   end
+  
+  def submit_user_signup
+    user_feedback = UserFeedback.new
+    
+    user_feedback.sentiment = 0
+    user_feedback.issue_type = 4000
+    user_feedback.email = params[:email]
+    user_feedback.description = params[:first_name] + " " + params[:last_name]
+    
+    user_feedback.save
+    
+    render nothing: true
+  end
 end
