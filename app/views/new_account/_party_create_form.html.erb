@@ -1,0 +1,47 @@
+<div id="party_create_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title">Party</h3>
+      </div>
+      
+      <%= form_tag({action: "create_party", method: "post"}, {role: "form", id: "party_form"}) do %>
+        <div class="modal-body">
+          
+          <div class="form-group">
+            <%= label_tag(:name, "Name your party") %>
+            <br />
+            <%= text_field_tag(:name, nil, :class => 'form-control') %>
+          </div> 
+          
+          <div class="form-group">
+            <%= label_tag(:description, "What is your party all about?") %>
+            <br />
+            <%= text_area_tag(:description, nil, :class => 'form-control', :rows => 5) %>
+          </div> 
+        </div>
+      
+        <div class="modal-footer bg-dark">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= submit_tag("Create", class: 'btn btn-success') %>
+        </div>
+      <% end %>
+      
+      <script>
+        $("#party_create_modal").on("show.bs.modal",
+          function ()
+          {
+            $("#name").val('');
+          });
+          
+        $("#party_form").submit(
+          function (event)
+          {
+            $("#party_create_modal").modal('hide');
+          });
+      </script>
+    </div>
+  </div>
+</div>
