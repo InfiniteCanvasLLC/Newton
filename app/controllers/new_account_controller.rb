@@ -22,8 +22,9 @@ class NewAccountController < ApplicationController
         @questions = Array.new
         @current_nav_selection = "nav_home"
 
-        @current_user_party = @user.party_at_index(  @user.current_party_index.to_i )
-        @current_user_party_name = @current_user_party.nil? ? "<Default party name>" : @current_user_party.name;
+        #if current user id invalid (party deleted for instance)
+        @current_user_party = get_user_current_party(@user)
+        @current_user_party_name = @current_user_party.name;
 
         actions_array.each do |cur_action|
 
@@ -105,7 +106,7 @@ class NewAccountController < ApplicationController
     def calendar
         user_id = session[:user_id]
         @user = User.find(user_id)
-        @current_party = @user.party_at_index( @user.current_party_index.to_i );
+        @current_party = get_user_current_party(@user)
 
         @current_nav_selection = "nav_calendar"
     end
@@ -117,7 +118,7 @@ class NewAccountController < ApplicationController
     def party
         user_id = session[:user_id]
         @user = User.find(user_id)
-        @current_user_party = @user.party_at_index( @user.current_party_index.to_i );
+        @current_user_party = get_user_current_party(@user)
         @all_parties = Party.all
         @current_nav_selection = "nav_party"
     end
@@ -134,4 +135,26 @@ class NewAccountController < ApplicationController
         @current_nav_selection = ""
     end
     
+    private
+
+    #this function returns the user's current party
+    def get_user_current_party(user)
+        # if the @user.current_party_index is invalid in any way, this will returns user.pary[0]
+        if user.current_party_index >= user.parties.count
+            user.current_party_index = 0
+            user.save
+        end
+
+        # if user.parties is empty we create a default party 0
+        if user.parties.count == 0
+           default_party = Party.new
+           default_party.name = user.name + "'s Party"
+           default_party.owner_user_id = user.id
+           default_party.save
+           user.parties << default_party
+        end
+
+        return user.party_at_index( user.current_party_index.to_i )
+    end
+
 end
