@@ -12,18 +12,19 @@
                 <p>
                     <%= @current_user_party.description %>
                 </p>
-
                 <div class="list-group">
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <p class="list-group-item">
                             <i class="fa fa-female fa-fw"></i> <%= @user.name %><!-- Male/Female is not available for the moment -->
-                            <span class="pull-right text-muted small"><em>Last seen 4 minutes ago</em><!-- Optional information regaring the user -->
+                            <span class="pull-right text-muted small"><em>Last seen 4 minutes ago</em><!-- Optional information regarding the user -->
                             </span>
                         </p>
                     <% end %>
                </div>
                <div class="row">
-                <% if @user.parties.count > 1 %>
+               <!-- We can leave this party if we don't own it or our parties table contains ANOTHER one that we own -->
+                <% if @current_user_party.owner_user_id != @user.id ||
+                      @user.parties.where(:owner_user_id => @user.id).where.not( :id => @current_user_party.id ).empty? == false %>
                     <div class="col-sm-3">
                         <a class="btn btn-default btn-block" id="leave-party-button" party="<%= @current_user_party.id %>" >Leave party</a>
                     </div>
