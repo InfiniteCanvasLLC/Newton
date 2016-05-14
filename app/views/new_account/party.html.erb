@@ -2,6 +2,7 @@
 <!-- Party page specific code -->
 <div class="row"><br>
     <div class="col-lg-8">
+        <!-- The current party -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-group fa-fw"></i> People in <%= @current_user_party.name %>
@@ -40,7 +41,7 @@
             <!-- /.panel-body -->
         </div>
 
-
+        <!-- All the user's parties -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="fa fa-music fa-fw"></i> Your parties
@@ -64,7 +65,29 @@
                </div>
             </div>
             <!-- /.panel-body -->
+        </div>
 
+        <!-- All parties in the system -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-globe fa-fw"></i> All parties in your area
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @all_parties.each do |party| %>
+                        <% if party.users.exists?(@user.id) == false %> <!-- make sure the user is not already in the party -->
+                            <a class="list-group-item" id="join-party-button" party="<%= party.id %>" =>
+                                <i class="fa fa-group fa-fw"></i> <%= party.name %>
+                                <span class="pull-right text-muted small">
+                                    <em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
+                                </span>
+                            </a>
+                        <% end %>
+                    <% end %>
+               </div>
+            </div>
+            <!-- /.panel-body -->
         </div>
     </div>
 </div>
@@ -75,6 +98,7 @@
 <%= render :partial => 'user_notification' %>
 <%= render 'party_create_form' %>
 <%= render 'party_edit_form' %>
+<%= render 'party_join_form' %>
 
 <script>
 $(document).click(function(event) {
@@ -143,6 +167,15 @@ $(document).click(function(event) {
             });
 
         location.reload();
+    }
+
+    //join a party button
+    else if(id == 'join-party-button')
+    {
+        var party_id = parseInt( $(event.target).attr('party'), 10);
+
+        //don't do that just yet, we need a better way
+        //$('#party_join_modal').modal('show');
     }
 });
 

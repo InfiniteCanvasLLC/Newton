@@ -99,6 +99,9 @@ class NewAccountController < ApplicationController
         redirect_to action: 'party'
     end
 
+    def join_party
+    end
+
     def calendar
         user_id = session[:user_id]
         @user = User.find(user_id)
@@ -115,6 +118,7 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         @user = User.find(user_id)
         @current_user_party = @user.party_at_index( @user.current_party_index.to_i );
+        @all_parties = Party.all
         @current_nav_selection = "nav_party"
     end
 
