@@ -24,6 +24,11 @@ class UsersController < ApplicationController
         @user = User.find(params[:user])
         @party = Party.find(params[:party])
 
+        #if we are removing the current user form the party they set as their current party
+        if(@user.party_at_index(@user.current_party_index).id ==  @party.id)
+            @user.current_party_index = [0, @user.current_party_index - 1].max
+        end
+
         @user.parties.delete(@party)
 
         redirect_to action: 'edit', id: @user.id

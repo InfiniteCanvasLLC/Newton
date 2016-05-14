@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   def party_at_index(party_index)
     if party_index >= parties.count
-      return parties[0];
+      return nil;
     else
       return parties[party_index];
     end

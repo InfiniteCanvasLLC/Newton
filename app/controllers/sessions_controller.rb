@@ -13,15 +13,6 @@ class SessionsController < ApplicationController
             user.current_party_index = 0
         end
 
-        #the user is under no party (create a default one)
-        if user.parties.count == 0
-           default_party = Party.new
-           default_party.name = user.name + "'s Party"
-           default_party.owner_user_id = user.id
-           default_party.save
-           user.parties << default_party
-        end
-
         session[:user_id] = user.id
         session[:fb_info] = auth.info
 
