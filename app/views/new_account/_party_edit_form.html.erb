@@ -1,0 +1,49 @@
+<div id="party_edit_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title">Party</h3>
+      </div>
+      
+      <%= form_tag({action: "edit_party", method: "post"}, {role: "form", id: "party_form"}) do %>
+        <div class="modal-body">
+          
+          <div class="form-group">
+            <%= label_tag(:name, "Change your party's name") %>
+            <br />
+            <%= text_field_tag(:name, nil, :class => 'form-control') %>
+          </div> 
+          
+          <div class="form-group">
+            <%= label_tag(:description, "Change what is your party all about") %>
+            <br />
+            <%= text_area_tag(:description, nil, :class => 'form-control', :rows => 5) %>
+          </div>
+
+          <%= hidden_field_tag(:party_id) %>
+        </div>
+      
+        <div class="modal-footer bg-dark">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= submit_tag("Apply", class: 'btn btn-success') %>
+        </div>
+      <% end %>
+      
+      <script>
+        $("#party_edit_modal").on("show.bs.modal",
+          function ()
+          {
+            $("#name").val('');
+          });
+          
+        $("#party_form").submit(
+          function (event)
+          {
+            $("#party_edit_modal").modal('hide');
+          });
+      </script>
+    </div>
+  </div>
+</div>

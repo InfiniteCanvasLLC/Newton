@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   resources :users
 
   post 'users/leave_group'
+  post 'new_account/switch_party'
+  post 'new_account/create_party'
+  post 'new_account/edit_party'
+  post 'new_account/leave_party'
+  post 'new_account/join_party'
   post 'parties/unregister_event'
 
   get 'sessions/new'

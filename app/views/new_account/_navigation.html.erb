@@ -35,7 +35,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 
                      <li class="divider"></li>
                      <li>
-                         <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                         <a href="<%= signout_path %>"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                      </li>
                  </ul>
              </li>
@@ -47,14 +47,14 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 		        <li class="<%= @current_nav_selection=='nav_home' ? 'selected' : ' ' %>">
 	                <a href="<%= home_path %>"><i class="fa fa-fw fa-home"></i> Home</a>
 	            </li>
+				<li class="<%= @current_nav_selection=='nav_party' ? 'selected' : ' ' %>">
+	                <a href="<%= party_user_page_path %>"><i class="fa fa-fw fa-group"></i> Party</a>
+	            </li>
 	            <li class="<%= @current_nav_selection=='nav_calendar' ? 'selected' : ' ' %>">
 	                <a href="<%= calendar_path %>"><i class="fa fa-fw fa-calendar"></i> Music Calendar</a>
 	            </li>
 	            <li class="<%= @current_nav_selection=='nav_stats' ? 'selected' : ' ' %>">
 	                <a href="<%= stats_path %>"><i class="fa fa-fw fa-bar-chart-o"></i> Stats</a>
-	            </li>
-	            <li class="<%= @current_nav_selection=='nav_party' ? 'selected' : ' ' %>">
-	                <a href="<%= party_user_page_path %>"><i class="fa fa-fw fa-group"></i> Party</a>
 	            </li>
 	            <li class="<%= @current_nav_selection=='nav_feedback' ? 'selected' : ' ' %>">
 	                <a href="<%= feedback_path %>"><i class="fa fa-fw fa-desktop"></i> Tell us what you think</a>
