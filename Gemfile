@@ -28,7 +28,9 @@ gem 'omniauth-facebook'
 gem 'font-awesome-rails'
 
 gem 'frontend-generators'
-gem 'spotify', '~> 12.6'
+#gem 'spotify', '~> 12.6'
+gem 'omniauth-spotify'
+#gem 'rspotify'  #uncomment for better spotify features maybe?
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

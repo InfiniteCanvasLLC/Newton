@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
 
     def new
-        redirect_to '/auth/facebook'
+        session.clear
+        #redirect_to '/auth/facebook'
+        redirect_to '/auth/spotify'
     end
 
     def create
