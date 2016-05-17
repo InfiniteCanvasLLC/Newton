@@ -24,7 +24,10 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
          <!-- Top Menu Items -->
          <ul class="nav navbar-right top-nav">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i> <%= (session[:fb_info])["name"] %> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				    <img class="img-circle" src="<%= (session[:fb_info])["image"] %>">
+					<i class="fa "></i> <%= (session[:fb_info])["name"] %> <b class="caret"></b>
+				 </a>
                  <ul class="dropdown-menu">
                      <li>
                          <a href="<%= profile_path %>"><i class="fa fa-fw fa-user"></i> Profile</a>
