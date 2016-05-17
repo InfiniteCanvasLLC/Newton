@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :link_tos
   resources :events
   resources :parties
   resources :user_actions
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
   get 'Profile'  => 'new_account#profile',    :as => :profile
   get 'Settings' => 'new_account#settings',   :as => :settings
 
+  get '/action/handle_link_to' => 'new_account#handle_link_to', :as => :handle_link_to
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/signin' => 'sessions#new', :as => :signin

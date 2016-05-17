@@ -22,7 +22,6 @@
 		
 			<div class="row" style="margin-top: 100px;">
 				<% @questions.each_with_index do |cur_question, i| %>
-				
 				<div class="col-lg-3 col-md-6" id= <%= "question_" + cur_question.action_id.to_s %> >
 	                <div class="panel panel-primary">
 	                    <div class="panel-heading">
@@ -87,9 +86,39 @@
 	                    </a>
 	                </div>
 	            </div>
-				
 				<% end %>
-				
+
+
+				<% @link_tos.each_with_index do |cur_link_to, i| %>
+				<div class="col-lg-3 col-md-6">
+					<div class="panel <%= cur_link_to.link_to.panel_style %>">
+	                    <div class="panel-heading">
+	                        <div class="row">
+	                            <div class="col-xs-3">
+	                                <i class="fa <%= cur_link_to.link_to.icon_style %> fa-5x"></i>
+	                            </div>
+	                            <div class="col-xs-9 text-right">
+	                                <div><%= cur_link_to.link_to.title %></div>
+	                            </div>
+	                        </div>
+	                    </div>
+
+						<div class="panel-body">
+							<div><%= cur_link_to.link_to.description %></div>
+						</div>
+
+						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id), :target => "_blank", :id => "link_to_button" do %>
+							<div class="panel-footer">
+	                            <span class="pull-left"><%= cur_link_to.link_to.link_text %></span>
+	                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+	                            <div class="clearfix"></div>
+	                        </div>
+						<% end %>
+
+					</div>
+				</div>
+				<% end %>
+
 			</div>
 		
 		</div>

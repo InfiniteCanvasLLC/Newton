@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Link Tos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Url</th>
+      <th>Link text</th>
+      <th>Icon style</th>
+      <th>Panel style</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @link_tos.each do |link_to| %>
+      <tr>
+        <td><%= link_to.title %></td>
+        <td><%= link_to.description %></td>
+        <td><%= link_to.url %></td>
+        <td><%= link_to.link_text %></td>
+        <td><%= link_to.icon_style %></td>
+        <td><%= link_to.panel_style %></td>
+        <td><%= link_to 'Show', link_to %></td>
+        <td><%= link_to 'Edit', edit_link_to_path(link_to) %></td>
+        <td><%= link_to 'Destroy', link_to, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Link to', new_link_to_path %>
