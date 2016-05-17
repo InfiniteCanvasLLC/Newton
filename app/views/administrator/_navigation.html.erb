@@ -1,0 +1,89 @@
+<!--
+This is designed such that calendar.html, home.html etc... do not have to copy paste this code.
+This code contains the rendering code for the navigation bar as well as the top menu and its items.
+For more on partials:
+http://api.rubyonrails.org/classes/ActionView/PartialRenderer.html
+http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
+-->
+
+<div id="wrapper">
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+	        <a class="navbar-brand" href="#">Newton Administrator</a>
+        </div>
+         
+	    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+	    <div class="collapse navbar-collapse navbar-ex1-collapse">
+	        <ul class="nav navbar-nav side-nav">
+                <!-- Questions Menu -->
+                <li class="<%= @current_nav_selection=='nav_home' ? 'selected' : ' ' %>">
+                    <a data-toggle="collapse" href="#collapse1">
+                        <span data-toggle="tooltip" title="Questions that be assigned to users (via actions)">
+                            <i class="fa fa-fw fa-question"></i> Questions <i class="fa fa-fw pull-right fa-angle-down"></i>
+                        </span>
+                    </a>
+                </li>
+                <ul id="collapse1" class="panel-collapse collapse" style="list-style-type:none">
+                    <li><a href="<%= new_question_path %>" data-toggle="tooltip" title="Create a new question">New Question</a></li>
+                    <li><a href="<%= questions_path %>" data-toggle="tooltip" title="View all questions">All Questions</a></li>
+                </ul>
+                <!-- User Actions Menu -->
+                <li class="<%= @current_nav_selection=='nav_home' ? 'selected' : ' ' %>">
+                    <a data-toggle="collapse" href="#collapse2">
+                        <span data-toggle="tooltip" title="Actions that are assigned to a user">
+                            <i class="fa fa-fw fa-bell"></i> User Actions <i class="fa fa-fw pull-right fa-angle-down"></i>
+                        </span>
+                    </a>
+                </li>
+                <ul id="collapse2" class="panel-collapse collapse" style="list-style-type:none">
+                    <li><a href="<%= new_user_action_path %>" data-toggle="tooltip" title="Create a new user action">New User Action</a></li>
+                    <li><a href="<%= user_actions_path %>" data-toggle="tooltip" title="View all user actions">All User Actions</a></li>
+                </ul>
+                <!-- Parties Menu -->
+                <li class="<%= @current_nav_selection=='nav_home' ? 'selected' : ' ' %>">
+                    <a data-toggle="collapse" href="#collapse3">
+                        <span data-toggle="tooltip" title="Parties contain a group of user. These links only allow you to create the parties themselves. You cannot add or remove users from a party using these links.">
+                            <i class="fa fa-fw fa-group"></i> Parties <i class="fa fa-fw pull-right fa-angle-down"></i>
+                        </span>
+                    </a>
+                </li>
+                <ul id="collapse3" class="panel-collapse collapse" style="list-style-type:none">
+                    <li><a href="<%= new_party_path %>" data-toggle="tooltip" title="Create a new party">New Party</a></li>
+                    <li><a href="<%= parties_path %>" data-toggle="tooltip" title="View all parties">All Parties</a></li>
+                </ul>
+                <!-- Users Menu -->
+                <li class="<%= @current_nav_selection=='nav_home' ? 'selected' : ' ' %>">
+                    <a data-toggle="collapse" href="#collapse4">
+                        <span data-toggle="tooltip" title="A user record exists for each unique user. You can update party membership by editing a user record.">
+                            <i class="fa fa-fw fa-user"></i> Users <i class="fa fa-fw pull-right fa-angle-down"></i>
+                        </span>
+                    </a>
+                </li>
+                <ul id="collapse4" class="panel-collapse collapse" style="list-style-type:none">
+                    <li><a href="<%= users_path %>" data-toggle="tooltip" title="View all users">All Users</a></li>
+                </ul>
+	        </ul>
+	    </div>
+    </nav>
+    
+    <!-- This will be replaced by some code as the template gets instantiated -->
+    <%= yield %>
+</div>
+
+<script>
+    $(function(){
+        $(".side-nav .collapse").on("hide.bs.collapse", function() {                   
+            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");
+        });
+        $('.side-nav .collapse').on("show.bs.collapse", function() {                        
+            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");        
+        });
+    })    
+</script>
