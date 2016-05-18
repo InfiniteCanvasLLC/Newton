@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 
-  layout "creative"
+  layout "administrator"
 
   before_action :set_question, only: [:show, :edit, :update, :destroy]
 

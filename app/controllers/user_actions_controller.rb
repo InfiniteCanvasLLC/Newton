@@ -1,7 +1,7 @@
 
 class UserActionsController < ApplicationController
 
-  layout "creative"
+  layout "administrator"
 
   before_action :set_user_action, only: [:show, :edit, :update, :destroy]
 

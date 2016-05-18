@@ -1,8 +1,12 @@
-/*!
- * Start Bootstrap - Creative Bootstrap Theme (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap
+//= require creative/cbpAnimatedHeader
+//= require creative/classie
+//= require creative/jquery.easing.min
+//= require creative/jquery.fittext
+//= require creative/wow.min
+//= require_self
 
 $(document).ready(function(){
 
@@ -23,11 +27,6 @@ $(document).ready(function(){
           target: '.navbar-fixed-top',
           offset: 51
       })
-
-      // Closes the Responsive Menu on Menu Item Click
-      $('.navbar-collapse ul li a').click(function() {
-          $('.navbar-toggle:visible').click();
-      });
 
       // Fit Text Plugin for Main Header
       $("h1").fitText(
@@ -50,4 +49,3 @@ $(document).ready(function(){
   })(jQuery); // End of use strict
 
 })
-
