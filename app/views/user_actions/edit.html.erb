@@ -1,10 +1,6 @@
-<%= render :layout => 'administrator/navigation' do %>
+<h1>Editing User Action</h1>
 
-    <h1>Editing User Action</h1>
+<%= render 'form' %>
 
-    <%= render 'form' %>
-
-    <%= link_to 'Show', @user_action %> |
-    <%= link_to 'Back', user_actions_path %>
-
-<% end %>
+<%= link_to 'Show', @user_action %> |
+<%= link_to 'Back', user_actions_path %>

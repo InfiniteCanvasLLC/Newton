@@ -1,70 +1,66 @@
-<%= render :layout => 'administrator/navigation' do %>
+<div class="container">
 
-  <div class="container">
+  <div class="row">
 
-    <div class="row">
+    <div class="col-md-12">
 
-      <div class="col-md-12">
+      <h2>Member of Parties</h2>
 
-        <h2>Member of Parties</h2>
+      <table class="table member_parties_table">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
 
-        <table class="table member_parties_table">
-          <thead>
+        <tbody>
+          <% @user_parties.each do |party| %>
             <tr>
-              <th>Name</th>
+              <td><%= party.name %></td>
+              <td><%= link_to 'Leave this group', {:user => @user.id, :party => party.id, :action => 'leave_group'}, method: :post %></td>
+              </td>
             </tr>
-          </thead>
+          <% end %>
+        </tbody>
+      </table>
 
-          <tbody>
-            <% @user_parties.each do |party| %>
-              <tr>
-                <td><%= party.name %></td>
-                <td><%= link_to 'Leave this group', {:user => @user.id, :party => party.id, :action => 'leave_group'}, method: :post %></td>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-
-      </div>
-
-    </div>
-
-    <div class="row">
-
-      <div class="col-md-6">
-        <h2>Join a Party</h2>
-
-        <%= form_for(@user) do |f| %>
-          <%= f.label :party_id, "Enter a new party to join" %><br>
-          <%= f.text_field :party_id, class: 'party_field' %><br>
-          <%= f.submit %>
-
-        <% end %>
-      </div>
-
-      <div class="col-md-6">
-        <table class="table parties_table" style="display: none">
-          <thead>
-            <tr>
-              <th>Name</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @all_parties.each do |party| %>
-              <tr class="clickable-row" data-party-id="<%= party.id %>">
-                <td><%= party.name %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
     </div>
 
   </div>
 
-<% end %>
+  <div class="row">
+
+    <div class="col-md-6">
+      <h2>Join a Party</h2>
+
+      <%= form_for(@user) do |f| %>
+        <%= f.label :party_id, "Enter a new party to join" %><br>
+        <%= f.text_field :party_id, class: 'party_field' %><br>
+        <%= f.submit %>
+
+      <% end %>
+    </div>
+
+    <div class="col-md-6">
+      <table class="table parties_table" style="display: none">
+        <thead>
+          <tr>
+            <th>Name</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @all_parties.each do |party| %>
+            <tr class="clickable-row" data-party-id="<%= party.id %>">
+              <td><%= party.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
 
 <script>
 $(document).ready(function() {

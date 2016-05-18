@@ -1,37 +1,34 @@
-<%= render :layout => 'administrator/navigation' do %>
+<p id="notice"><%= notice %></p>
 
-  <p id="notice"><%= notice %></p>
+<h1>Listing User Actions</h1>
 
-  <h1>Listing User Actions</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>User ID</th>
+      <th>User</th>
+      <th>Action type</th>
+      <th>Action</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-  <table class="table">
-    <thead>
+  <tbody>
+    <% @user_actions.each do |user_action| %>
       <tr>
-        <th>User ID</th>
-        <th>User</th>
-        <th>Action type</th>
-        <th>Action</th>
-        <th colspan="3"></th>
+        <td><%= user_action.user.id %></td>
+        <td><%= user_action.user.name %></td>
+        <td><%= user_action.action_type %></td>
+        <td><%= user_action.action_id %></td>
+        <td><%= link_to 'Show', user_action %></td>
+        <td><%= link_to 'Edit', edit_user_action_path(user_action) %></td>
+        <td><%= link_to 'Destroy', user_action, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    </thead>
+    <% end %>
+  </tbody>
+</table>
 
-    <tbody>
-      <% @user_actions.each do |user_action| %>
-        <tr>
-          <td><%= user_action.user.id %></td>
-          <td><%= user_action.user.name %></td>
-          <td><%= user_action.action_type %></td>
-          <td><%= user_action.action_id %></td>
-          <td><%= link_to 'Show', user_action %></td>
-          <td><%= link_to 'Edit', edit_user_action_path(user_action) %></td>
-          <td><%= link_to 'Destroy', user_action, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+<br>
 
-  <br>
-
-  <%= link_to 'New User action', new_user_action_path %>
-
-<% end %>
+<%= link_to 'New User action', new_user_action_path %> |
+<%= link_to 'Back', administrator_path %>

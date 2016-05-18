@@ -1,38 +1,34 @@
-<%= render :layout => 'administrator/navigation' do %>
+<p id="notice"><%= notice %></p>
 
-  <p id="notice"><%= notice %></p>
+<p>
+  <strong>Text:</strong>
+  <%= @question.text %>
+</p>
 
-  <p>
-    <strong>Text:</strong>
-    <%= @question.text %>
-  </p>
+<p>
+  <strong>Question type:</strong>
+  <%= @question.question_type %>
+</p>
 
-  <p>
-    <strong>Question type:</strong>
-    <%= @question.question_type %>
-  </p>
+<p>
+  <strong>Metadata one:</strong>
+  <%= @question.metadata_one %>
+</p>
 
-  <p>
-    <strong>Metadata one:</strong>
-    <%= @question.metadata_one %>
-  </p>
+<p>
+  <strong>Metadata two:</strong>
+  <%= @question.metadata_two %>
+</p>
 
-  <p>
-    <strong>Metadata two:</strong>
-    <%= @question.metadata_two %>
-  </p>
+<p>
+  <strong>Metadata three:</strong>
+  <%= @question.metadata_three %>
+</p>
 
-  <p>
-    <strong>Metadata three:</strong>
-    <%= @question.metadata_three %>
-  </p>
+<p>
+  <strong>Metadata four:</strong>
+  <%= @question.metadata_four %>
+</p>
 
-  <p>
-    <strong>Metadata four:</strong>
-    <%= @question.metadata_four %>
-  </p>
-
-  <%= link_to 'Edit', edit_question_path(@question) %> |
-  <%= link_to 'Back', questions_path %>
-
-<% end %>
+<%= link_to 'Edit', edit_question_path(@question) %> |
+<%= link_to 'Back', questions_path %>

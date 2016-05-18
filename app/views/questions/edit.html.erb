@@ -1,10 +1,6 @@
-<%= render :layout => 'administrator/navigation' do %>
+<h1>Editing Question</h1>
 
-    <h1>Editing Question</h1>
+<%= render 'form' %>
 
-    <%= render 'form' %>
-
-    <%= link_to 'Show', @question %> |
-    <%= link_to 'Back', questions_path %>
-
-<% end %>
+<%= link_to 'Show', @question %> |
+<%= link_to 'Back', questions_path %>

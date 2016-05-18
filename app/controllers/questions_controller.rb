@@ -7,27 +7,21 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @current_nav_selection = "nav_questions"
-    
     @questions = Question.all
   end
 
   # GET /questions/1
   # GET /questions/1.json
   def show
-    @current_nav_selection = "nav_questions"
   end
 
   # GET /questions/new
   def new
-    @current_nav_selection = "nav_questions"
-    
     @question = Question.new
   end
 
   # GET /questions/1/edit
   def edit
-    @current_nav_selection = "nav_questions"
   end
 
   # POST /questions
