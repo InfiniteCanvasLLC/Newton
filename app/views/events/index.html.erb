@@ -1,34 +1,37 @@
-<p id="notice"><%= notice %></p>
+<%= render :layout => 'administrator/navigation' do %>
 
-<h1>Listing Events</h1>
+  <p id="notice"><%= notice %></p>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Description</th>
-      <th>Event type</th>
-      <th>Start</th>
-      <th>Metadata</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <h1>Listing Events</h1>
 
-  <tbody>
-    <% @events.each do |event| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= event.description %></td>
-        <td><%= event.event_type %></td>
-        <td><%= event.start %></td>
-        <td><%= event.metadata %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Description</th>
+        <th>Event type</th>
+        <th>Start</th>
+        <th>Metadata</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td><%= event.description %></td>
+          <td><%= event.event_type %></td>
+          <td><%= event.start %></td>
+          <td><%= event.metadata %></td>
+          <td><%= link_to 'Show', event %></td>
+          <td><%= link_to 'Edit', edit_event_path(event) %></td>
+          <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Event', new_event_path %> |
-<%= link_to 'Back', administrator_path %>
+  <br>
+
+  <%= link_to 'New Event', new_event_path %>
+
+<% end %>

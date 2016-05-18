@@ -6,25 +6,32 @@ class PartiesController < ApplicationController
   # GET /parties
   # GET /parties.json
   def index
+    @current_nav_selection = "nav_parties"
+    
     @parties = Party.all
   end
 
   # GET /parties/1
   # GET /parties/1.json
   def show
+    @current_nav_selection = "nav_parties"
   end
 
   # GET /parties/new
   def new
+    @current_nav_selection = "nav_parties"
+    
     @party = Party.new
   end
 
   # GET /parties/1/edit
   def edit
-     @all_events = Event.all
-     #@party_events = @party.events.to_a #Event.all.to_a
-     #party = Party.find(params[:id])
-     #@party.events << Event.find(1)
+    @current_nav_selection = "nav_parties"
+    
+    @all_events = Event.all
+    #@party_events = @party.events.to_a #Event.all.to_a
+    #party = Party.find(params[:id])
+    #@party.events << Event.find(1)
   end
 
   def unregister_event
