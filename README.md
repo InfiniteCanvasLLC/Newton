@@ -35,6 +35,10 @@ If you want to deploy to Heroku, that is certainly fine.  Please ask Rishi to ad
 
 See the [Questions](docs/Questions.md) article
 
+### Link Tos
+
+See the [LinkTos](docs/LinkTos.md) article
+
 ### Actions
 
 See the [Actions](docs/Actions.md) article
