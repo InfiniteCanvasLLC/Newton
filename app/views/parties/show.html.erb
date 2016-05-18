@@ -1,15 +1,11 @@
-<%= render :layout => 'administrator/navigation' do %>
+<p id="notice"><%= notice %></p>
 
-  <p id="notice"><%= notice %></p>
+<p>
+  <strong>Name:</strong>
+  <%= @party.name %><br>
+  <strong>Number of events:</strong>
+  <%= @party.events.count %>
+</p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= @party.name %><br>
-    <strong>Number of events:</strong>
-    <%= @party.events.count %>
-  </p>
-
-  <%= link_to 'Edit', edit_party_path(@party) %> |
-  <%= link_to 'Back', parties_path %>
-
-<% end %>
+<%= link_to 'Edit', edit_party_path(@party) %> |
+<%= link_to 'Back', parties_path %>

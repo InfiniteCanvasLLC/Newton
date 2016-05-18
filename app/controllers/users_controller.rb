@@ -2,14 +2,10 @@ class UsersController < ApplicationController
     layout "creative"
     
     def index
-        @current_nav_selection = "nav_users"
-    
         @users = User.all
     end
 
     def edit
-        @current_nav_selection = "nav_users"
-        
         @user = User.find(params[:id])
         @all_parties = Party.all
         @user_parties = @user.parties;
