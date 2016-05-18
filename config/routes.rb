@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/signin' => 'sessions#new', :as => :signin
 
+  get 'user_feedbacks' => 'user_feedbacks#index',   :as => :user_feedbacks
+  
   get 'creatives/index'
 
   get 'administrator' => 'administrator#index'

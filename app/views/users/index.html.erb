@@ -1,22 +1,24 @@
-<h1>Listing Users</h1>
+<%= render :layout => 'administrator/navigation' do %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>E-mail</th>
-    </tr>
-  </thead>
+  <h1>Listing Users</h1>
 
-  <tbody>
-    <% @users.each do |user| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <th>Name</th>
+        <th>E-mail</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<%= link_to 'Back', administrator_path %>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+<% end %>
