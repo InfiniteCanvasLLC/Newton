@@ -9,7 +9,6 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 
 <div id="wrapper">
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-		
 		<!-- Brand and toggle get grouped for better mobile display -->
 	    <div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -45,8 +44,9 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
          </ul>
 	
 	    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+		<!-- Use this for debugging it will show you the outline of an element : style="border: 1px solid red" -->
 	    <div class="collapse navbar-collapse navbar-ex1-collapse">
-	        <ul class="nav navbar-nav side-nav">
+	        <ul class="nav navbar-nav side-nav" style="top: 81px"> <!-- We need to find a better way than 81px (height of the header)-->
 		        <li class="<%= @current_nav_selection=='nav_home' ? 'selected' : ' ' %>">
 	                <a href="<%= home_path %>"><i class="fa fa-fw fa-home"></i> Home</a>
 	            </li>
@@ -67,7 +67,10 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 	    <!-- /.navbar-collapse -->
 	</nav>
 
+	<!-- "top: 100px; border: 1px solid red" -->
+	<div id="page-wrapper"
     <!-- This will be replaced by some code as the template gets instantiated -->
-    <%= yield %>
-    
+	<%= yield %>
+	</div>
+
 </div>
