@@ -81,6 +81,12 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                     <li><a href="<%= new_event_path %>" data-toggle="tooltip" title="Create a new event">New Event</a></li>
                     <li><a href="<%= events_path %>" data-toggle="tooltip" title="View all eventss">All Events</a></li>
                 </ul>
+                <!-- User Feedback Menu -->
+                <li class="<%= @current_nav_selection=='nav_user_feedbacks' ? 'selected' : ' ' %>">
+                    <a href="<%= user_feedbacks_path %>" data-toggle="tooltip" title="View all submitted user feedback">
+                        <i class="fa fa-fw fa-comments"></i> User Feedback
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
