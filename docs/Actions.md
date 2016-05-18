@@ -12,7 +12,7 @@ Data is contained in the ```UserActions``` table
 |-------------|-------------|
 | id      | Unique identifier of the action
 | user_id | User that this action is for |
-| action_type | The type of action.  Currently supported values are:<ul><li>0 - Question</ul> |
+| action_type | The type of action.  Currently supported values are:<ul><li>0 - Question</ul> <ul><li>1 - Link Tos</ul> |
 | action_id | Specific to the type of action.  For questions, this is the ID of the question in the database |
 
 The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLS
