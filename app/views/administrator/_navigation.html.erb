@@ -87,6 +87,12 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                         <i class="fa fa-fw fa-comments"></i> User Feedback
                     </a>
                 </li>
+                <!-- Linktos Menu -->
+                <li class="<%= @current_nav_selection=='nav_linktos' ? 'selected' : ' ' %>">
+                    <a href="<%= link_tos_path %>" data-toggle="tooltip" title="View all linktos">
+                        <i class="fa fa-fw fa-quote-right"></i> Link tos
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

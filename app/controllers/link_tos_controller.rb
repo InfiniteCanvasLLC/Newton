@@ -1,25 +1,29 @@
 class LinkTosController < ApplicationController
   before_action :set_link_to, only: [:show, :edit, :update, :destroy]
-  layout "creative"
+  layout "administrator"
   
   # GET /link_tos
   # GET /link_tos.json
   def index
+    @current_nav_selection = "nav_linktos"
     @link_tos = LinkTo.all
   end
 
   # GET /link_tos/1
   # GET /link_tos/1.json
   def show
+    @current_nav_selection = "nav_linktos"
   end
 
   # GET /link_tos/new
   def new
+    @current_nav_selection = "nav_linktos"
     @link_to = LinkTo.new
   end
 
   # GET /link_tos/1/edit
   def edit
+    @current_nav_selection = "nav_linktos"
   end
 
   # POST /link_tos
