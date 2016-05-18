@@ -5,21 +5,27 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
+    @current_nav_selection = "nav_events"
+    
     @events = Event.all
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
+    @current_nav_selection = "nav_events"
   end
 
   # GET /events/new
   def new
+    @current_nav_selection = "nav_events"
+    
     @event = Event.new
   end
 
   # GET /events/1/edit
   def edit
+    @current_nav_selection = "nav_events"
   end
 
   # POST /events

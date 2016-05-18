@@ -1,24 +1,28 @@
-<p id="notice"><%= notice %></p>
+<%= render :layout => 'administrator/navigation' do %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Event type:</strong>
-  <%= @event.event_type %>
-</p>
+  <p>
+    <strong>Description:</strong>
+    <%= @event.description %>
+  </p>
 
-<p>
-  <strong>Start:</strong>
-  <%= @event.start %>
-</p>
+  <p>
+    <strong>Event type:</strong>
+    <%= @event.event_type %>
+  </p>
 
-<p>
-  <strong>Metadata:</strong>
-  <%= @event.metadata %>
-</p>
+  <p>
+    <strong>Start:</strong>
+    <%= @event.start %>
+  </p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+  <p>
+    <strong>Metadata:</strong>
+    <%= @event.metadata %>
+  </p>
+
+  <%= link_to 'Edit', edit_event_path(@event) %> |
+  <%= link_to 'Back', events_path %>
+
+<% end %>
