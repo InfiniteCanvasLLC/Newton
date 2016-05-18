@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  layout "creative"
+  layout "administrator"
   
   # GET /events
   # GET /events.json
