@@ -1,5 +1,9 @@
-<h1>New Party</h1>
+<%= render :layout => 'administrator/navigation' do %>
 
-<%= render 'form' %>
+    <h1>New Party</h1>
 
-<%= link_to 'Back', parties_path %>
+    <%= render 'form' %>
+
+    <%= link_to 'Back', parties_path %>
+
+<% end %>

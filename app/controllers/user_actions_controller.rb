@@ -8,16 +8,21 @@ class UserActionsController < ApplicationController
   # GET /user_actions
   # GET /user_actions.json
   def index
+    @current_nav_selection = "nav_user_actions"
+    
     @user_actions = UserAction.all
   end
 
   # GET /user_actions/1
   # GET /user_actions/1.json
   def show
+    @current_nav_selection = "nav_user_actions"
   end
 
   # GET /user_actions/new
   def new
+    @current_nav_selection = "nav_user_actions"
+    
     @user_action = UserAction.new
 
     @users = User.all.to_a
@@ -26,6 +31,8 @@ class UserActionsController < ApplicationController
 
   # GET /user_actions/1/edit
   def edit
+    @current_nav_selection = "nav_user_actions"
+    
     @users = User.all.to_a
     @questions = Question.all.to_a
   end
