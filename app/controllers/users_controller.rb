@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    layout "creative"
+    layout "administrator"
     
     def index
         @current_nav_selection = "nav_users"

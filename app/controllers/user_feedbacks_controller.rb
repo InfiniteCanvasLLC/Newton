@@ -1,6 +1,6 @@
 class UserFeedbacksController < ApplicationController
 
-    layout "creative"
+    layout "administrator"
   
     # GET /user_feedbacks
     # GET /user_feedbacks.json

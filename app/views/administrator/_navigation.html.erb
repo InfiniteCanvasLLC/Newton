@@ -26,7 +26,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 <li class="<%= @current_nav_selection=='nav_users' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseUsers">
                         <span data-toggle="tooltip" title="A user record exists for each unique user. You can update party membership by editing a user record.">
-                            <i class="fa fa-fw fa-user"></i> Users <i class="fa fa-fw pull-right fa-angle-down"></i>
+                            <i class="fa fa-fw fa-user"></i> Users <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_users' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
                         </span>
                     </a>
                 </li>
@@ -37,7 +37,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 <li class="<%= @current_nav_selection=='nav_parties' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseParties">
                         <span data-toggle="tooltip" title="Parties contain a group of user. These links only allow you to create the parties themselves. You cannot add or remove users from a party using these links.">
-                            <i class="fa fa-fw fa-group"></i> Parties <i class="fa fa-fw pull-right fa-angle-down"></i>
+                            <i class="fa fa-fw fa-group"></i> Parties <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_parties' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
                         </span>
                     </a>
                 </li>
@@ -49,7 +49,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 <li class="<%= @current_nav_selection=='nav_user_actions' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseUserActions">
                         <span data-toggle="tooltip" title="Actions that are assigned to a user">
-                            <i class="fa fa-fw fa-bell"></i> User Actions <i class="fa fa-fw pull-right fa-angle-down"></i>
+                            <i class="fa fa-fw fa-bell"></i> User Actions <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_user_actions' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
                         </span>
                     </a>
                 </li>
@@ -61,7 +61,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 <li class="<%= @current_nav_selection=='nav_questions' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseQuestions">
                         <span data-toggle="tooltip" title="Questions that be assigned to users (via actions)">
-                            <i class="fa fa-fw fa-question"></i> Questions <i class="fa fa-fw pull-right fa-angle-down"></i>
+                            <i class="fa fa-fw fa-question"></i> Questions <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_questions' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
                         </span>
                     </a>
                 </li>
@@ -73,7 +73,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 <li class="<%= @current_nav_selection=='nav_events' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseEvents">
                         <span data-toggle="tooltip" title="">
-                            <i class="fa fa-fw fa-calendar"></i> Events <i class="fa fa-fw pull-right fa-angle-down"></i>
+                            <i class="fa fa-fw fa-calendar"></i> Events <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_events' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
                         </span>
                     </a>
                 </li>
@@ -98,10 +98,10 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 <script>
     $(function(){
         $(".side-nav .collapse").on("hide.bs.collapse", function() {                   
-            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");
+            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");
         });
         $('.side-nav .collapse').on("show.bs.collapse", function() {                        
-            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");        
+            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");        
         });
     })    
 </script>

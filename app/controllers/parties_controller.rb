@@ -1,5 +1,5 @@
 class PartiesController < ApplicationController
-  layout "creative"
+  layout "administrator"
   
   before_action :set_party, only: [:show, :edit, :update, :destroy]
 
