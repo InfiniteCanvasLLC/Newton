@@ -27,6 +27,7 @@ class UserActionsController < ApplicationController
 
     @users = User.all.to_a
     @questions = Question.all.to_a
+    @link_tos  = LinkTo.all.to_a
   end
 
   # GET /user_actions/1/edit
@@ -35,6 +36,7 @@ class UserActionsController < ApplicationController
     
     @users = User.all.to_a
     @questions = Question.all.to_a
+    @link_tos  = LinkTo.all.to_a
   end
 
   # POST /user_actions

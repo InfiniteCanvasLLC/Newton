@@ -19,7 +19,7 @@
       </div>
       <div class="field">
         <%= f.label :action_type %><br>
-        <%= f.select :action_type, [ ['Question', '0'] ] %>
+        <%= f.select :action_type, [ ['Question', '0'], ['LinkTo', '1'] ] %>
       </div>
       <div class="field">
         <%= f.label :action_id %><br>
@@ -79,6 +79,33 @@
 
       </table>
 
+      <table class="table linkto_table" style="display: none" >
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Banner</th>
+            <th>Desc</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @link_tos.each do |cur_link| %>
+          <tr class="clickable-row">
+            <td class="linkto_id">
+              <%= cur_link.id %>
+            </td>
+            <td>
+              <%= cur_link.title %>
+            </td>
+            <td>
+              <%= cur_link.description %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+
     </div>
   </div>
 <% end %>
@@ -120,10 +147,28 @@ $(document).ready(function() {
     }
   });
 
+   $('.linkto_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $(".action_field").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var linkto_id = $(this).find(".linkto_id").first().html().trim();
+
+      $(".action_field").val(linkto_id);
+    }
+  });
+
 
   $(".user_field").focus(function () {
     $(".user_table").css('display', 'table');
     $(".questions_table").css('display', 'none');
+    $(".linkto_table").css('display', 'none');
   });
 
   $(".action_type").focus(function () {
@@ -133,6 +178,7 @@ $(document).ready(function() {
   $(".action_field").focus(function () {
     $(".user_table").css('display', 'none');
     $(".questions_table").css('display', 'table');
+    $(".linkto_table").css('display', 'table');
   });
 
 });

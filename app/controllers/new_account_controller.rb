@@ -4,6 +4,11 @@ class QuestionAnswerPair
     attr_accessor :action_id
 end
 
+class LinkToActionPair
+    attr_accessor :link_to
+    attr_accessor :action_id
+end
+
 class NewAccountController < ApplicationController   
 
     def initialize
@@ -20,6 +25,7 @@ class NewAccountController < ApplicationController
         actions_array = actions.to_a
 
         @questions = Array.new
+        @link_tos  = Array.new
         @current_nav_selection = "nav_home"
 
         #if current user id invalid (party deleted for instance)
@@ -28,7 +34,7 @@ class NewAccountController < ApplicationController
 
         actions_array.each do |cur_action|
 
-            if (cur_action.action_type == 0)
+            if (cur_action.action_type == 0) #0 = Question
                 qaPair = QuestionAnswerPair.new
 
                 qaPair.question = Question.find(cur_action.action_id)
@@ -36,6 +42,11 @@ class NewAccountController < ApplicationController
                 qaPair.action_id = cur_action.id
 
                 @questions << qaPair
+            elsif (cur_action.action_type == 1) #1 = Link To
+                laPair = LinkToActionPair.new
+                laPair.link_to = LinkTo.find(cur_action.action_id)
+                laPair.action_id = cur_action.id
+                @link_tos << laPair
             end
         end
     end
@@ -55,6 +66,12 @@ class NewAccountController < ApplicationController
         action.destroy
 
         render nothing: true
+    end
+
+    def handle_link_to
+        action = UserAction.find(params[:action_id] )
+        #action.destroy
+        redirect_to params[:url]
     end
 
     def switch_party
@@ -139,6 +156,11 @@ class NewAccountController < ApplicationController
 
     #this function returns the user's current party
     def get_user_current_party(user)
+        #if this is the first time the user logs in (current_party_index nil)
+        if user.current_party_index.nil?
+            user.current_party_index = 0
+        end
+
         # if the @user.current_party_index is invalid in any way, this will returns user.pary[0]
         if user.current_party_index >= user.parties.count
             user.current_party_index = 0

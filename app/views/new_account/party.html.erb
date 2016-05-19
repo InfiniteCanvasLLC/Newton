@@ -1,7 +1,7 @@
 <%= render :layout => 'navigation' do %>
 <!-- Party page specific code -->
 <div class="row"><br>
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         <!-- The current party -->
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -16,7 +16,7 @@
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <p class="list-group-item">
                             <i class="fa fa-female fa-fw"></i> <%= @user.name %><!-- Male/Female is not available for the moment -->
-                            <span class="pull-right text-muted small"><em>Last seen 4 minutes ago</em><!-- Optional information regarding the user -->
+                            <span class="pull-right label label-success"><em>Active</em><!-- Optional information regarding the user -->
                             </span>
                         </p>
                     <% end %>
