@@ -1,3 +1,8 @@
+class QuestionAnswerPair
+    attr_accessor :question
+    attr_accessor :answer
+end
+
 class UsersController < ApplicationController
     layout "administrator"
     
@@ -13,6 +18,36 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         @all_parties = Party.all
         @user_parties = @user.parties;
+    end
+
+    def show
+        @current_nav_selection = "nav_users"
+        
+        user_id = params[:id]
+        @user = User.find(params[:id])
+        
+        @questions = Array.new
+        
+        actions = UserAction.where("user_id = " + user_id.to_s)
+        actions.to_a.each do |action|
+            if (action.action_type == 0) #0 = Question
+                @questions << Question.find(action.action_id)
+            elsif (action.action_type == 1) #1 = Link To
+                #TODO
+            end
+        end
+        
+        @questions_answers = Array.new
+        
+        answers = QuestionAnswer.where("user_id = " + user_id.to_s)
+        answers.to_a.each do |answer|
+            qaPair = QuestionAnswerPair.new
+
+            qaPair.question = Question.find(answer.question_id)
+            qaPair.answer = answer
+
+            @questions_answers << qaPair
+        end
     end
 
     def update        
