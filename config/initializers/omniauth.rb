@@ -9,7 +9,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   puts ENV['SPOTIFY_ID']
   puts ENV['SPOTIFY_SECRET']
   puts ENV['OAUTH_DEBUG']
-          puts "end I AM DEBUGGIN NOW"
+  puts "end I AM DEBUGGIN NOW"
 
 
   provider :spotify, ENV['SPOTIFY_ID'],  ENV['SPOTIFY_SECRET'], 

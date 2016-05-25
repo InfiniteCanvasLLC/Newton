@@ -31,7 +31,9 @@ gem 'frontend-generators'
 #gem 'spotify', '~> 12.6'
 gem 'omniauth-spotify'
 gem 'rspotify'  #uncomment for better spotify features maybe?
-
+gem 'omniauth-oauth2'
+gem 'rest-client'
+gem 'spotify-client'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
