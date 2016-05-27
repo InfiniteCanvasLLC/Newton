@@ -27,7 +27,7 @@
 						</div>
 						<div class="col-xs-9 text-right">
 							<div class="huge">1</div>
-							<div><%= cur_question.question.get_subtype_name(cur_question.question["question_type"]) %></div>
+							<div><%= cur_question.question.get_subtype_name() %></div>
 						</div>
 					</div>
 				</div>
@@ -37,7 +37,7 @@
 					<div>
 						<%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
 
-							<% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Multiple Choice") %>
+							<% if (cur_question.question.get_subtype_name() == "Multiple Choice") %>
 								<%= radio_button_tag :answer_integer, '0' %>
 								<%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
 								<%= radio_button_tag :answer_integer, '1' %>
@@ -49,7 +49,7 @@
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Yes/No") %>
+							<% if (cur_question.question.get_subtype_name() == "Yes/No") %>
 								<%= radio_button_tag :answer_integer, '0' %>
 								<%= label_tag(:answer_integer_yes, "Yes") %><br>
 								<%= radio_button_tag :answer_integer, '1' %>
@@ -57,12 +57,12 @@
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Rating") %>
+							<% if (cur_question.question.get_subtype_name() == "Rating") %>
 								<%= number_field_tag( :answer_integer, nil, min: 0, max: 10 )%><br><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<% if (cur_question.question.get_subtype_name(cur_question.question["question_type"]) == "Text") %>
+							<% if (cur_question.question.get_subtype_name() == "Text") %>
 								<%= text_field_tag( :answer_text, nil )%><br><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>

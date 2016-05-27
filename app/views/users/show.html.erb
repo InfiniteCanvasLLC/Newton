@@ -8,7 +8,6 @@
         <th>Question Text</th>
         <th>Question type</th>
         <th>Answer</th>
-        <th>Answer Text</th>
       </tr>
     </thead>
 
@@ -16,8 +15,7 @@
       <% @questions.each do |question| %>
         <tr>
           <td><%= question.text %></td>
-          <td><%= question.get_subtype_name(question.question_type) %></td>
-          <td><b>UNANSWERED</b></td>
+          <td><%= question.get_subtype_name() %></td>
           <td><b>UNANSWERED</b></td>
           <td><%= link_to 'Show', question %></td>
         </tr>
@@ -28,22 +26,8 @@
       <% @questions_answers.each do |question_answer| %>
         <tr>
           <td><%= question_answer.question.text %></td>
-          <td><%= question_answer.question.get_subtype_name(question_answer.question.question_type) %></td>
-          <td>
-            <% case question_answer.answer.answer_integer %>
-            <% when 0 %>
-                0) <%= question_answer.question.metadata_one %>
-            <% when 1 %>
-                1) <%= question_answer.question.metadata_two %>
-            <% when 2 %>
-                2) <%= question_answer.question.metadata_three %>
-            <% when 3 %>
-                3) <%= question_answer.question.metadata_four %>
-            <% else %>
-                <% question_answer.answer.answer_integer %>
-            <% end %>
-          </td>
-          <td><%= question_answer.answer.answer_text %></td>
+          <td><%= question_answer.question.get_subtype_name() %></td>
+          <td><%= question_answer.answer.get_answer() %></td>
           <td><%= link_to 'Show', question_path(question_answer.question) %></td>
         </tr>
       <% end %>

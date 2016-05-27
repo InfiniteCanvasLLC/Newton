@@ -9,27 +9,27 @@
 
   <p>
     <strong>Question type:</strong>
-    <%= @question.question_type %>
+    <%= @question.get_subtype_name() %>
   </p>
 
   <p>
     <strong>Metadata one:</strong>
-    <%= @question.metadata_one %>
+    <%= @question.metadata_one_formatted() %>
   </p>
 
   <p>
     <strong>Metadata two:</strong>
-    <%= @question.metadata_two %>
+    <%= @question.metadata_two_formatted() %>
   </p>
 
   <p>
     <strong>Metadata three:</strong>
-    <%= @question.metadata_three %>
+    <%= @question.metadata_three_formatted() %>
   </p>
 
   <p>
     <strong>Metadata four:</strong>
-    <%= @question.metadata_four %>
+    <%= @question.metadata_four_formatted() %>
   </p>
 
   <%= link_to 'Edit', edit_question_path(@question) %> |
