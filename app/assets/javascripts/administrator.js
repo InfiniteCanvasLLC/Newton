@@ -5,7 +5,6 @@
 //= require creative/classie
 //= require creative/jquery.easing.min
 //= require creative/jquery.fittext
-//= require creative/wow.min
 //= require_self
 
 $(document).ready(function(){
@@ -42,9 +41,6 @@ $(document).ready(function(){
               top: 100
           }
       })
-
-      // Initialize WOW.js Scrolling Animations
-      new WOW().init();
 
   })(jQuery); // End of use strict
 
