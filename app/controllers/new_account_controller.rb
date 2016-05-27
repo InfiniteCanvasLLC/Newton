@@ -170,13 +170,18 @@ class NewAccountController < ApplicationController
         # if user.parties is empty we create a default party 0
         if user.parties.count == 0
            default_party = Party.new
-           default_party.name = user.name + "'s Party"
+           default_party.name = get_random_party_name()
            default_party.owner_user_id = user.id
            default_party.save
            user.parties << default_party
         end
 
         return user.party_at_index( user.current_party_index.to_i )
+    end
+
+    #this function returns a random party name
+    def get_random_party_name()
+        return  Faker::Superhero.name + "'s " + Faker::Superhero.power
     end
 
 end
