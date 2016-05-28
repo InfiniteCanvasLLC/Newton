@@ -6,4 +6,9 @@ class Party < ActiveRecord::Base
   def event_id
     ""
   end
+
+  # this function returns a random party name
+  def self.random_name
+    return (Faker::Hacker.adjective + " " + Faker::Team.creature).split.map(&:capitalize).join(' ') + " " + Faker::Company.suffix
+  end
 end
