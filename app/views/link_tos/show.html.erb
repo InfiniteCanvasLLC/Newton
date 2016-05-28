@@ -1,0 +1,38 @@
+<%= render :layout => 'administrator/navigation' do %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @link_to.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @link_to.description %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @link_to.url %>
+</p>
+
+<p>
+  <strong>Link text:</strong>
+  <%= @link_to.link_text %>
+</p>
+
+<p>
+  <strong>Icon style:</strong>
+  <%= @link_to.icon_style %>
+</p>
+
+<p>
+  <strong>Panel style:</strong>
+  <%= @link_to.panel_style %>
+</p>
+
+<%= link_to 'Edit', edit_link_to_path(@link_to) %> |
+<%= link_to 'Back', link_tos_path %>
+
+<% end %>

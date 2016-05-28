@@ -1,3 +1,3 @@
 class AdministratorController < ApplicationController
-    layout "creative"
+    layout "administrator"
 end

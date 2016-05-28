@@ -1,5 +1,183 @@
 <%= render :layout => 'navigation' do %>
-	
 <!-- Party page specific code -->
-	
+<div class="row"><br>
+    <div class="col-lg-12">
+        <!-- The current party -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-group fa-fw"></i> People in <%= @current_user_party.name %>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <p>
+                    <%= @current_user_party.description %>
+                </p>
+                <div class="list-group">
+                    <% @current_user_party.users.each_with_index do |user, i| %>
+                        <p class="list-group-item">
+                            <i class="fa fa-female fa-fw"></i> <%= @user.name %><!-- Male/Female is not available for the moment -->
+                            <span class="pull-right label label-success"><em>Active</em><!-- Optional information regarding the user -->
+                            </span>
+                        </p>
+                    <% end %>
+               </div>
+               <div class="row">
+               <!-- We can leave this party if we don't own it or our parties table contains ANOTHER one that we own -->
+                <% if @current_user_party.owner_user_id != @user.id ||
+                      @user.parties.where(:owner_user_id => @user.id).where.not( :id => @current_user_party.id ).empty? == false %>
+                    <div class="col-sm-3">
+                        <a class="btn btn-default btn-block" id="leave-party-button" party="<%= @current_user_party.id %>" >Leave party</a>
+                    </div>
+                <% end %>
+                <% if @current_user_party.owner_user_id == @user.id%>
+                    <div class="col-sm-3">
+                        <a class="btn btn-default btn-block" id="edit-party-button" party="<%= @current_user_party.id %>" >Edit party</a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a class="btn btn-default btn-block" id="invite-member-button">Invite</a>
+                    </div>
+                <% end %>
+               </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+
+        <!-- All the user's parties -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-music fa-fw"></i> Your parties
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @user.parties.each do |party| %>
+                        <p class="list-group-item">
+                            <i class="<%= party.owner_user_id == @user.id ? 'fa fa-edit fa-fw' : 'fa fa-group fa-fw' %>"></i> <%= party.name %>
+                            <span class="pull-right text-muted small">
+                                <em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
+                            </span>
+                        </p>
+                    <% end %>
+               </div>
+               <div class="row">
+                    <div class="col-sm-3">
+                        <a class="btn btn-default btn-block" id="create-party-button">Create party</a>
+                    </div>
+               </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+
+        <!-- All parties in the system -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-globe fa-fw"></i> All parties in your area
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @all_parties.each do |party| %>
+                        <% if party.users.exists?(@user.id) == false %> <!-- make sure the user is not already in the party -->
+                            <a class="list-group-item" id="join-party-button" party="<%= party.id %>" =>
+                                <i class="fa fa-group fa-fw"></i> <%= party.name %>
+                                <span class="pull-right text-muted small">
+                                    <em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
+                                </span>
+                            </a>
+                        <% end %>
+                    <% end %>
+               </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
 <% end %>
+
+
+<!-- @TODO: There should be a better way, we should be able to use the same partial for edit and create -->
+<%= render :partial => 'user_notification' %>
+<%= render 'party_create_form' %>
+<%= render 'party_edit_form' %>
+<%= render 'party_join_form' %>
+
+<script>
+$(document).click(function(event) {
+    var id = $(event.target).attr("id");
+    if(id==null)
+        return;
+
+    //edit party button clicked
+    if( id == 'edit-party-button' )
+    {
+        var party_id = parseInt( $(event.target).attr('party') , 10);
+
+        //issuing an ajax request for the party data
+        $.ajax({
+            url: '/parties/' + party_id + '.json',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            cache: false,
+            success: function(data) {
+               //on success the party is accessible from 'data'
+               var party_edit_form = $('#party_edit_modal')
+               for (var key in data) {
+                    if (data.hasOwnProperty(key))
+                    {
+                        var form_field = party_edit_form.find("#" + key)
+                        if(form_field != null)
+                        {
+                            form_field.val(data[key]);//set the starting value of the field
+                        }
+                    }
+                }
+                //set the party id
+                party_edit_form.find("#party_id").val(party_id);
+            },
+            error: function() {
+                window.alert('Failed to retrieve party' + party_id);
+            }
+        });
+
+        $('#party_edit_modal').modal('show');
+    }
+
+    //create party button clicked
+    else if(id == 'create-party-button')
+    {
+        <% if @user.parties.count < 5 %>
+            $('#party_create_modal').modal('show');
+        <% else %>
+            //var note = "You can only create up to 5 parties";
+            //var theTag = $('#notification_modal').find("#notification-field");
+            //theTag.val(note);
+            $('#notification_modal').modal('show');
+        <% end %>
+    }
+
+    //leave party button
+    else if(id == 'leave-party-button')
+    {
+        var party_id = parseInt( $(event.target).attr('party'), 10);
+
+        $.ajax({
+            url: '/new_account/leave_party',
+            type: 'POST',
+            data: $.param({ party: party_id, user: <%= @user.id %> })
+            });
+
+        location.reload();
+    }
+
+    //join a party button
+    else if(id == 'join-party-button')
+    {
+        var party_id = parseInt( $(event.target).attr('party'), 10);
+
+        //don't do that just yet, we need a better way
+        //$('#party_join_modal').modal('show');
+    }
+});
+
+</script>

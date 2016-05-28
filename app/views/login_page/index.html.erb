@@ -41,12 +41,19 @@
                 <h1>Newton</h1>
                 <hr>
                 <h4>Customized concert deals and music recomendations for you and your friends.</h4>
-                <div class="service-box">
-                    <a href="#services" class="btn btn-primary btn-xl page-scroll">How Does It Work?</a>
-                </div>
-                <div class="service-box">
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
-                    <a class="btn btn-primary btn-xl btn-social btn-facebook" href="<%= signin_path %>"><span class="fa fa-facebook"></span> Sign in with Facebook</a></p>
+                <div class="">
+                    <div class="text-center row-btn">
+                        <a href="" class="btn btn-primary btn-xl page-scroll center-block" data-toggle="modal" data-target="#signup_modal">Sign Up</a>
+                    </div>
+                    <br />
+                    <div class="text-center row-btn">
+                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block">How Does It Work?</a>
+                    </div>
+                    <br />
+                    <div class="text-center row-btn">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                    </div>
                 </div>
                 <div class="service-box">
                     <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
@@ -76,14 +83,14 @@
                 </div>
                 <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-music text-primary" data-wow-delay=".1s"></i>
+                        <i class="fa fa-4x fa-music text-primary"></i>
                         <h3>Recommend some tunes</h3>
                         <p class="text-muted">Using our recomendation engine we'll send you new artists that you will enjoy.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
-                        <i class="fa fa-4x fa-ticket text-primary" data-wow-delay=".2s"></i>
+                        <i class="fa fa-4x fa-ticket text-primary"></i>
                         <h3>Enjoy a live show</h3>
                         <p class="text-muted">When you and your friends' favorite artists are in town, we'll send you a special group deal.</p>
                     </div>
@@ -92,20 +99,20 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="bg-primary">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Contact</h2>
-                    <hr class="primary">
+                    <hr class="light">
                     <p>Have a question or comment? We'd love to hear from you.</p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                    <p><a href="mailto:feedback@newton.com">feedback@newton.com</a></p>
+                    <a class="btn btn-default btn-xl" data-toggle="modal" data-target="#feedback_modal">Send Feedback</a>
                 </div>
             </div>
         </div>
     </section>
-
+    <%= render 'signup_dialog' %>
+    <%= render 'feedback_dialog' %>
 </body>

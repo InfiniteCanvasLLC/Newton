@@ -15,6 +15,10 @@ class SessionsController < ApplicationController
         user = User.where(  :provider => auth['provider'],
                             :uid => auth['uid']).first || User.create_with_omniauth(auth)
 
+        if user.current_party_index.nil?
+            user.current_party_index = 0
+        end
+
         session[:user_id] = user.id
         session[:fb_info] = auth.info
 

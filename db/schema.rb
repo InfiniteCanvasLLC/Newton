@@ -11,12 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160505032829) do
+ActiveRecord::Schema.define(version: 20160517051826) do
+
+  create_table "events", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "event_type"
+    t.datetime "start"
+    t.string   "metadata"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "events_parties", id: false, force: :cascade do |t|
+    t.integer "event_id", null: false
+    t.integer "party_id", null: false
+  end
+
+  create_table "link_tos", force: :cascade do |t|
+    t.string   "title"
+    t.string   "description"
+    t.text     "url"
+    t.string   "link_text"
+    t.string   "icon_style"
+    t.string   "panel_style"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "parties", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "owner_user_id"
+    t.text     "description"
   end
 
   create_table "parties_users", id: false, force: :cascade do |t|
@@ -59,13 +86,23 @@ ActiveRecord::Schema.define(version: 20160505032829) do
 
   add_index "user_actions", ["user_id"], name: "index_user_actions_on_user_id"
 
+  create_table "user_feedbacks", force: :cascade do |t|
+    t.integer  "sentiment"
+    t.integer  "issue_type"
+    t.string   "email"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.integer  "current_party_index"
   end
 
 end

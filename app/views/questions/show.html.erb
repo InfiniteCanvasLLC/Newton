@@ -1,34 +1,38 @@
-<p id="notice"><%= notice %></p>
+<%= render :layout => 'administrator/navigation' do %>
 
-<p>
-  <strong>Text:</strong>
-  <%= @question.text %>
-</p>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Question type:</strong>
-  <%= @question.question_type %>
-</p>
+  <p>
+    <strong>Text:</strong>
+    <%= @question.text %>
+  </p>
 
-<p>
-  <strong>Metadata one:</strong>
-  <%= @question.metadata_one %>
-</p>
+  <p>
+    <strong>Question type:</strong>
+    <%= @question.get_subtype_name() %>
+  </p>
 
-<p>
-  <strong>Metadata two:</strong>
-  <%= @question.metadata_two %>
-</p>
+  <p>
+    <strong>Metadata one:</strong>
+    <%= @question.metadata_one_formatted() %>
+  </p>
 
-<p>
-  <strong>Metadata three:</strong>
-  <%= @question.metadata_three %>
-</p>
+  <p>
+    <strong>Metadata two:</strong>
+    <%= @question.metadata_two_formatted() %>
+  </p>
 
-<p>
-  <strong>Metadata four:</strong>
-  <%= @question.metadata_four %>
-</p>
+  <p>
+    <strong>Metadata three:</strong>
+    <%= @question.metadata_three_formatted() %>
+  </p>
 
-<%= link_to 'Edit', edit_question_path(@question) %> |
-<%= link_to 'Back', questions_path %>
+  <p>
+    <strong>Metadata four:</strong>
+    <%= @question.metadata_four_formatted() %>
+  </p>
+
+  <%= link_to 'Edit', edit_question_path(@question) %> |
+  <%= link_to 'Back', questions_path %>
+
+<% end %>

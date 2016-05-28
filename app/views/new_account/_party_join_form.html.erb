@@ -1,0 +1,30 @@
+<div id="party_join_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+    
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title">Info</h3>
+      </div>
+      
+       <div class="modal-body edit-content">
+            Do you want to join this party? By sending a request, the owner of the party will 
+            get the chance to review your profile and either accept or reject your request. 
+       </div>
+      
+        <div class="modal-footer bg-dark">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= submit_tag("Send request", class: 'btn btn-success') %>
+        </div>
+      
+       <script>    
+        $("#party_join_modal").submit(
+        function (event)
+        {
+            $("#party_join_modal").modal('hide');
+        });
+      </script>
+
+    </div>
+  </div>
+</div>

@@ -23,10 +23,10 @@ class User < ActiveRecord::Base
   end
 
   def party_at_index(party_index)
-    if parties.empty? == true
-      return "<Default Party Name>"
+    if party_index >= parties.count
+      return nil;
     else
-      return parties[party_index].name;
+      return parties[party_index];
     end
   end
 

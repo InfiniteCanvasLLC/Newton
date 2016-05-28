@@ -1,6 +1,6 @@
 # Actions
 
-An action is associated with a user.  This could be a question they could answer, or another action such as linking up Spotify.  These are stored in the ```UserActions``` table.
+An action is associated with a user.  This could be a question they could answer, or a linkto such as linking up Spotify.  These are stored in the ```UserActions``` table.
 
 **Note:** It is envisioned that there could be actions that are not stored in this table in the future.  Eg: If a user hasn't linked their Spotify account, we already know have that information because presumably it would be indicated in the ```User``` table or somewhere similar.  So a decision would need to be made whether to actually cache an action in the ```UserActions```, or just look up if a Spotify account is linked as the logic of a given page dictates.
 
@@ -12,8 +12,8 @@ Data is contained in the ```UserActions``` table
 |-------------|-------------|
 | id      | Unique identifier of the action
 | user_id | User that this action is for |
-| action_type | The type of action.  Currently supported values are:<ul><li>0 - Question</ul> |
-| action_id | Specific to the type of action.  For questions, this is the ID of the question in the database |
+| action_type | The type of action.  Currently supported values are:<ul><li>0 - Question</ul> <ul><li>1 - Link Tos</ul> |
+| action_id | Specific to the type of action.  This is the ID of the question/linkto/etc... in the database |
 
 The routes are the usual Rails routes for CRUD operations.  The following are the relevant URLS
 
@@ -31,7 +31,7 @@ The routes are the usual Rails routes for CRUD operations.  The following are th
 
 For debugging, and for the time being, actions have to manually be assigned to a user by an administrator. For now, everyone is an administrator.
 
-Go to http://localhost:3000/user_actions/new to create a new user action.  You will need to select a user, and select a question to assign to them.
+Go to http://localhost:3000/user_actions/new to create a new user action.  You will need to select a user, and select an action to assign to them. Make sure you select the correct drop down item (question OR LinkTo).
 
 You can also go to the administrator page at http://localhost:3000/administrator
 

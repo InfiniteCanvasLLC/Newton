@@ -1,37 +1,41 @@
-<p id="notice"><%= notice %></p>
+<%= render :layout => 'administrator/navigation' do %>
 
-<h1>Listing Questions</h1>
+  <p id="notice"><%= notice %></p>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Text</th>
-      <th>Question type</th>
-      <th>Metadata one</th>
-      <th>Metadata two</th>
-      <th>Metadata three</th>
-      <th>Metadata four</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <h1>Listing Questions</h1>
 
-  <tbody>
-    <% @questions.each do |question| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= question.text %></td>
-        <td><%= question.question_type %></td>
-        <td><%= question.metadata_one %></td>
-        <td><%= question.metadata_two %></td>
-        <td><%= question.metadata_three %></td>
-        <td><%= question.metadata_four %></td>
-        <td><%= link_to 'Show', question %></td>
-        <td><%= link_to 'Edit', edit_question_path(question) %></td>
-        <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Text</th>
+        <th>Question type</th>
+        <th>Metadata one</th>
+        <th>Metadata two</th>
+        <th>Metadata three</th>
+        <th>Metadata four</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @questions.each do |question| %>
+        <tr>
+          <td><%= question.text %></td>
+          <td><%= question.get_subtype_name() %></td>
+          <td><%= question.metadata_one_formatted() %></td>
+          <td><%= question.metadata_two_formatted() %></td>
+          <td><%= question.metadata_three_formatted() %></td>
+          <td><%= question.metadata_four_formatted() %></td>
+          <td><%= link_to 'Show', question %></td>
+          <td><%= link_to 'Edit', edit_question_path(question) %></td>
+          <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Question', new_question_path %>
+  <br>
+
+  <%= link_to 'New Question', new_question_path %>
+
+<% end %>

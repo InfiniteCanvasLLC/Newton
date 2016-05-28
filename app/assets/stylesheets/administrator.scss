@@ -1,3 +1,137 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *= require creative/manifest
+*/
 // Place all the styles related to the administrator controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+    margin-top: 100px;
+}
+
+@media(min-width:768px) {
+    body {
+        margin-top: 50px;
+    }
+}
+
+#wrapper {
+    padding-left: 0;
+	height: 100%;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 225px;
+    }
+}
+
+.navbar-default {
+    text-transform: uppercase;
+    font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight: 700;
+    -webkit-transition: all .35s;
+    -moz-transition: all .35s;
+    transition: all .35s;
+}
+
+.navbar-default a,
+.navbar-default a:focus {
+    color: #777;
+}
+
+.navbar-default a:hover,
+.navbar-default a:focus:hover {
+    color: #222;
+}
+
+.navbar-default .nav > li.active > a,
+.navbar-default .nav > li.active > a:focus,
+.navbar-default .nav > li.active > a:hover,
+.navbar-default .nav > li.active > a:focus:hover {
+    background-color: #eee;
+}
+
+@media(min-width:768px) {
+    .navbar-default {
+        border-color: rgba(34,34,34,.05);
+        background-color: #fff;
+    }
+
+    .navbar-default .navbar-header .navbar-brand {
+        color: #f05f40;
+    }
+
+    .navbar-default .navbar-header .navbar-brand:hover,
+    .navbar-default .navbar-header .navbar-brand:focus {
+        color: #222;
+    }
+
+    .navbar-default .nav > li>a,
+    .navbar-default .nav>li>a:focus {
+        color: #777;
+    }
+
+    .navbar-default .nav > li>a:hover,
+    .navbar-default .nav>li>a:focus:hover {
+        color: #222;
+    }
+
+    .navbar-default.affix {
+        border-color: rgba(34,34,34,.05);
+        background-color: #eee;
+    }
+    
+    .side-nav {
+        position: fixed;
+        top: 51px;
+        left: 225px;
+        width: 225px;
+        margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+        bottom: 0;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+		height: 1000px;
+    }
+
+    .side-nav>li>a {
+        width: 225px;
+    }
+}
+
+.selected {
+    border-left:7px solid #f05f40;
+}
+
+::-moz-selection {
+    color: #f05f40;
+    background: #fff;
+}
+
+::selection {
+    color: #f05f40;
+    background: #fff;
+}
+
+img::selection {
+    color: #f05f40;
+    background: 0 0;
+}
+
+img::-moz-selection {
+    color: #f05f40;
+    background: 0 0;
+}

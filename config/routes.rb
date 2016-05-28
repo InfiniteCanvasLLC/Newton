@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
+  resources :link_tos
+  resources :events
   resources :parties
   resources :user_actions
   resources :questions
   resources :users
 
   post 'users/leave_group'
+  post 'new_account/switch_party'
+  post 'new_account/create_party'
+  post 'new_account/edit_party'
+  post 'new_account/leave_party'
+  post 'new_account/join_party'
+  post 'parties/unregister_event'
 
   get 'sessions/new'
 
@@ -14,6 +22,9 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'login_page#index'
 
+  post 'login_page/submit_user_signup'
+  post 'login_page/submit_user_feedback'
+  
   post 'EnterAnswer' => 'new_account#enter_answer'
 
   get 'Home'     => 'new_account#home',       :as => :home
@@ -26,10 +37,13 @@ Rails.application.routes.draw do
   get 'Profile'  => 'new_account#profile',    :as => :profile
   get 'Settings' => 'new_account#settings',   :as => :settings
 
+  get '/action/handle_link_to' => 'new_account#handle_link_to', :as => :handle_link_to
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signout' => 'sessions#destroy', :as => :signout
   get '/signin' => 'sessions#new', :as => :signin
 
+  get 'user_feedbacks' => 'user_feedbacks#index',   :as => :user_feedbacks
+  
   get 'creatives/index'
 
   get 'administrator' => 'administrator#index'
