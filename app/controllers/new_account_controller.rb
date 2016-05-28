@@ -170,7 +170,7 @@ class NewAccountController < ApplicationController
         # if user.parties is empty we create a default party 0
         if user.parties.count == 0
            default_party = Party.new
-           default_party.name = user.name + "'s Party"
+           default_party.name = Party.random_name
            default_party.owner_user_id = user.id
            default_party.save
            user.parties << default_party
