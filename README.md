@@ -24,6 +24,13 @@ The environment variables you need to define are ```FACEBOOK_KEY``` and ```FACEB
 2) Modify your local omniauth-oauth2 file. 
    a) Use $ bundle show omniauth-oauth2 to find where the gem is located 
    b) Modify the gem according to this diff: https://github.com/intridea/omniauth-oauth2/pull/82/files
+3) Create a LinkTo for Spotify Login
+   a) Goto http://localhost:3000/link_tos
+   b) Create new link to:
+      Title: Spotify Login, Description: Log into Spotify, URL: /auth/spotify, Icon Style: fa-spotify, Panel Style: panel-green
+4) Create a Action that references the new LinkTo
+   a) Goto http://localhost:3000/user_actions/new
+   b) Asign action to yourself, and set action type to 1 (1 is a LinkTo)
 
 ### Setup your local database
 You need to create the appropriate database tables in your local copy of the Newton app.  Run the following campaign:
