@@ -18,6 +18,13 @@ The environment variables you need to define are ```FACEBOOK_KEY``` and ```FACEB
 
 **NOTE:** These only apply when running in development mode.  In production mode, the environment variables are pulled from the Heroku configuration.
 
+### Setting up Spotify Support
+### Call Gene if any issues come up, or if you need SPOTIFY_ID/SECRET
+1) Define environment variables inside bash profile: SPOTIFY_ID and SPOTIFY_SECRET 
+2) Modify your local omniauth-oauth2 file. 
+   a) Use $ bundle show omniauth-oauth2 to find where the gem is located 
+   b) Modify the gem according to this diff: https://github.com/intridea/omniauth-oauth2/pull/82/files
+
 ### Setup your local database
 You need to create the appropriate database tables in your local copy of the Newton app.  Run the following campaign:
 
