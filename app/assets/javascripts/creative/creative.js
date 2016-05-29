@@ -14,7 +14,7 @@ $(document).ready(function(){
           var $anchor = $(this);
           $('html, body').stop().animate({
               scrollTop: ($($anchor.attr('href')).offset().top - 50)
-          }, 1250, 'easeInOutExpo');
+          }, 1250, 'easeInOutCubic');
           event.preventDefault();
       });
 
