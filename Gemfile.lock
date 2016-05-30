@@ -53,6 +53,7 @@ GEM
     concurrent-ruby (1.0.1)
     debug_inspector (0.0.2)
     erubis (2.7.0)
+    excon (0.49.0)
     execjs (2.6.0)
     faker (1.6.3)
       i18n (~> 0.5)
@@ -114,6 +115,8 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
+    omniauth-spotify (0.0.9)
+      omniauth-oauth2 (~> 1.1)
     pg (0.18.4)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -151,6 +154,8 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     sass (3.4.22)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -161,6 +166,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    spotify-client (0.0.10)
+      excon (~> 0.37)
     spring (1.7.0)
     sprockets (3.6.0)
       concurrent-ruby (~> 1.0)
@@ -204,11 +211,15 @@ DEPENDENCIES
   jquery-rails
   momentjs-rails
   omniauth-facebook
+  omniauth-oauth2
+  omniauth-spotify
   pg
   rails (= 4.2.5.1)
   rails_12factor
+  rest-client
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  spotify-client
   spring
   sqlite3
   turbolinks
@@ -217,4 +228,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.12.2
+   1.12.3

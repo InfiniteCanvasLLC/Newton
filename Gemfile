@@ -29,6 +29,10 @@ gem 'font-awesome-rails'
 
 gem 'frontend-generators'
 
+#Stuff for logging into Spotify
+gem 'omniauth-spotify'
+gem 'spotify-client'
+
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 

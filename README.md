@@ -10,13 +10,27 @@ You must first install Rails.  Follow the instructions at [http://installrails.c
 Clone this repo.  And then run ```bundle install --without production``` to install the Ruby Gems (libraries) and the various dependencies.
 
 ### Setup environment variables
-You need to specify the Facebook App ID and Secret, the app pulls these from environment variables.  You can either set these in your bash_profile, or use [Figaro](https://github.com/laserlemon/figaro).
+You need to specify the Facebook App ID and Secret, the app pulls these from environment variables.  You can either set these in your bash_profile ($open ~/.bash_profile), or use [Figaro](https://github.com/laserlemon/figaro).
 
 If you want to use Figaro, run ```bundle exec figaro install```, this will create a ```config/application.yml``` file and you can put the environment variables in there.  This command automatically adds application.yml to your Git ignores, the whole point is to avoid checking in sensitive data to version control after all!
 
 The environment variables you need to define are ```FACEBOOK_KEY``` and ```FACEBOOK_SECRET```, these are used in ```config/initializers/omniauth.rb```
 
 **NOTE:** These only apply when running in development mode.  In production mode, the environment variables are pulled from the Heroku configuration.
+
+### Setting up Spotify Support
+### Call Gene if any issues come up, or if you need SPOTIFY_ID/SECRET
+1) Define environment variables inside bash profile: SPOTIFY_ID and SPOTIFY_SECRET 
+2) Modify your local omniauth-oauth2 file. 
+   a) Use $ bundle show omniauth-oauth2 to find where the gem is located 
+   b) Modify the gem according to this diff: https://github.com/intridea/omniauth-oauth2/pull/82/files
+3) Create a LinkTo for Spotify Login
+   a) Goto http://localhost:3000/link_tos
+   b) Create new link to:
+      Title: Spotify Login, Description: Log into Spotify, URL: /auth/spotify, Icon Style: fa-spotify, Panel Style: panel-green
+4) Create a Action that references the new LinkTo
+   a) Goto http://localhost:3000/user_actions/new
+   b) Asign action to yourself, and set action type to 1 (1 is a LinkTo)
 
 ### Setup your local database
 You need to create the appropriate database tables in your local copy of the Newton app.  Run the following campaign:

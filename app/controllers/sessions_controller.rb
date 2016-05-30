@@ -28,5 +28,15 @@ class SessionsController < ApplicationController
         redirect_to root_url, notice => 'Signed out'
     end
 
+    def handle_spotify_auth
+        auth = request.env["omniauth.auth"]
+        spotify_token = auth['credentials']['token']
+        #TODO save spotify token on Newton server
+        # ...
+   
+        
+        # take player back to their home page
+        redirect_to controller: 'new_account', action: 'home'
+    end
 
 end
