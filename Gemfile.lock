@@ -154,8 +154,6 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     sass (3.4.22)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -211,12 +209,10 @@ DEPENDENCIES
   jquery-rails
   momentjs-rails
   omniauth-facebook
-  omniauth-oauth2
   omniauth-spotify
   pg
   rails (= 4.2.5.1)
   rails_12factor
-  rest-client
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spotify-client
@@ -228,4 +224,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.12.3
+   1.12.5
