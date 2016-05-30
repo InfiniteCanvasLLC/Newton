@@ -147,3 +147,10 @@ rails console
 
 ### Conclusion
 This is still very early in development, please ask questions on the #newton channel on Slack.
+
+
+### Accounts
+The following are the accounts create for support of the Newton service:
+- Facebook app (credentials and basic user info) --> Rishi
+- Spotify app (music info) --> Gene
+- Gmails (customer outreach) --> Serge
