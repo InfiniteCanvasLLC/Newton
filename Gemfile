@@ -31,8 +31,6 @@ gem 'frontend-generators'
 
 #Stuff for logging into Spotify
 gem 'omniauth-spotify'
-gem 'omniauth-oauth2'
-gem 'rest-client'
 gem 'spotify-client'
 
 gem 'fullcalendar-rails'

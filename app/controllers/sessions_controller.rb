@@ -1,5 +1,3 @@
-require 'omniauth-oauth2'
-require 'rest-client'
 class SessionsController < ApplicationController
 
     def new
