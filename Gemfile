@@ -29,8 +29,7 @@ gem 'font-awesome-rails'
 
 gem 'frontend-generators'
 
-#Stuff for logging into Spotify
-gem 'omniauth-spotify'
+gem 'omniauth-spotify', :git => 'https://github.com/rishigupta9999/omniauth-spotify.git'
 gem 'spotify-client'
 
 gem 'fullcalendar-rails'
