@@ -35,3 +35,13 @@ The only URL you really have to visit is http://localhost:3000/administrator and
 Any linkto or CRUD operations you've performed should reflect in your database.
 
 
+#### Linkto types
+For certain types of actions we need to create some specific LinkTos, the type_id is here just for that
+
+| Type | ID | Description |
+| -------------- | -------------- | ----------- |
+| Standard LinkTo | 0  | This is the simplest form of LinkTo. Use this to refer someone to a YouTube video, a FB post, or a cool article on the web. |
+| Sync Spotify info | 1 | For the linkto that asks the user to sync information with Spotify|
+| New party invitation | 2 | The linkto that lets the user know that some friend requested them to be added to one of their parties.|
+| Invite a friend to party | 3 | When a user first joins, they have to have at least one other pwerson in the party they are currently in. This will be assigned to them to send a friend request to fill up their Party.|
+| Request to join party | 4 |The linkto that lets the the user know that someone wants to join their party|
