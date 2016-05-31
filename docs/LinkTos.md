@@ -44,4 +44,4 @@ For certain types of actions we need to create some specific LinkTos, the type_i
 | Sync Spotify info | 1 | For the linkto that asks the user to sync information with Spotify|
 | New party invitation | 2 | The linkto that lets the user know that some friend requested them to be added to one of their parties.|
 | Invite a friend to party | 3 | When a user first joins, they have to have at least one other pwerson in the party they are currently in. This will be assigned to them to send a friend request to fill up their Party.|
-| Request to join party | 4 |The linkto that lets the the user know that someone wants to join their party|
+| Request to join party | 4 |The linkto that lets the user know that someone wants to join their party|
