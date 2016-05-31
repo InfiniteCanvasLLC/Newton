@@ -124,8 +124,6 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         @user = User.find(user_id)
         @current_party = get_user_current_party(@user)
-        #user_feedback.email = params[:email]
-        #user_feedback.description = params[:first_name] + " " + params[:last_name]
         greeting = "Hi " + params[:first_name] + "!"
         message = @user.name + " would like you to join his party " + @current_party.name + " on Newton.com!"
         footer = "<link to what...?>"
