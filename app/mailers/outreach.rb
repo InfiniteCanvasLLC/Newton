@@ -11,4 +11,12 @@ class Outreach < ApplicationMailer
     @footer_message = "Your friends at Newton :) "
     mail to: user.email
   end
+
+  def direct_user_message(email, title, message, footer)
+    @header_message = title
+    @message        = message
+    @footer_message = footer
+    mail to: email
+  end
+
 end

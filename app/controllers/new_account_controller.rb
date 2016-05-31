@@ -120,6 +120,19 @@ class NewAccountController < ApplicationController
     def join_party
     end
 
+    def submit_friend_invite_request
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+        @current_party = get_user_current_party(@user)
+        #user_feedback.email = params[:email]
+        #user_feedback.description = params[:first_name] + " " + params[:last_name]
+        greeting = "Hi " + params[:first_name] + "!"
+        message = @user.name + " would like you to join his party " + @current_party.name + " on Newton.com!"
+        footer = "<link to what...?>"
+        Outreach.direct_user_message( params[:email], greeting, message, footer).deliver_now
+        redirect_to action: 'party'
+    end
+
     def calendar
         user_id = session[:user_id]
         @user = User.find(user_id)
