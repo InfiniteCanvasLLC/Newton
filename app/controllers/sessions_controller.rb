@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
 
         if user.current_party_index.nil?
             user.current_party_index = 0
+            user.save
         end
 
         session[:user_id] = user.id
