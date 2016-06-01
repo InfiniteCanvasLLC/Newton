@@ -121,14 +121,32 @@ class NewAccountController < ApplicationController
     end
 
     def submit_friend_invite_request
+        friend_first_name = params[:first_name]
+        friend_last_name = params[:last_name]
+        friend_email = params[:email]
         user_id = session[:user_id]
         @user = User.find(user_id)
         @current_party = get_user_current_party(@user)
-        greeting = "Hi " + params[:first_name] + "!"
-        message = @user.name + " would like you to join his party " + @current_party.name + " on Newton.com!"
-        footer = "<link to what...?>"
-        Outreach.direct_user_message( params[:email], greeting, message, footer).deliver_now
-        redirect_to action: 'party'
+        #TODO:
+        # | request_type  | party_id |  source_user_id |  target_user_name |  target_user_email |
+        # Send Friend invite:
+        # invite_user_to_party ---> Party info/User info
+
+        # Send a request to remove a user from party:
+        # remove_user_from_party ---> Party info/User info
+
+        # Send a request to join a party:
+        # join_party ---> Party info/User info
+
+        # Send a request to leave a party:
+        # leave_party ---> Party info/User info
+
+        # Send a request to delete a party:
+        # delete_party ---> Party info/User info
+
+        #Periodically process and resolve the async requ in the database
+        # https://devcenter.heroku.com/articles/queuing-ruby-resque
+        # https://github.com/resque/resque
     end
 
     def calendar
