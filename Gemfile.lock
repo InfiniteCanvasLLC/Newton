@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/rishigupta9999/omniauth-spotify.git
+  revision: 6377e51fb7bb9e509a4f98bb8c1ac405b13d1096
+  specs:
+    omniauth-spotify (0.0.9)
+      omniauth-oauth2 (~> 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -115,8 +122,6 @@ GEM
     omniauth-oauth2 (1.4.0)
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
-    omniauth-spotify (0.0.9)
-      omniauth-oauth2 (~> 1.1)
     pg (0.18.4)
     rack (1.6.4)
     rack-test (0.6.3)
@@ -209,7 +214,7 @@ DEPENDENCIES
   jquery-rails
   momentjs-rails
   omniauth-facebook
-  omniauth-spotify
+  omniauth-spotify!
   pg
   rails (= 4.2.5.1)
   rails_12factor

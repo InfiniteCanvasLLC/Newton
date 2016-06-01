@@ -19,18 +19,16 @@ The environment variables you need to define are ```FACEBOOK_KEY``` and ```FACEB
 **NOTE:** These only apply when running in development mode.  In production mode, the environment variables are pulled from the Heroku configuration.
 
 ### Setting up Spotify Support
-### Call Gene if any issues come up, or if you need SPOTIFY_ID/SECRET
-1) Define environment variables inside bash profile: SPOTIFY_ID and SPOTIFY_SECRET 
-2) Modify your local omniauth-oauth2 file. 
-   a) Use $ bundle show omniauth-oauth2 to find where the gem is located 
-   b) Modify the gem according to this diff: https://github.com/intridea/omniauth-oauth2/pull/82/files
-3) Create a LinkTo for Spotify Login
-   a) Goto http://localhost:3000/link_tos
-   b) Create new link to:
+
+#### Call Gene if any issues come up, or if you need SPOTIFY_ID/SECRET
+1. Define environment variables inside bash profile: SPOTIFY_ID and SPOTIFY_SECRET
+2. Create a LinkTo for Spotify Login
+ 1. Goto http://localhost:3000/link_tos
+ 2. Create new link to:
       Title: Spotify Login, Description: Log into Spotify, URL: /auth/spotify, Icon Style: fa-spotify, Panel Style: panel-green
-4) Create a Action that references the new LinkTo
+3. Create a Action that references the new LinkTo
    a) Goto http://localhost:3000/user_actions/new
-   b) Asign action to yourself, and set action type to 1 (1 is a LinkTo)
+   b) Assign action to yourself, and set action type to 1 (1 is a LinkTo)
 
 ### Setup your local database
 You need to create the appropriate database tables in your local copy of the Newton app.  Run the following campaign:
@@ -80,11 +78,11 @@ rails console
 
 2.2.1 :001 > user = User.find(1)
   User Load (0.4ms)  SELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT 1  [["id", 1]]
- => #<User id: 1, provider: "facebook", uid: "10154129229729939", name: "Rishi Gupta", email: "rishig@mac.com", created_at: "2016-04-18 05:07:17", updated_at: "2016-04-18 05:07:17"> 
+ => #<User id: 1, provider: "facebook", uid: "10154129229729939", name: "Rishi Gupta", email: "rishig@mac.com", created_at: "2016-04-18 05:07:17", updated_at: "2016-04-18 05:07:17">
 
 2.2.1 :012 > UserAction.where("user_id=2")
   UserAction Load (1.6ms)  SELECT "user_actions".* FROM "user_actions" WHERE (user_id=2)
- => #<ActiveRecord::Relation [#<UserAction id: 13, user_id: 2, action_type: 0, action_id: 3, created_at: "2016-05-07 08:57:59", updated_at: "2016-05-07 08:57:59">]> 
+ => #<ActiveRecord::Relation [#<UserAction id: 13, user_id: 2, action_type: 0, action_id: 3, created_at: "2016-05-07 08:57:59", updated_at: "2016-05-07 08:57:59">]>
 
 2.2.1 :014 > pp Question.all
   Question Load (0.3ms)  SELECT "questions".* FROM "questions"
@@ -138,8 +136,8 @@ rails console
   metadata_four: "More than Windows 3.1",
   created_at: Sat, 07 May 2016 06:49:44 UTC +00:00,
   updated_at: Sat, 07 May 2016 06:49:44 UTC +00:00>]
- => #<ActiveRecord::Relation [#<Question id: 1, text: "Do you listen to vinyl?", question_type: 1, metadata_one: "", metadata_two: "", metadata_three: "", metadata_four: "", created_at: "2016-04-18 06:56:29", updated_at: "2016-04-24 09:16:50">, #<Question id: 2, text: "What is your favorite ice cream flavor?", question_type: 0, metadata_one: "Salted Caramel", metadata_two: "Pistachio", metadata_three: "Mango", metadata_four: "Malted Chocolate", created_at: "2016-04-18 06:58:41", updated_at: "2016-04-18 06:58:41">, #<Question id: 3, text: "Rate Lady Gaga's previous album", question_type: 2, metadata_one: "", metadata_two: "", metadata_three: "", metadata_four: "", created_at: "2016-04-24 08:16:07", updated_at: "2016-04-24 09:17:45">, #<Question id: 4, text: "What is your favorite TV show?", question_type: 0, metadata_one: "Family Guy", metadata_two: "American Dad", metadata_three: "Simpsons", metadata_four: "South Park", created_at: "2016-05-06 09:48:37", updated_at: "2016-05-06 09:48:37">, #<Question id: 5, text: "How much does the Weeknd suck?", question_type: 0, metadata_one: "A lot", metadata_two: "A massive amount", metadata_three: "A planet sized amount", metadata_four: "More than Windows 3.1", created_at: "2016-05-07 06:49:44", updated_at: "2016-05-07 06:49:44">]> 
-2.2.1 :015 > 
+ => #<ActiveRecord::Relation [#<Question id: 1, text: "Do you listen to vinyl?", question_type: 1, metadata_one: "", metadata_two: "", metadata_three: "", metadata_four: "", created_at: "2016-04-18 06:56:29", updated_at: "2016-04-24 09:16:50">, #<Question id: 2, text: "What is your favorite ice cream flavor?", question_type: 0, metadata_one: "Salted Caramel", metadata_two: "Pistachio", metadata_three: "Mango", metadata_four: "Malted Chocolate", created_at: "2016-04-18 06:58:41", updated_at: "2016-04-18 06:58:41">, #<Question id: 3, text: "Rate Lady Gaga's previous album", question_type: 2, metadata_one: "", metadata_two: "", metadata_three: "", metadata_four: "", created_at: "2016-04-24 08:16:07", updated_at: "2016-04-24 09:17:45">, #<Question id: 4, text: "What is your favorite TV show?", question_type: 0, metadata_one: "Family Guy", metadata_two: "American Dad", metadata_three: "Simpsons", metadata_four: "South Park", created_at: "2016-05-06 09:48:37", updated_at: "2016-05-06 09:48:37">, #<Question id: 5, text: "How much does the Weeknd suck?", question_type: 0, metadata_one: "A lot", metadata_two: "A massive amount", metadata_three: "A planet sized amount", metadata_four: "More than Windows 3.1", created_at: "2016-05-07 06:49:44", updated_at: "2016-05-07 06:49:44">]>
+2.2.1 :015 >
 
 
 ```
