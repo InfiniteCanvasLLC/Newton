@@ -34,7 +34,7 @@
                         <a class="btn btn-default btn-block" id="edit-party-button" party="<%= @current_user_party.id %>" >Edit party</a>
                     </div>
                     <div class="col-sm-3">
-                        <a class="btn btn-default btn-block" id="invite-member-button">Invite</a>
+                        <a class="btn btn-default btn-block" id="invite-friend-button" party="<%= @current_user_party.id %>">Invite</a>
                     </div>
                 <% end %>
                </div>
@@ -100,6 +100,8 @@
 <%= render 'party_create_form' %>
 <%= render 'party_edit_form' %>
 <%= render 'party_join_form' %>
+<%= render :partial => 'party_invite_form', :locals => {:party_name => @current_user_party.name } %>
+
 
 <script>
 $(document).click(function(event) {
@@ -177,6 +179,13 @@ $(document).click(function(event) {
 
         //don't do that just yet, we need a better way
         //$('#party_join_modal').modal('show');
+    }
+
+    //invite friend
+    else if(id == 'invite-friend-button')
+    {
+        //var party_id = parseInt( $(event.target).attr('party'), 10);
+        $('#party_invite_modal').modal('show');
     }
 });
 

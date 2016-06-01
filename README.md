@@ -30,6 +30,9 @@ The environment variables you need to define are ```FACEBOOK_KEY``` and ```FACEB
    a) Goto http://localhost:3000/user_actions/new
    b) Assign action to yourself, and set action type to 1 (1 is a LinkTo)
 
+### Setting up the Mailer
+Same as for the env variables for Facebook and Spotify. You need to export GMAIL_USERNAME and GMAIL_PASSWORD. You should have received an email with the current (temporary) Gmail account info.
+
 ### Setup your local database
 You need to create the appropriate database tables in your local copy of the Newton app.  Run the following campaign:
 
@@ -145,3 +148,10 @@ rails console
 
 ### Conclusion
 This is still very early in development, please ask questions on the #newton channel on Slack.
+
+
+### Accounts
+The following are the accounts create for support of the Newton service:
+- Facebook app (credentials and basic user info) --> Rishi
+- Spotify app (music info) --> Gene
+- Gmails (customer outreach) --> Serge

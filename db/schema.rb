@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517051826) do
+ActiveRecord::Schema.define(version: 20160531034649) do
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
@@ -34,8 +34,9 @@ ActiveRecord::Schema.define(version: 20160517051826) do
     t.string   "link_text"
     t.string   "icon_style"
     t.string   "panel_style"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "type_id",     default: 0
   end
 
   create_table "parties", force: :cascade do |t|

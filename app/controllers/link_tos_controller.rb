@@ -74,6 +74,6 @@ class LinkTosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def link_to_params
-      params.require(:link_to).permit(:title, :description, :url, :link_text, :icon_style, :panel_style)
+      params.require(:link_to).permit(:title, :description, :url, :link_text, :icon_style, :panel_style, :type_id)
     end
 end
