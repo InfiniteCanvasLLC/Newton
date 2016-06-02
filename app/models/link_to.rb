@@ -26,7 +26,7 @@ class LinkTo < ActiveRecord::Base
     return 1
   end
 
-  def self.party_invitaion_type
+  def self.party_invitation_type
     return 2
   end
 
@@ -43,8 +43,8 @@ class LinkTo < ActiveRecord::Base
     return LinkTo.where("type_id = " + LinkTo.sync_spotify_type.to_s ).first
   end
 
-  def self.get_party_invitaion_link
-    return LinkTo.where("type_id = " + LinkTo.party_invitaion_type.to_s ).first
+  def self.get_party_invitation_link
+    return LinkTo.where("type_id = " + LinkTo.party_invitation_type.to_s ).first
   end
 
   def self.get_invite_friend_link
