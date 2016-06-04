@@ -9,7 +9,7 @@ class LinkToActionPair
     attr_accessor :action_id
 end
 
-class NewAccountController < ApplicationController   
+class NewAccountController < ApplicationController
 
     def initialize
         super
@@ -21,6 +21,8 @@ class NewAccountController < ApplicationController
 
         @user = User.find(user_id)
         @num_actions = actions.count
+
+        self.manage_actions_dynamically
 
         actions_array = actions.to_a
 
@@ -34,7 +36,7 @@ class NewAccountController < ApplicationController
 
         actions_array.each do |cur_action|
 
-            if (cur_action.action_type == 0) #0 = Question
+            if (cur_action.action_type == UserAction.question_type)
                 qaPair = QuestionAnswerPair.new
 
                 qaPair.question = Question.find(cur_action.action_id)
@@ -42,13 +44,46 @@ class NewAccountController < ApplicationController
                 qaPair.action_id = cur_action.id
 
                 @questions << qaPair
-            elsif (cur_action.action_type == 1) #1 = Link To
+            elsif (cur_action.action_type == UserAction.linkto_type)
                 laPair = LinkToActionPair.new
                 laPair.link_to = LinkTo.find(cur_action.action_id)
                 laPair.action_id = cur_action.id
                 @link_tos << laPair
             end
         end
+
+        #resolve dst user id for all party invites
+        # this is in the case where an invite was sent to someone who is not already part of Audicy
+        invites = @user.get_all_party_invites
+        invites.to_a.each do |invite|
+            invite.dst_user_id ==  @user.id #if this is a new user, invited by a firend, their id is ivalid (-1)
+        end
+    end
+
+    #based on user state (are we missing some information)
+    # we might want to assign some actions for the user to do.
+    # ie: Their gender, location, and age (or age group).
+    # But also some party related requests might be in their queue
+    def manage_actions_dynamically
+      if @user.get_all_party_invites.empty? == false
+        if @user.is_assigned_linkto( LinkTo.get_party_invitation_link ) == false
+            #assign the linkto
+            invite = LinkTo.get_party_invitation_link
+            if invite != nil #we have to create that linkto manually and have it in the DB
+            #create a new action and assign it to the user
+            action = UserAction.new
+            action.user_id = @user.id
+            action.action_type = UserAction.linkto_type
+            action.action_id = invite.id
+            action.save
+            end
+        end
+      else #the invites are empty we might have to remove the linkto
+        if @user.is_assigned_linkto( LinkTo.get_party_invitation_link ) == true
+          #remove it
+          @user.get_actions.where("action_id" => LinkTo.get_party_invitation_link.id).delete_all
+        end
+      end
     end
 
     def enter_answer
@@ -91,7 +126,7 @@ class NewAccountController < ApplicationController
     end
 
     def create_party
-    #@TODO: Check for param validity (is there a party with the same name?)
+    #@TODO: Check for param validity (eg: is there a party with the same name?)
         user_id = session[:user_id]
         @user = User.find(user_id)
 
@@ -118,35 +153,58 @@ class NewAccountController < ApplicationController
     end
 
     def join_party
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+        party = Party.find(params[:party_id])
+
+        #make sure user not already in the party
+        if party.users.exists?(@user.id) == false
+            party.users << @user #store user
+        end
+
+        PartyInvite.where(:party_id => party.id, :dst_user_id => @user.id).delete_all
+
+        redirect_to action: 'party'
     end
 
-    def submit_friend_invite_request
+    def submit_party_invite_request
         friend_first_name = params[:first_name]
         friend_last_name = params[:last_name]
+        friend_full_name = friend_first_name + " " + friend_last_name;
         friend_email = params[:email]
         user_id = session[:user_id]
         @user = User.find(user_id)
         @current_party = get_user_current_party(@user)
-        #TODO:
-        # | request_type  | party_id |  source_user_id |  target_user_name |  target_user_email |
-        # Send Friend invite:
-        # invite_user_to_party ---> Party info/User info
 
-        # Send a request to remove a user from party:
-        # remove_user_from_party ---> Party info/User info
+        #find the friend
+        friend =
+        User.where( :name => friend_full_name, :email => friend_email ).first ||
+        User.where( :name => friend_full_name.capitalize, :email => friend_email ).first
+        # if friend == @user (self invite)... just return
+        #if friend belongs to @current_party just return
+        if friend != nil
+            if @current_party.users.exists?(friend.id) || friend.id == @user.id
+                return
+            end
+        end
 
-        # Send a request to join a party:
-        # join_party ---> Party info/User info
+        #if this friend hasn't already been invited...
+        invite = PartyInvite.where(:party_id => @current_party.id, :dst_user_email => friend_email).first
+        if invite == nil
+          #create party invite
+          invite = PartyInvite.new
+          invite.party_id       = @current_party.id
+          invite.src_user_id    = @user.id
+          invite.dst_user_id    = friend != nil ? friend.id : -1
+          invite.dst_user_name  = friend_full_name
+          invite.dst_user_email = friend_email
+          invite.save
 
-        # Send a request to leave a party:
-        # leave_party ---> Party info/User info
+          #send an email
+          Outreach.party_invite( @current_party, @user, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+        end
 
-        # Send a request to delete a party:
-        # delete_party ---> Party info/User info
-
-        #Periodically process and resolve the async requ in the database
-        # https://devcenter.heroku.com/articles/queuing-ruby-resque
-        # https://github.com/resque/resque
+        redirect_to action: 'party'
     end
 
     def calendar
@@ -166,6 +224,8 @@ class NewAccountController < ApplicationController
         @user = User.find(user_id)
         @current_user_party = get_user_current_party(@user)
         @all_parties = Party.all
+        @party_invites = PartyInvite.where(:dst_user_id => @user.id).to_a
+
         @current_nav_selection = "nav_party"
     end
 
@@ -180,7 +240,7 @@ class NewAccountController < ApplicationController
     def settings
         @current_nav_selection = ""
     end
-    
+
     private
 
     #this function returns the user's current party
