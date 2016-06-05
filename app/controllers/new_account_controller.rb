@@ -103,6 +103,22 @@ class NewAccountController < ApplicationController
         render nothing: true
     end
 
+    def edit_user
+        user_id = session[:user_id]
+        user = User.find(user_id)
+        #@TODO: SANITIZE!!! :)
+        user.name   = params[:name]
+        user.email  = params[:email]
+        user.secondary_email = params[:secondary_email]
+        user.gender   = params[:gender]
+        user.birthday = params[:birthday]
+        user.zip_code = params[:zip_code]
+        user.description = params[:description]
+        user.save
+
+        redirect_to action: 'profile'
+    end
+
     def handle_link_to
         action = UserAction.find(params[:action_id] )
         #action.destroy
@@ -234,6 +250,8 @@ class NewAccountController < ApplicationController
     end
 
     def profile
+        user_id = session[:user_id]
+        @user = User.find(user_id)
         @current_nav_selection = ""
     end
 
