@@ -27,7 +27,12 @@ class User < ActiveRecord::Base
   end
 
   def get_all_party_invites
-    return PartyInvite.where(:dst_user_email => self.email)
+    return PartyInvite.where(:dst_user_email => self.email) + PartyInvite.where(:dst_user_email => self.secondary_email)
+  end
+
+  def remove_party_invites(party_id)
+    PartyInvite.where(:party_id => party_id, :dst_user_email => self.email).delete_all
+    PartyInvite.where(:party_id => party_id, :dst_user_email => self.secondary_email).delete_all
   end
 
   def is_assigned_linkto( linkto )

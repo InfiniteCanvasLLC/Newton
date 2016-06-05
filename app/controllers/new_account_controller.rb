@@ -178,7 +178,7 @@ class NewAccountController < ApplicationController
             party.users << @user #store user
         end
 
-        PartyInvite.where(:party_id => party.id, :dst_user_id => @user.id).delete_all
+        @user.remove_party_invites(params[:party_id])
 
         redirect_to action: 'party'
     end
@@ -240,7 +240,7 @@ class NewAccountController < ApplicationController
         @user = User.find(user_id)
         @current_user_party = get_user_current_party(@user)
         @all_parties = Party.all
-        @party_invites = PartyInvite.where(:dst_user_id => @user.id).to_a
+        @party_invites = @user.get_all_party_invites
 
         @current_nav_selection = "nav_party"
     end
