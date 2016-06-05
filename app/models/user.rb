@@ -36,6 +36,11 @@ class User < ActiveRecord::Base
   end
 
   def is_assigned_linkto( linkto )
+    #sanity check
+    if linkto.nil? == true
+      return false
+    end
+
     is_assigned = false;
     actions = self.get_actions
     actions.each do |action|
