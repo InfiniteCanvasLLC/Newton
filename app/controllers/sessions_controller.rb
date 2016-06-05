@@ -1,3 +1,11 @@
+module Spotify
+    class Client
+        def me_top_artist
+            run(:get, '/v1/me/top/artists', [200])
+        end
+    end
+end
+
 class SessionsController < ApplicationController
 
     def new
@@ -31,10 +39,28 @@ class SessionsController < ApplicationController
     def handle_spotify_auth
         auth = request.env["omniauth.auth"]
         spotify_token = auth['credentials']['token']
-        #TODO save spotify token on Newton server
-        # ...
-   
         
+        # Save spotify data to Newton server
+        config = 
+        {
+            :access_token => spotify_token,  # initialize the client with an access token to perform authenticated calls
+            :raise_errors => true,  # choose between returning false or raising a proper exception when API calls fails
+
+            # Connection properties
+            :retries       => 1,    # automatically retry a certain number of times before returning
+            :read_timeout  => 10,   # set longer read_timeout, default is 10 seconds
+            :write_timeout => 10,   # set longer write_timeout, default is 10 seconds
+            :persistent    => false # when true, make multiple requests calls using a single persistent connection. Use +close_connection+ method on the client to manually clean up sockets
+        }
+        
+        client = Spotify::Client.new(config)
+        
+        # grab track data
+        myTracks = client.me_tracks
+        
+        topArtists = client.me_top_artist
+        
+       byebug 
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home'
     end
