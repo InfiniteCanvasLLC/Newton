@@ -57,38 +57,36 @@ class NewAccountController < ApplicationController
         invites = @user.get_all_party_invites
         invites.to_a.each do |invite|
             invite.dst_user_id ==  @user.id #if this is a new user, invited by a firend, their id is ivalid (-1)
+            invite.save #Don't forget to save!
         end
     end
 
     #based on user state (are we missing some information)
     # we might want to assign some actions for the user to do.
-    # ie: Their gender, location, and age (or age group).
+    # ie: Update their gender, location, and age (or age group).
     # But also some party related requests might be in their queue
     def manage_actions_dynamically
+      inviteLinkto = LinkTo.get_party_invitation_link #this could be nil, remember, we need to create it manually (only once though).
+
       if @user.get_all_party_invites.empty? == false
-        if @user.is_assigned_linkto( LinkTo.get_party_invitation_link ) == false
-            #assign the linkto
-            invite = LinkTo.get_party_invitation_link
-            if invite != nil #we have to create that linkto manually and have it in the DB
-            #create a new action and assign it to the user
-            action = UserAction.new
-            action.user_id = @user.id
-            action.action_type = UserAction.linkto_type
-            action.action_id = invite.id
-            action.save
-            end
+        if @user.is_assigned_linkto( inviteLinkto ) == false
+          #create a new action and assign it to the user
+          action = UserAction.new
+          action.user_id = @user.id
+          action.action_type = UserAction.linkto_type
+          action.action_id = inviteLinkto.id
+          action.save
         end
       else #the invites are empty we might have to remove the linkto
-        if @user.is_assigned_linkto( LinkTo.get_party_invitation_link ) == true
+        if @user.is_assigned_linkto( inviteLinkto ) == true
           #remove it
-          @user.get_actions.where("action_id" => LinkTo.get_party_invitation_link.id).delete_all
+          @user.get_actions.where("action_id" => inviteLinkto.id).delete_all
         end
       end
     end
 
     def enter_answer
         questionAnswer = QuestionAnswer.new
-
         action = UserAction.find(params[:action_id])
 
         questionAnswer.question_id = action.action_id
