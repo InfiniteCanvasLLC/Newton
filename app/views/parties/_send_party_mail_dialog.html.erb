@@ -34,7 +34,6 @@
         $("#send_party_mail_modal").on("show.bs.modal",
           function (e)
           {
-            console.log($("#send_party_mail_header").text());
             $("#send_party_mail_header").html($(e.relatedTarget).data('party-name'));
             $("#party_id").val($(e.relatedTarget).data('party-id'));
             $("#email_subject").val('');

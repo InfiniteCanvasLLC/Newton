@@ -6,7 +6,7 @@ end
 class UsersController < ApplicationController
     layout "administrator"
     before_action :set_user, only: [:show, :edit, :update]
-    
+
     def index
         @current_nav_selection = "nav_users"
 
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     end
 
     def send_user_email
-        Outreach.mail_to_user(params[:user_id], params[:email_subject], params[:email_body]).deliver_now
+        Outreach.mail_to_user_id(params[:user_id], params[:email_subject], params[:email_body]).deliver_now
         render nothing: true
     end
 
