@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def is_female
-    return self.gender == 0;
+    return self.gender == 0
   end
 
   def question_answers
