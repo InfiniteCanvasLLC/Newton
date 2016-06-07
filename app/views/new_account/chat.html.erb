@@ -1,16 +1,12 @@
 <%= render :layout => 'navigation' do %>
-    
 <!-- Chat page specific code -->
 <div class="row"><br>
     <div class="col-lg-12">
         <div class="panel panel-default">
-        
           <div class="panel-heading">
               <i class="fa fa-fw"></i> Chat for <%= @current_party.name %> (<%= @conversations.count %> posts) 
           </div>
-          
           <div class="panel-body">
-            
             <div id="chat-div-messages" lastid="<%= @conversations.last.nil? == true ? -1 : @conversations.last.id %>" >
             <% @conversations.each_with_index do |conversation, i| %>
                 <div class=<%= conversation.user.id == @user.id ? "chat-box-right" : "chat-box-left" %> >
@@ -23,11 +19,9 @@
                     <img src="http://placehold.it/64x64" alt="bootstrap Chat box user image" class="img-circle">
                     -  <%= conversation.user.name %>
                 </div>
-    
                 <hr>
             <% end %>
-            </div>           
-                    
+            </div>
             <!-- The send text box -->
             <div class="chat-box-footer">
                 <div class="input-group">
@@ -42,7 +36,7 @@
           </div>
         </div>
     </div>
-</div>          
+</div>
 
 <script>
 //Resets the text field to empty, after getting the value.
@@ -53,9 +47,9 @@ function handleMessageSubmission()
     var text = $("#chat-input-msg").val();
     if(text == "")//empty string
         return;
-        
+
     $("#chat-input-msg").val("");
-    
+
     //send the data to the controller
     $.ajax({
     type: "POST",
@@ -90,7 +84,6 @@ $(document).click(function(event) {
 //When on the chat page, this pulls the server every 3 seconds for a new message. 
 //If such is found, reload the page.
 function worker() {
-    
   var lastMsgID =  $("#chat-div-messages").attr("lastid");
   if (lastMsgID != -1) //invalid for empty conversations
   {
@@ -108,7 +101,6 @@ function worker() {
         }
     });
   }
-  
   //re issue a call in the next 3 seconds
   setTimeout(worker, 3000);
 }
@@ -118,6 +110,6 @@ $(document).ready(function() {
   setTimeout(worker, 3000);
 });
 
-</script>            
+</script>
 	
 <% end %>
