@@ -12,4 +12,28 @@ class Outreach < ApplicationMailer
     mail to: user.email
   end
 
+  def mail_to_user(user_id, email_subject, email_body)
+    user = User.find(user_id)
+
+    @header_message = "Hi " + user.name
+    @message = email_body
+    @footer_message = "Your friends at Newton :) "
+
+    mail to: user.email, subject: email_subject
+  end
+
+  def mail_to_party(party_id, email_subject, email_body)
+    party = Party.find(party_id)
+    emails = Array.new
+    party.users.each do |user|
+      emails << user.email
+    end
+
+    @header_message = "Hi " + party.name
+    @message = email_body
+    @footer_message = "Your friends at Newton :) "
+
+    mail to: emails, subject: email_subject
+  end
+
 end
