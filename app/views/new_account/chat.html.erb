@@ -1,0 +1,123 @@
+<%= render :layout => 'navigation' do %>
+    
+<!-- Chat page specific code -->
+<div class="row"><br>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+        
+          <div class="panel-heading">
+              <i class="fa fa-fw"></i> Chat for <%= @current_party.name %> (<%= @conversations.count %> posts) 
+          </div>
+          
+          <div class="panel-body">
+            
+            <div id="chat-div-messages" lastid="<%= @conversations.last.nil? == true ? -1 : @conversations.last.id %>" >
+            <% @conversations.each_with_index do |conversation, i| %>
+                <div class=<%= conversation.user.id == @user.id ? "chat-box-right" : "chat-box-left" %> >
+                    <%= conversation.message %>  
+                    (<%= conversation.created_at.today? == true ? 
+                    conversation.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M") : 
+                    conversation.created_at.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %m-%d") %>)
+                </div>
+                <div class=<%= conversation.user.id == @user.id ? "chat-box-name-right" : "chat-box-name-left" %> >
+                    <img src="http://placehold.it/64x64" alt="bootstrap Chat box user image" class="img-circle">
+                    -  <%= conversation.user.name %>
+                </div>
+    
+                <hr>
+            <% end %>
+            </div>           
+                    
+            <!-- The send text box -->
+            <div class="chat-box-footer">
+                <div class="input-group">
+                    <input id="chat-input-msg" type="text" class="form-control" placeholder="Broadcast to your party here...">
+                    <span class="input-group-btn">
+                        <button id="chat-button-send" class="btn btn-info" type="button">SEND</button>
+                    </span>
+                </div>
+            </div>
+            <!-- End of send text box -->
+          
+          </div>
+        </div>
+    </div>
+</div>          
+
+<script>
+//Resets the text field to empty, after getting the value.
+//Issues an ajax post to new_account/handle_chat_post, sending the
+//  message as a string.
+function handleMessageSubmission() 
+{
+    var text = $("#chat-input-msg").val();
+    if(text == "")//empty string
+        return;
+        
+    $("#chat-input-msg").val("");
+    
+    //send the data to the controller
+    $.ajax({
+    type: "POST",
+    url: "new_account/handle_chat_post",
+    success: function(data) {
+         location.reload();
+        },
+    data: { 
+    'message': text
+    }
+    });
+}
+
+$( "#chat-input-msg" ).keypress(function() {
+  if (event.keyCode === 13) // 13 is 'enter' key
+  {
+    handleMessageSubmission();
+  }
+});
+$(document).click(function(event) {
+    var id = $(event.target).attr("id");
+    if(id==null)
+        return;
+
+    //edit party button clicked
+    if( id == 'chat-button-send' )
+    {
+        handleMessageSubmission();
+    }
+});
+
+//When on the chat page, this pulls the server every 3 seconds for a new message. 
+//If such is found, reload the page.
+function worker() {
+    
+  var lastMsgID =  $("#chat-div-messages").attr("lastid");
+  if (lastMsgID != -1) //invalid for empty conversations
+  {
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        url: "new_account/handle_chat_update",
+        success: function(data) {
+            var reload_page = data["reload_page"];
+            if(reload_page)
+                location.reload();
+        },
+        data: { 
+        'last_message_id': lastMsgID
+        }
+    });
+  }
+  
+  //re issue a call in the next 3 seconds
+  setTimeout(worker, 3000);
+}
+
+$(document).ready(function() {
+  // run the first time; all subsequent calls will take care of themselves
+  setTimeout(worker, 3000);
+});
+
+</script>            
+	
+<% end %>

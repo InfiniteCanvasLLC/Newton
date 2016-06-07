@@ -232,6 +232,48 @@ class NewAccountController < ApplicationController
     def stats
         @current_nav_selection = "nav_stats"
     end
+    
+    def chat
+        user_id = session[:user_id]
+        @user = User.find(user_id)
+        @current_party = get_user_current_party(@user)
+        
+        #only display the last 20 entries in the chat (maybe a more dynamic scheme in the future)
+        @conversations = @current_party.party_conversations.last(20)
+        @current_nav_selection = "nav_chat"
+    end
+    
+    def handle_chat_post
+       user_id = session[:user_id]
+       @user = User.find(user_id)
+       @current_party = get_user_current_party(@user)
+    
+       conversation = PartyConversation.new
+       conversation.party_id = @current_party.id
+       conversation.message  = params[:message]
+       conversation.user_id  = user_id
+    
+       conversation.save
+       
+       redirect_to action: 'chat'
+    end
+    
+    def handle_chat_update
+       user_id = session[:user_id]
+       @user = User.find(user_id)
+       @current_party = get_user_current_party(@user)
+       
+       # there are new messages to display (ie: the front end is not in sync with the back end)
+       if @current_party.party_conversations.empty? == false && 
+          @current_party.party_conversations.last.id != params[:last_message_id].to_i
+           conversations = @current_party.party_conversations.last(20)
+           render json: {"reload_page": true}
+       else
+           #the JQuery is pulling for new messages available
+           #redirect_to action: 'chat'
+           render json: {"reload_page": false}
+       end
+    end
 
     def party
         user_id = session[:user_id]

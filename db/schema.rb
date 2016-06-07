@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605054402) do
+ActiveRecord::Schema.define(version: 20160606210302) do
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(version: 20160605054402) do
   end
 
   add_index "parties_users", ["user_id", "party_id"], name: "by_user_and_party", unique: true
+
+  create_table "party_conversations", force: :cascade do |t|
+    t.integer  "party_id"
+    t.text     "message"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "party_conversations", ["party_id"], name: "index_party_conversations_on_party_id"
 
   create_table "party_invites", force: :cascade do |t|
     t.integer  "party_id"
