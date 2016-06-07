@@ -5,6 +5,7 @@ end
 
 class UsersController < ApplicationController
     layout "administrator"
+    before_action :set_user, only: [:show, :edit, :update]
     
     def index
         @current_nav_selection = "nav_users"
@@ -71,5 +72,10 @@ class UsersController < ApplicationController
         @user.parties.delete(@party)
 
         redirect_to action: 'edit', id: @user.id
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params[:id])
     end
 end

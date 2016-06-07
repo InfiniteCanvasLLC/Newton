@@ -12,7 +12,8 @@ Rails.application.routes.draw do
   post 'new_account/edit_party'
   post 'new_account/leave_party'
   post 'new_account/join_party'
-  post 'new_account/submit_friend_invite_request'
+  post 'new_account/submit_party_invite_request'
+  post 'new_account/edit_user'
   post 'parties/unregister_event'
 
   get 'sessions/new'

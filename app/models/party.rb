@@ -11,4 +11,8 @@ class Party < ActiveRecord::Base
   def self.random_name
     return (Faker::Hacker.adjective + " " + Faker::Team.creature).split.map(&:capitalize).join(' ') + " " + Faker::Company.suffix
   end
+
+  def get_owner
+    return User.find( self.owner_user_id )
+  end
 end
