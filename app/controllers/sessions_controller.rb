@@ -6,13 +6,13 @@ class SessionsController < ApplicationController
 
     def create
         auth = request.env["omniauth.auth"]
-        user = User.where(  :provider => auth['provider'], :uid => auth['uid']).first 
+        user = User.where(  :provider => auth['provider'], :uid => auth['uid']).first
         if( user.nil?)
             user = User.create_with_omniauth(auth)
             # new user, send a welcome message (btw I am pretty sure the email field should be valid #VERIFY)
             Outreach.welcome(user).deliver_now
         end
-        
+
         if user.current_party_index.nil?
             user.current_party_index = 0
             user.save
@@ -20,10 +20,6 @@ class SessionsController < ApplicationController
 
         session[:user_id] = user.id
         session[:fb_info] = auth.info
-
-        if (session[:fb_info])["about"].nil?
-            (session[:fb_info])["about"] = "Something about yourself"
-        end
 
         redirect_to controller: 'new_account', action: 'home'
     end
@@ -38,8 +34,8 @@ class SessionsController < ApplicationController
         spotify_token = auth['credentials']['token']
         #TODO save spotify token on Newton server
         # ...
-   
-        
+
+
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home'
     end

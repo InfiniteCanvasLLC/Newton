@@ -12,6 +12,7 @@ class Outreach < ApplicationMailer
     mail to: user.email
   end
 
+<<<<<<< HEAD
   def mail_to_user(user_id, email_subject, email_body)
     user = User.find(user_id)
 
@@ -20,14 +21,6 @@ class Outreach < ApplicationMailer
     @footer_message = "Your friends at Newton :) "
 
     mail to: user.email, subject: email_subject
-  end
-
-  def party_invite(party, src, dest_name, dest_email, link)
-    @header_message = "Hi " + dest_name
-    @message = "Your friend " + src.name + " would like to invite you to their party " + party.name + "!\n\n"
-    @link = link
-    @footer_message = "Your friends at Audicy :) "
-    mail to: dest_email
   end
 
   def mail_to_party(party_id, email_subject, email_body)
@@ -44,4 +37,13 @@ class Outreach < ApplicationMailer
     mail to: emails, subject: email_subject
   end
 
+=======
+  def party_invite(party, src, dest_name, dest_email, link)
+    @header_message = "Hi " + dest_name
+    @message = "Your friend " + src.name + " would like to invite you to their party " + party.name + "!\n\n"
+    @link = link
+    @footer_message = "Your friends at Audicy :) "
+    mail to: dest_email
+  end
+>>>>>>> master
 end

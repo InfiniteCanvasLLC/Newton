@@ -6,7 +6,7 @@ class LinkTo < ActiveRecord::Base
       #special meaning (ToDos)
       when LinkTo.sync_spotify_type
           return "Sync Spotify info"
-      when LinkTo.party_invitaion_type
+      when LinkTo.party_invitation_type
           return "New party invitation"
       when LinkTo.invite_friend_type
           return "Invite a friend to party"
@@ -16,7 +16,7 @@ class LinkTo < ActiveRecord::Base
           return "UNKNOW"
       end
   end
-  
+
   #IDs for specific types of LinkTos
   def self.standard_type
     return 0

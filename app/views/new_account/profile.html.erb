@@ -1,5 +1,114 @@
 <%= render :layout => 'navigation' do %>
 	
 <!-- Profile page specific code -->
-	
+<div class="row"><br>
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-fw"></i> About yourself
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.name %>
+                    </p>
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.email %>
+                    </p>
+
+                    <!-- Optional -->
+                    <% if @user.secondary_email.blank? == false %>
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.secondary_email %>
+                    </p>
+                    <% end %>
+                    <% if @user.gender.blank? == false %>
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.gender == 0 ? "Female" : "Male" %>
+                    </p>
+                    <% end %>
+                    <% if @user.birthday.blank? == false %>
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.birthday %>
+                    </p>
+                    <% end %>
+                    <% if @user.zip_code.blank? == false  && @user.zip_code != 0 %>
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.zip_code %>
+                    </p>
+                    <% end %>
+                    <% if @user.description.blank? == false %>
+                    <p class="list-group-item">
+                        <i class="fa fa-fw"></i> <%= @user.description %>
+                    </p>
+                    <% end %>
+                    <!---->
+
+               </div>
+               <div class="row">
+                    <div class="col-sm-3">
+                        <a class="btn btn-default btn-block" id="edit-user-button" userid="<%= @user.id %>" >Edit</a>
+                    </div>
+               </div>
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+    </div>
+</div>
 <% end %>
+
+
+<%= render 'user_edit_form' %>
+
+<script>
+$(document).click(function(event) {
+    var id = $(event.target).attr("id");
+    if(id==null)
+        return;
+
+    //edit party button clicked
+    if( id == 'edit-user-button' )
+    {
+        var user_id = parseInt( $(event.target).attr('userid') , 10);
+
+        //issuing an ajax request for the user data
+        $.ajax({
+            url: '/users/' + user_id + '.json',
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            cache: false,
+            success: function(data) {
+               //on success the party is accessible from 'data'
+               //go over each key in data and set it in the user_edit_form field
+               var user_edit_form = $('#user_edit_modal')
+               for (var key in data) {
+                    if (data.hasOwnProperty(key))
+                    {
+                        var form_field = user_edit_form.find("#" + key)
+                        if(form_field != null)//Why does #id exists???
+                        {
+                            form_field.val(data[key]);//set the starting value of the field
+                            //for radio buttons add 'checked' attribute if checked
+                            if(key == "gender")
+                            {
+                                if (data[key] == 0)
+                                    $("#gender_0").attr("checked", true)
+                                else
+                                    $("#gender_1").attr("checked", true)
+                            }
+                        }
+                    }
+                }
+            },
+            error: function() {
+                window.alert('Failed to retrieve user' + user_id);
+            }
+        });
+
+        $('#user_edit_modal').modal('show');
+    }
+});
+</script>
