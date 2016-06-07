@@ -1,13 +1,13 @@
 class PartiesController < ApplicationController
   layout "administrator"
-  
+
   before_action :set_party, only: [:show, :edit, :update, :destroy]
 
   # GET /parties
   # GET /parties.json
   def index
     @current_nav_selection = "nav_parties"
-    
+
     @parties = Party.all
   end
 
@@ -20,14 +20,14 @@ class PartiesController < ApplicationController
   # GET /parties/new
   def new
     @current_nav_selection = "nav_parties"
-    
+
     @party = Party.new
   end
 
   # GET /parties/1/edit
   def edit
     @current_nav_selection = "nav_parties"
-    
+
     @all_events = Event.all
     #@party_events = @party.events.to_a #Event.all.to_a
     #party = Party.find(params[:id])
@@ -90,6 +90,11 @@ class PartiesController < ApplicationController
       format.html { redirect_to parties_url, notice: 'Party was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def send_party_email
+    Outreach.mail_to_party_id(params[:party_id], params[:email_subject], params[:email_body]).deliver_now
+    render nothing: true
   end
 
   private
