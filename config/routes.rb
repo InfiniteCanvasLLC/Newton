@@ -28,7 +28,10 @@ Rails.application.routes.draw do
 
   post 'login_page/submit_user_signup'
   post 'login_page/submit_user_feedback'
-  
+
+  post 'users/send_user_email'
+  post 'parties/send_party_email'
+
   post 'EnterAnswer' => 'new_account#enter_answer'
 
   get 'Home'     => 'new_account#home',       :as => :home
@@ -49,7 +52,7 @@ Rails.application.routes.draw do
   get '/signin' => 'sessions#new', :as => :signin
 
   get 'user_feedbacks' => 'user_feedbacks#index',   :as => :user_feedbacks
-  
+
   get 'creatives/index'
 
   get 'administrator' => 'administrator#index'
