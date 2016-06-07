@@ -15,7 +15,7 @@
                 <div class="list-group">
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <p class="list-group-item">
-                            <i class="fa fa-female fa-fw"></i> <%= user.name %><!-- Male/Female is not available for the moment -->
+                            <i class="<%= user.is_female ? 'fa fa-female fa-fw' : 'fa fa-male fa-fw' %>"></i> <%= user.name %><!-- Male/Female is not available for the moment -->
                             <span class="pull-right label label-success"><em>Active</em><!-- Optional information regarding the user -->
                             </span>
                         </p>
