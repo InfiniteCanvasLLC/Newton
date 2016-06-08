@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   post 'new_account/join_party'
   post 'new_account/submit_party_invite_request'
   post 'new_account/edit_user'
+  post 'new_account/handle_chat_post'
+  post 'new_account/handle_chat_update'
+  post 'parties/unregister_event'
   post 'new_account/handle_event_commitment'
   post 'parties/unregister_for_event'
 
@@ -36,6 +39,7 @@ Rails.application.routes.draw do
   get 'Home'     => 'new_account#home',       :as => :home
   get 'Calendar' => 'new_account#calendar',   :as => :calendar
   get 'Stats'    => 'new_account#stats',      :as => :stats
+  get 'Chat'     => 'new_account#chat',       :as => :chat
   get 'Party'    => 'new_account#party',      :as => :party_user_page
   get 'Feedback' => 'new_account#feedback',   :as => :feedback
 

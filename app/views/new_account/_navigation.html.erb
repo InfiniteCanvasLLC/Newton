@@ -47,6 +47,9 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 				<li class="<%= @current_nav_selection=='nav_party' ? 'selected' : ' ' %>">
 	                <a href="<%= party_user_page_path %>"><i class="fa fa-fw fa-group"></i> Party</a>
 	            </li>
+		        <li class="<%= @current_nav_selection=='nav_chat' ? 'selected' : ' ' %>">
+	                <a href="<%= chat_path %>"><i class="fa fa-fw fa-slack"></i> Chat</a>
+	            </li>
 	            <li class="<%= @current_nav_selection=='nav_calendar' ? 'selected' : ' ' %>">
 	                <a href="<%= calendar_path %>"><i class="fa fa-fw fa-calendar"></i> Music Events</a>
 	            </li>
