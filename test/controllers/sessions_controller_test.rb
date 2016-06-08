@@ -20,8 +20,6 @@ class SessionsControllerTest < ActionController::TestCase
         })
 
         request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:facebook]
-
-        puts request.env["omniauth.auth"]
     end
 
     test "Facebook Redirect Path" do
@@ -31,6 +29,10 @@ class SessionsControllerTest < ActionController::TestCase
 
     test "Login with new user" do
         get :create
+
+        user = User.where(email: ENV['FB_TESTUSER_USERNAME'] )
+        assert(user != nil, "User was not created")
+        assert_redirected_to(controller: 'new_account', action: 'home')
     end
 
 end
