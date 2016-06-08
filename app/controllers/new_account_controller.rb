@@ -69,7 +69,7 @@ class NewAccountController < ApplicationController
       inviteLinkto = LinkTo.get_party_invitation_link #this could be nil, remember, we need to create it manually (only once though).
 
       if @user.get_all_party_invites.empty? == false
-        if @user.is_assigned_linkto( inviteLinkto ) == false
+        if @user.is_assigned_linkto( inviteLinkto ) == false && inviteLinkto != nil
           #create a new action and assign it to the user
           action = UserAction.new
           action.user_id = @user.id
@@ -192,8 +192,8 @@ class NewAccountController < ApplicationController
 
         #find the friend
         friend =
-        User.where( :name => friend_full_name, :email => friend_email ).first ||
-        User.where( :name => friend_full_name.capitalize, :email => friend_email ).first
+        User.where( :email => friend_email ).first ||
+        User.where( :secondary_email => friend_email ).first
         # if friend == @user (self invite)... just return
         #if friend belongs to @current_party just return
         if friend != nil
