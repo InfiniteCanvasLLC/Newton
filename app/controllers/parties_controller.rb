@@ -99,6 +99,7 @@ class PartiesController < ApplicationController
   # DELETE /parties/1
   # DELETE /parties/1.json
   def destroy
+    #@TODO: remove all party related information (registrations + conversations)
     @party.destroy
     respond_to do |format|
       format.html { redirect_to parties_url, notice: 'Party was successfully destroyed.' }
