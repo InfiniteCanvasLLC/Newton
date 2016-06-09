@@ -66,5 +66,9 @@ class User < ActiveRecord::Base
       return parties[party_index];
     end
   end
+  
+  def is_active
+    return (Time.now - self.last_seen).to_i < 60*5 #5 minutes ago
+  end
 
 end

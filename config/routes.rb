@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post 'new_account/edit_user'
   post 'new_account/handle_chat_post'
   post 'new_account/handle_chat_update'
+  post 'new_account/pull_user_statuses'
   post 'parties/unregister_event'
 
   get 'sessions/new'
