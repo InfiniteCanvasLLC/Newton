@@ -69,7 +69,7 @@ class NewAccountController < ApplicationController
       inviteLinkto = LinkTo.get_party_invitation_link #this could be nil, remember, we need to create it manually (only once though).
 
       if @user.get_all_party_invites.empty? == false
-        if @user.is_assigned_linkto( inviteLinkto ) == false
+        if @user.is_assigned_linkto( inviteLinkto ) == false && inviteLinkto != nil
           #create a new action and assign it to the user
           action = UserAction.new
           action.user_id = @user.id
@@ -192,8 +192,8 @@ class NewAccountController < ApplicationController
 
         #find the friend
         friend =
-        User.where( :name => friend_full_name, :email => friend_email ).first ||
-        User.where( :name => friend_full_name.capitalize, :email => friend_email ).first
+        User.where( :email => friend_email ).first ||
+        User.where( :secondary_email => friend_email ).first
         # if friend == @user (self invite)... just return
         #if friend belongs to @current_party just return
         if friend != nil
@@ -225,8 +225,22 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         @user = User.find(user_id)
         @current_party = get_user_current_party(@user)
+        @current_party_events = @current_party.events.sort_by &:start
 
         @current_nav_selection = "nav_calendar"
+    end
+    
+    def handle_event_commitment
+       event = Event.find(params[:event_id])
+       user_id = session[:user_id]
+       @user = User.find(user_id)
+       @current_party = get_user_current_party(@user)
+
+       reg = @current_party.get_registration(event.id, @user.id)
+       reg.commitment = params[:new_commitment]
+       reg.save
+       
+       redirect_to action: 'calendar'
     end
 
     def stats
@@ -303,13 +317,9 @@ class NewAccountController < ApplicationController
 
     #this function returns the user's current party
     def get_user_current_party(user)
-        #if this is the first time the user logs in (current_party_index nil)
-        if user.current_party_index.nil?
-            user.current_party_index = 0
-        end
-
+        # if this is the first time the user logs in (current_party_index nil)
         # if the @user.current_party_index is invalid in any way, this will returns user.pary[0]
-        if user.current_party_index >= user.parties.count
+        if user.current_party_index.nil? || user.current_party_index >= user.parties.count
             user.current_party_index = 0
             user.save
         end
