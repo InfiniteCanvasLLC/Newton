@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608001949) do
-
+ActiveRecord::Schema.define(version: 20160608152830) do
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
     t.integer  "user_id"
@@ -140,6 +139,7 @@ ActiveRecord::Schema.define(version: 20160608001949) do
     t.date     "birthday",            default: '2016-06-05'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
+    t.datetime "last_seen"
   end
 
 end

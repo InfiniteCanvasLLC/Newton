@@ -15,8 +15,9 @@
                 <div class="list-group">
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <p class="list-group-item">
-                            <i class="<%= user.is_female ? 'fa fa-female fa-fw' : 'fa fa-male fa-fw' %>"></i> <%= user.name %><!-- Male/Female is not available for the moment -->
-                            <span class="pull-right label label-success"><em>Active</em><!-- Optional information regarding the user -->
+                            <i class="<%= user.is_female ? 'fa fa-female fa-fw' : 'fa fa-male fa-fw' %>"></i> <%= user.name %>
+                            <span id="user-status-label-<%=user.id%>" class="<%= user.is_active ? 'pull-right label label-success' : 'pull-right label label-warning' %>" >
+                              <em id="user-status-text-<%=user.id%>"> <%= user.is_active ? 'Active' : 'Inactive' %> </em>
                             </span>
                         </p>
                     <% end %>
@@ -239,4 +240,42 @@ $(document).click(function(event) {
     }
 });
 
+
+//This pulls the server every minute for a new message.
+//If such is found, reload the page.
+function worker() {
+
+  $.ajax({
+      dataType: 'json',
+      type: "POST",
+      url: "new_account/pull_user_statuses",
+      success: function(data) {
+          for (i = 0; i < data.length; i++)
+          {
+              //status of the user
+              var active = data[i]["user_active"];
+
+              //query the laber to update its color and the text to change its value
+              var label_id = "user-status-label-" + data[i]["user_id"];
+              var text_id  = "user-status-text-" + data[i]["user_id"];
+              var label = $("#" + label_id)
+              var span  = $("#" + text_id)
+              
+              span.text( active ? "Active" : "Inactive" );
+              
+              label.removeClass( "label-success" )//.addClass
+              label.removeClass( "label-warning" )//.addClass
+              label.addClass(  active ? "label-success" : "label-warning" );
+          }
+      }
+  });
+
+  //re-issue a call in the next minute
+  setTimeout(worker, 60000);
+}
+
+$(document).ready(function() {
+  // run the first time; all subsequent calls will take care of themselves
+  setTimeout(worker, 60000);
+});
 </script>
