@@ -176,8 +176,9 @@ class NewAccountController < ApplicationController
 
     def pull_user_statuses
       @current_party = get_user_current_party(@user)
-      #render :file => "new_account/pull_user_statuses.json.erb", :content_type => 'application/json'
-      #render json: @user
+      # Because the controller's method is called pull_user_statuses and there is a file pull_user_statuses.json.erb, 
+      # the file gets executed. The contents of the file are then returned to the ajax 'success' method
+      #This is equalivalent to: render :file => "new_account/pull_user_statuses.json.erb", :content_type => 'application/json'
     end
 
     def submit_party_invite_request
