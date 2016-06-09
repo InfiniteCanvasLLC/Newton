@@ -142,7 +142,7 @@ class NewAccountController < ApplicationController
         party = Party.new
         party.name = params[:name]
         party.description = params[:description]
-        party.owner_user_id = user_id
+        party.owner_user_id = @user.id
         party.save
 
         #since the user created it, they are part of it
@@ -229,8 +229,6 @@ class NewAccountController < ApplicationController
     
     def handle_event_commitment
        event = Event.find(params[:event_id])
-       user_id = session[:user_id]
-       @user = User.find(user_id)
        @current_party = get_user_current_party(@user)
 
        reg = @current_party.get_registration(event.id, @user.id)
@@ -258,7 +256,7 @@ class NewAccountController < ApplicationController
        conversation = PartyConversation.new
        conversation.party_id = @current_party.id
        conversation.message  = params[:message]
-       conversation.user_id  = user_id
+       conversation.user_id  = @user.id
     
        conversation.save
        
