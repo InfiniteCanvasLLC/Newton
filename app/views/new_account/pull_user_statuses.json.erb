@@ -1,0 +1,2 @@
+<% if @current_party.users.count > 1 %> [ <% end %> <% @current_party.users.each_with_index do |user, index| %> { "user_id" : <%= user.id %>, "user_active" : <%= user.is_active %>} <% if index != @current_party.users.count - 1 %> , <%end%> <%end%> <% if @current_party.users.count > 1 %> ] <% end %>
+
