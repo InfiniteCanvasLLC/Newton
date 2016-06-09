@@ -32,7 +32,6 @@ gem 'frontend-generators'
 gem 'omniauth-spotify', :git => 'https://github.com/rishigupta9999/omniauth-spotify.git'
 gem 'spotify-client'
 
-gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 
 gem 'faker'

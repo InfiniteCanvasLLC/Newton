@@ -15,7 +15,7 @@
             <% @party.events.each do |event| %>
                 <tr>
                 <td><%= event.description %></td>
-                <td><%= link_to 'Unregister for this event', {:party => @party.id, :event => event.id, :action => 'unregister_event'}, method: :post %></td>
+                <td><%= link_to 'Unregister for this event', {:party => @party.id, :event => event.id, :action => 'unregister_for_event'}, method: :post %></td>
                 </td>
                 </tr>
             <% end %>

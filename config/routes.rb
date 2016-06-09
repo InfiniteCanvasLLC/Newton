@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   post 'new_account/handle_chat_update'
   post 'new_account/pull_user_statuses'
   post 'parties/unregister_event'
+  post 'new_account/handle_event_commitment'
+  post 'parties/unregister_for_event'
 
   get 'sessions/new'
 
