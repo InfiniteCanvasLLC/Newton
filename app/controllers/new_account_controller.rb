@@ -177,7 +177,6 @@ class NewAccountController < ApplicationController
     def pull_user_statuses
       @current_party = get_user_current_party(@user)
       #render :file => "new_account/pull_user_statuses.json.erb", :content_type => 'application/json'
-      #render json: @user
     end
 
     def submit_party_invite_request
