@@ -66,9 +66,10 @@ class User < ActiveRecord::Base
       return parties[party_index];
     end
   end
-  
+
+  active_timeout=(300)#5 minutes
   def is_active
-    return (Time.now - self.last_seen).to_i < 60*5 #5 minutes ago
+    return (Time.now - self.last_seen).to_i < active_timeout #5 minutes ago
   end
 
 end
