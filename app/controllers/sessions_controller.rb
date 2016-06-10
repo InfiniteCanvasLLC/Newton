@@ -56,11 +56,13 @@ class SessionsController < ApplicationController
         client = Spotify::Client.new(config)
         
         # grab track data
-        myTracks = client.me_tracks
-        
         topArtists = client.me_top_artist
         
-       byebug 
+        # convert topArtists to a hash to save to the database
+        topArtistsHash = JSON.parse( topArtists["items"] )
+
+        
+      
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home'
     end
