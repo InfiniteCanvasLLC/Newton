@@ -104,14 +104,14 @@ class NewAccountController < ApplicationController
 
     def edit_user
         #@TODO: SANITIZE!!! :)
-        user.name   = params[:name]
-        user.email  = params[:email]
-        user.secondary_email = params[:secondary_email]
-        user.gender   = params[:gender]
-        user.birthday = params[:birthday]
-        user.zip_code = params[:zip_code]
-        user.description = params[:description]
-        user.save
+        @user.name   = params[:name]
+        @user.email  = params[:email]
+        @user.secondary_email = params[:secondary_email]
+        @user.gender   = params[:gender]
+        @user.birthday = params[:birthday]
+        @user.zip_code = params[:zip_code]
+        @user.description = params[:description]
+        @user.save
 
         redirect_to action: 'profile'
     end
