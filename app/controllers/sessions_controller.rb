@@ -64,7 +64,6 @@ class SessionsController < ApplicationController
 
         #topArtistsHash = JSON.parse( topArtists )
         user = User.find( session[:user_id] )
-        byebug
         user.favorite_info.top_artists = topArtists
         user.favorite_info.save
         user.save
