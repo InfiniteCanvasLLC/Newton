@@ -19,6 +19,7 @@ class SessionsController < ApplicationController
 
         if user.current_party_index.nil?
             user.current_party_index = 0
+            user.save
         end
 
         session[:user_id] = user.id
@@ -59,10 +60,15 @@ class SessionsController < ApplicationController
         topArtists = client.me_top_artist
         
         # convert topArtists to a hash to save to the database
-        topArtistsHash = JSON.parse( topArtists["items"] )
+        #topArtistsHash = JSON.parse( topArtists["items"].to_s[1...-1] )
 
-        
-      
+        #topArtistsHash = JSON.parse( topArtists )
+        user = User.find( session[:user_id] )
+        byebug
+        user.favorite_info.top_artists = topArtists
+        user.favorite_info.save
+        user.save
+
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home'
     end

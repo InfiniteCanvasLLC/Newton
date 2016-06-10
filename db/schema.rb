@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160517051826) do
+ActiveRecord::Schema.define(version: 20160610034033) do
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 20160517051826) do
     t.integer "event_id", null: false
     t.integer "party_id", null: false
   end
+
+  create_table "favorite_infos", force: :cascade do |t|
+    t.text     "top_artists"
+    t.text     "top_songs"
+    t.text     "top_genre"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "favorite_infos", ["user_id"], name: "index_favorite_infos_on_user_id"
 
   create_table "link_tos", force: :cascade do |t|
     t.string   "title"
