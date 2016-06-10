@@ -1,20 +1,33 @@
 class LinkTo < ActiveRecord::Base
   def get_type_id_string
-      case self.type_id
-      when LinkTo.standard_type
-          return "Standard LinkTo" #Link to youtube, FB, etc...
-      #special meaning (ToDos)
-      when LinkTo.sync_spotify_type
-          return "Sync Spotify info"
-      when LinkTo.party_invitation_type
-          return "New party invitation"
-      when LinkTo.invite_friend_type
-          return "Invite a friend to party"
-      when LinkTo.request_to_join_party_type
-          return "Request to join party"
-      else
-          return "UNKNOW"
-      end
+    LinkTo.type_id_to_string(self.type_id)
+  end
+
+  def self.get_type_name_to_id_array
+    pairs = Array.new
+    5.times do |i|
+      pair = [LinkTo.type_id_to_string(i), i]
+      pairs << pair
+    end
+    return pairs
+  end
+
+  def self.type_id_to_string(type_id)
+    case type_id
+    when LinkTo.standard_type
+        return "Standard LinkTo" #Link to youtube, FB, etc...
+    #special meaning (ToDos)
+    when LinkTo.sync_spotify_type
+        return "Sync Spotify info"
+    when LinkTo.party_invitation_type
+        return "New party invitation"
+    when LinkTo.invite_friend_type
+        return "Invite a friend to party"
+    when LinkTo.request_to_join_party_type
+        return "Request to join party"
+    else
+        return "UNKNOW"
+    end
   end
 
   #IDs for specific types of LinkTos

@@ -11,35 +11,51 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :description %><br>
+      <%= f.text_field :description %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_area :url %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :url %><br>
+      <%= f.text_area :url %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :link_text %><br>
-    <%= f.text_field :link_text %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :link_text %><br>
+      <%= f.text_field :link_text %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :icon_style %><br>
-    <%= f.text_field :icon_style %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :icon_style %><br>
+      <%= f.text_field :icon_style %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :panel_style %><br>
-    <%= f.text_field :panel_style %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :panel_style %><br>
+      <%= f.text_field :panel_style %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :type_id %><br>
-    <%= f.text_field :type_id %>
+  <div class="field row">
+    <div class="col-md-12">
+      <%= f.label :type_id %><br>
+      <%= f.select :type_id, @link_to_types_list %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="actions row">
+    <div class="col-md-12">
+      <%= f.submit :class => 'btn btn-primary' %>
+    </div>
   </div>
 <% end %>

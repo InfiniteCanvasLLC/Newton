@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   # GET /questions.json
   def index
     @current_nav_selection = "nav_questions"
-    
+
     @questions = Question.all
   end
 
@@ -21,8 +21,9 @@ class QuestionsController < ApplicationController
   # GET /questions/new
   def new
     @current_nav_selection = "nav_questions"
-    
+
     @question = Question.new
+    @question_types_list = Question.get_type_name_to_id_array
   end
 
   # GET /questions/1/edit

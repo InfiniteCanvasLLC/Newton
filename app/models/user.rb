@@ -63,4 +63,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.get_user_name_to_id_array
+    pairs = Array.new
+    User.all.each do |user|
+      pair = [user.name, user.id]
+      pairs << pair
+    end
+    return pairs
+  end
 end
