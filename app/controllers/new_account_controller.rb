@@ -162,7 +162,6 @@ class NewAccountController < ApplicationController
     end
 
     def request_to_join_party
-       byebug
       redirect_to action: 'party'
     end
 
