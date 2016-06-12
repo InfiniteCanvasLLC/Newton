@@ -79,7 +79,7 @@
             <div class="panel-body">
                 <div class="list-group">
                     <% @party_invites.each do |invite| %>
-                        <a class="list-group-item" id="invite-join-party-button" party="<%= invite.get_party.id %>" desc="<%= invite.get_party.description %>" owner="<%= invite.get_party.get_owner.name %>"=>
+                        <a style="cursor:pointer;" class="list-group-item" id="invite-join-party-button" party="<%= invite.get_party.id %>" desc="<%= invite.get_party.description %>" owner="<%= invite.get_party.get_owner.name %>"=>
                             <i class="fa fa-group fa-fw"></i> <%= invite.get_party.name %>
                             <span class="pull-right text-muted small">
                                 <em><%= invite.get_party.users.count%> <%= invite.get_party.users.count == 1 ? 'person' : 'people' %></em>
@@ -104,8 +104,12 @@
                 <div class="list-group">
                     <% @all_parties.each do |party| %>
                         <% if party.users.exists?(@user.id) == false %> <!-- make sure the user is not already in the party -->
-                            <a class="list-group-item" id="request-join-party-button" party="<%= party.id %>" desc="<%= party.description %>" owner="<%= party.get_owner.name %>"=>
+                            <a style="cursor:pointer;" class="list-group-item" id="request-join-party-button" party="<%= party.id %>" desc="<%= party.description %>" owner="<%= party.get_owner.name %>"=>
                                 <i class="fa fa-group fa-fw"></i> <%= party.name %>
+                                <% if ((@user.zip_code) != 0 && (party.get_owner.zip_code) != 0) %>
+                                  <%= ', ' + @user.get_region + ','%>
+                                  <%= '(' + party.get_owner.get_distance_from_user(@user).to_i.to_s + ' miles from you)'%>
+                                <% end %>
                                 <span class="pull-right text-muted small">
                                     <em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
                                 </span>
@@ -126,6 +130,7 @@
 <%= render 'party_create_form' %>
 <%= render 'party_edit_form' %>
 <%= render 'party_join_form' %>
+<%= render 'party_request_to_join_form' %>
 <%= render :partial => 'party_invite_form', :locals => {:party_name => @current_user_party.name } %>
 
 
@@ -216,7 +221,7 @@ $(document).click(function(event) {
         //don't do that just yet, we need a better way
         $('#party_join_modal').modal('show');
     }
-    //you would like to join a party
+    //you would like to join a party, you need to send a petition for joining a party
     else if(id == 'request-join-party-button')
     {
         var party_id = parseInt( $(event.target).attr('party'), 10);
@@ -224,12 +229,14 @@ $(document).click(function(event) {
         var party_owner =  $(event.target).attr('owner')
         var party_desc =  $(event.target).attr('desc')
 
-        var party_join_form = $('#party_join_modal')
+        var party_request_join_form = $('#party_request_to_join_modal')
 
-        document.getElementById("party-join-title").innerHTML = "Join " + party_owner + "'s party!"
-        document.getElementById("party-join-content").innerHTML = "Description: " + party_desc
+        document.getElementById('party-request-to-join-title').innerHTML = "Join " + party_owner + "'s party!"
+        document.getElementById('party-request-to-join-content').innerHTML = "Description: " + party_desc
 
-        party_join_form.find("#party_id").val(party_id);
+        party_request_join_form.find("#party_id").val(party_id);
+
+        party_request_join_form.modal('show');
     }
 
     //invite friend

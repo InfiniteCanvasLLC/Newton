@@ -36,6 +36,8 @@ gem 'momentjs-rails'
 
 gem 'faker'
 
+gem 'area'
+gem 'geokit'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

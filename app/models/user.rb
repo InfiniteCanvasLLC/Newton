@@ -72,4 +72,24 @@ class User < ActiveRecord::Base
     return (Time.now - self.last_seen).to_i < @@active_timeout #5 minutes ago
   end
 
+  def get_distance_from_user(other_user)
+    if other_user.zip_code==0 || self.zip_code == 0
+      return 0
+    end
+
+    source  = other_user.zip_code.to_s.to_latlon.split(',')
+    current_location = Geokit::LatLng.new(source[0].to_f, source[1].to_f)
+    destination = self.zip_code.to_s.to_latlon
+
+    return current_location.distance_to(destination)
+  end
+
+  def get_region
+    if self.zip_code != 0
+      return self.zip_code.to_s.to_region
+    else
+      return ""
+    end
+  end
+
 end
