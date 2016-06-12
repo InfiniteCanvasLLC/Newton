@@ -1,7 +1,11 @@
 module Spotify
     class Client
-        def me_top_artist
+        def me_top_artists
             run(:get, '/v1/me/top/artists', [200])
+        end
+
+        def me_top_tracks
+            run(:get, '/v1/me/top/tracks', [200])
         end
     end
 end
@@ -54,15 +58,16 @@ class SessionsController < ApplicationController
             :persistent    => false # when true, make multiple requests calls using a single persistent connection. Use +close_connection+ method on the client to manually clean up sockets
         }
         
+        # parse the spotify data for the stuff we want
         client = Spotify::Client.new(config)
         
-        # grab track data
-        topArtistsSpotifyData = client.me_top_artist
+        # grab top artists and genres
+        topArtistsSpotifyData = client.me_top_artists
         
-        # parse the spotify data for the stuff we want
-        topArtistHash = {}
+        topArtistsHash = {}
+        topGenresArray = []
         topArtistsSpotifyData["items"].each_with_index do |spotifyArtistData, index|
-            # create artist hasg for database
+            # create artist hash for database
             artistHash = {}
             artistHash["rank"] = index
             artistHash["spotify_id"] = spotifyArtistData["id"]
@@ -70,16 +75,42 @@ class SessionsController < ApplicationController
             artistHash["genres"] = spotifyArtistData["genres"]
 
             # add this artist to our artist hash (key is the artist ranking.  top arists will be 0)
-            topArtistHash[index] = artistHash
+            topArtistsHash[index] = artistHash
+
+            # add this artists various genres
+            spotifyArtistData["genres"].each do |genre|
+                unless topGenresArray.include? genre
+                    topGenresArray.push(genre)
+                end
+            end
+
         end
 
-        byebug
+        #grab top tracks
+        topTracksSpotifyData = client.me_top_tracks
+        topTracksHash = {}
+        topTracksSpotifyData["items"].each_with_index do |spotifyTrackData, index|
+            # create track hash for database
+            trackHash = {}
+            trackHash["rank"] = index
+            trackHash["spotify_id"] = spotifyTrackData["id"]
+            trackHash["name"] = spotifyTrackData["name"]
+            trackHash["album_name"] = spotifyTrackData["album"]["name"]
+            trackHash["artist"] = spotifyTrackData["artists"][0]["name"]
+            # add this track to our track hash (key is the track ranking.  top track will be 0)
+            topTracksHash[index] = trackHash
+        end
+
+        # grab top genres
         # convert topArtists to a hash to save to the database
         #topArtistsHash = JSON.parse( topArtists["items"].to_s[1...-1] )
-
         #topArtistsHash = JSON.parse( topArtists )
+        byebug
         user = User.find( session[:user_id] )
-        user.favorite_info.top_artists = topArtistHash
+        user.favorite_info.top_artists = topArtistsHash
+        user.favorite_info.top_songs = topTracksHash
+        user.favorite_info.top_genre = topGenresArray
+
         user.favorite_info.save
         user.save
 
