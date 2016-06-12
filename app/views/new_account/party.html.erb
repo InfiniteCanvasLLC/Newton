@@ -93,6 +93,26 @@
         <% end %>
 
 
+        <!-- All Join party requests -->
+        <% if @join_party_requests.empty? == false %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-link fa-fw"></i> Join <%= @current_user_party.name%> Request(s)
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @join_party_requests.each do |request| %>
+                        <a style="cursor:pointer;" class="list-group-item" id="view-join-party-button" user="<%= request.user_id %>" username="<%= request.get_user.name %>" msg="<%= request.message %>" >
+                            <i class="fa fa-group fa-fw"></i> <%= request.get_user.name %>
+                        </a>
+                    <% end %>
+               </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <% end %>
+
 
         <!-- All parties in the system -->
         <div class="panel panel-default">
@@ -131,6 +151,7 @@
 <%= render 'party_edit_form' %>
 <%= render 'party_join_form' %>
 <%= render 'party_request_to_join_form' %>
+<%= render 'view_request_to_join_form' %>
 <%= render :partial => 'party_invite_form', :locals => {:party_name => @current_user_party.name } %>
 
 
@@ -237,6 +258,23 @@ $(document).click(function(event) {
         party_request_join_form.find("#party_id").val(party_id);
 
         party_request_join_form.modal('show');
+    }
+
+    //We want to see the user's join party request
+    else if(id == 'view-join-party-button')
+    {
+        var user_id = parseInt( $(event.target).attr('user'), 10)
+        var party_name =  $(event.target).attr('username')
+        var msg =  $(event.target).attr('msg')
+
+        var view_join_request_form = $('#view_join_request_modal')
+
+        document.getElementById('view-join-request-title').innerHTML = party_name + " would like to join your party."
+        document.getElementById('view-join-request-content').innerHTML = "User Message: " + msg
+
+        view_join_request_form.find("#user_id").val(user_id);
+
+        view_join_request_form.modal('show')
     }
 
     //invite friend

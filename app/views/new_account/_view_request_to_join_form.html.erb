@@ -1,0 +1,32 @@
+<div id="view_join_request_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary">
+        <h3 id="view-join-request-title" class="modal-title">Info</h3>
+      </div>
+
+      <%= form_tag({action: "handle_user_request_to_join_party", method: "post"}, {role: "form", id: "party_join_form"}) do %>
+       <div id="view-join-request-content" class="modal-body edit-content">
+       </div>
+
+        <div class="modal-footer bg-dark">
+           <%= submit_tag("Accept!", class: 'btn btn-success') %>
+           <button type="button" class="btn btn-default" data-dismiss="modal">Reject</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+        <%= hidden_field_tag(:user_id) %>
+       <% end %>
+
+       <script>
+        $("#view_join_request_modal").submit(
+        function (event)
+        {
+            $("#view_join_request_modal").modal('hide');
+        });
+      </script>
+
+    </div>
+  </div>
+</div>

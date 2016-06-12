@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   post 'new_account/leave_party'
   post 'new_account/join_party'
   post 'new_account/request_to_join_party'
+  post 'new_account/handle_user_request_to_join_party'
   post 'new_account/submit_party_invite_request'
   post 'new_account/edit_user'
   post 'new_account/handle_chat_post'

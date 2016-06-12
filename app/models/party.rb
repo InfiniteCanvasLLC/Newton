@@ -17,10 +17,23 @@ class Party < ActiveRecord::Base
   def get_owner
     return User.find( self.owner_user_id )
   end
-  
+
   def get_registration(event_id, user_id)
-     #for a given pary, for a given user and event, there can be only one registration
+    #for a given pary, for a given user and event, there can be only one registration
     return self.event_registrations.where(:event_id => event_id, :user_id => user_id).first 
+  end
+
+  def did_user_request_to_join(user_id)
+    #return true if the user already registered to join this party
+    return JoinPartyRequest.where(:party_id => self.id, :user_id => user_id).empty? == false
+  end
+
+  def remove_party_join_requests(user_id)
+    JoinPartyRequest.where(:party_id => self.id, :user_id => user_id).delete_all
+  end
+
+  def get_all_join_party_requests
+    return JoinPartyRequest.where(:party_id => self.id)
   end
 
   #@remove all party related information (registrations + conversations + party invites)
