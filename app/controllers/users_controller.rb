@@ -16,20 +16,15 @@ class UsersController < ApplicationController
     def edit
         @current_nav_selection = "nav_users"
 
-        @user = User.find(params[:id])
         @all_parties = Party.all
         @user_parties = @user.parties;
     end
 
     def show
-        @current_nav_selection = "nav_users"
-
-        user_id = params[:id]
-        @user = User.find(params[:id])
-
+        # Unanswered Questions
         @questions = Array.new
 
-        actions = UserAction.where("user_id = " + user_id.to_s)
+        actions = UserAction.where("user_id = " + params[:id].to_s)
         actions.to_a.each do |action|
             if (action.action_type == 0) #0 = Question
                 @questions << Question.find(action.action_id)
@@ -38,9 +33,10 @@ class UsersController < ApplicationController
             end
         end
 
+        # Answered Question
         @questions_answers = Array.new
 
-        answers = QuestionAnswer.where("user_id = " + user_id.to_s)
+        answers = QuestionAnswer.where("user_id = " + params[:id].to_s)
         answers.to_a.each do |answer|
             qaPair = QuestionAnswerPair.new
 
@@ -49,10 +45,18 @@ class UsersController < ApplicationController
 
             @questions_answers << qaPair
         end
+
+        # Metadata
+        @metadata = Array.new
+        @metadata_types = UserMetadatum.type_name_to_type_id_array
+
+        metadata = UserMetadatum.where("user_id = " + params[:id].to_s)
+        metadata.each do |metadatum|
+            @metadata << metadatum
+        end
     end
 
     def update
-        @user = User.find(params[:id])
         @party = Party.find(params[:user][:party_id])
 
         @user.parties << @party
@@ -74,9 +78,18 @@ class UsersController < ApplicationController
         redirect_to action: 'edit', id: @user.id
     end
 
-    def send_user_email
-        Outreach.mail_to_user_id(params[:user_id], params[:email_subject], params[:email_body]).deliver_now
+    def send_email
+        Outreach.mail_to_user_id(params[:id], params[:email_subject], params[:email_body]).deliver_now
         render nothing: true
+    end
+
+    def create_metadata
+        @metadatum           = UserMetadatum.new
+        @metadatum.user_id   = params[:id]
+        @metadatum.data_type = params[:data_type]
+        @metadatum.data      = params[:data]
+        @metadatum.save
+        render json: @metadatum
     end
 
     # Use callbacks to share common setup or constraints between actions.

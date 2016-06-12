@@ -1,0 +1,39 @@
+<div>
+  <%= form_tag({action: "send_email", method: "post"}, {role: "form", id: "send_user_mail_form", remote: true}) do %>
+    <div class="form-group">
+      <%= label_tag(:email_subject, "Subject") %><br>
+      <%= text_area_tag(:email_subject, nil, :class => 'form-control', :rows => 1) %>
+    </div>
+
+    <div class="form-group">
+      <%= label_tag(:email_body, "Body") %><br>
+      <%= text_area_tag(:email_body, nil, :class => 'form-control', :rows => 5) %>
+    </div>
+
+    <%= button_tag("Send", class: 'btn btn-success', id:'send_email_button') %>
+  <% end %>
+
+  <script>
+    $("#send_user_mail_form").bind("ajax:send",
+      function(event,xhr)
+      {
+        $("#send_email_button").html("<i class='fa fa-circle-o-notch fa-spin'></i> Sending...");
+        $("#send_email_button").prop("disabled", true);
+      });
+
+    $("#send_user_mail_form").bind("ajax:error",
+      function(event,xhr,status,error)
+      {
+        window.alert("Error Sending Email\n" + error);
+      });
+
+    $("#send_user_mail_form").bind("ajax:complete",
+      function(event,xhr,status)
+      {
+        $("#email_subject").val('');
+        $("#email_body").val('');
+        $("#send_email_button").html("Send");
+        $("#send_email_button").prop("disabled", false);
+      });
+  </script>
+</div>
