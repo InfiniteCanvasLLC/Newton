@@ -174,6 +174,13 @@ class NewAccountController < ApplicationController
       request.user_id    = @user.id
       request.message    = params[:description]
       request.save
+
+      #send an email
+      owner_id = party.get_owner.id
+      email_subject = "Party Join Request"
+      email_body = @user.name + " would like to join " + party.name
+      Outreach.mail_to_user_id(owner_id, email_subject, email_body).deliver_now
+
       redirect_to action: 'party'
     end
 
