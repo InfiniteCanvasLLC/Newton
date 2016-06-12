@@ -57,14 +57,29 @@ class SessionsController < ApplicationController
         client = Spotify::Client.new(config)
         
         # grab track data
-        topArtists = client.me_top_artist
+        topArtistsSpotifyData = client.me_top_artist
         
+        # parse the spotify data for the stuff we want
+        topArtistHash = {}
+        topArtistsSpotifyData["items"].each_with_index do |spotifyArtistData, index|
+            # create artist hasg for database
+            artistHash = {}
+            artistHash["rank"] = index
+            artistHash["spotify_id"] = spotifyArtistData["id"]
+            artistHash["name"] = spotifyArtistData["name"]
+            artistHash["genres"] = spotifyArtistData["genres"]
+
+            # add this artist to our artist hash (key is the artist ranking.  top arists will be 0)
+            topArtistHash[index] = artistHash
+        end
+
+        byebug
         # convert topArtists to a hash to save to the database
         #topArtistsHash = JSON.parse( topArtists["items"].to_s[1...-1] )
 
         #topArtistsHash = JSON.parse( topArtists )
         user = User.find( session[:user_id] )
-        user.favorite_info.top_artists = topArtists
+        user.favorite_info.top_artists = topArtistHash
         user.favorite_info.save
         user.save
 
