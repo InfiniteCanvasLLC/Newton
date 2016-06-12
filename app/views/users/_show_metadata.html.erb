@@ -5,7 +5,6 @@
         <th>Metadatum Type</th>
         <th>Metadatum</th>
         <th></th>
-        <th></th>
       </tr>
     </thead>
 
@@ -14,8 +13,7 @@
         <tr>
           <td><%= metadatum.data_type_name %></td>
           <td><%= metadatum.data %></td>
-          <td></td>
-          <td></td>
+          <td><%= button_tag("Delete", class: 'btn btn-primary', data: { confirm: "Are you sure?" }, :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
         </tr>
       <% end %>
     </tbody>
@@ -65,5 +63,19 @@
         $("#create_metadata_button").html("Add");
         $("#create_metadata_button").prop("disabled", false);
       });
+
+    function on_delete_metadata_button_clicked(td, metadatum_id)
+    {
+      $.ajax({
+          type: "DELETE",
+          url: "users/destroy_metadata",
+          data: {
+            'metadatum_id': metadatum_id
+          },
+          success: function(data) {
+            td.closest('tr').remove();
+          }
+      });
+    }
   </script>
 </div>

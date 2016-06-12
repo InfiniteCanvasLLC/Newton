@@ -92,6 +92,11 @@ class UsersController < ApplicationController
         render json: @metadatum
     end
 
+    def destroy_metadata
+        UserMetadatum.find(params[:metadatum_id]).destroy
+        render nothing: true
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
         @user = User.find(params[:id])

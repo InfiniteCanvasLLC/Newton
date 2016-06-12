@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   resources :questions
 
   resources :users, shallow: true do
-    resources :user_metadata
     post 'send_email', on: :member
     post 'create_metadata', on: :member
+    delete 'destroy_metadata', on: :collection
   end
 
   post 'users/leave_group'
