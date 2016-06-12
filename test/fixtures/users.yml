@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  provider: MyString
-  uid: MyString
-  name: MyString
-  email: MyString
+  provider: 'facebook'
+  uid: '23456'
+  name: 'Steve Jobs'
+  email: 'support@audicy.us'
 
 two:
-  provider: MyString
-  uid: MyString
-  name: MyString
-  email: MyString
+  provider: 'facebook'
+  uid: '23499'
+  name: 'Steve Wozniak'
+  email: 'woz@audicy.us'
