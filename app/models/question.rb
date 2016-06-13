@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   has_many :question_answers
 
   def get_subtype_name()
-    return type_id_to_string(self.question_type)
+    return Question.type_id_to_string(self.question_type)
   end
 
   def metadata_one_formatted()
@@ -33,7 +33,7 @@ class Question < ActiveRecord::Base
   def self.get_type_name_to_id_array
     pairs = Array.new
     4.times do |i|
-      pair = [LinkTo.type_id_to_string(i), i]
+      pair = [Question.type_id_to_string(i), i]
       pairs << pair
     end
     return pairs
