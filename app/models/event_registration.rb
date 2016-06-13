@@ -1,0 +1,50 @@
+class EventRegistration < ActiveRecord::Base
+  belongs_to :party
+
+  def self.user_not_going
+    return 2
+  end
+
+  def self.user_unsure
+    return 1
+  end
+  
+  def self.user_going
+    return 0
+  end
+  
+  def is_user_not_going
+    return self.commitment == EventRegistration.user_not_going
+  end
+
+  def is_user_unsure
+    return self.commitment == EventRegistration.user_unsure
+  end
+  
+  def is_user_going
+    return self.commitment == EventRegistration.user_going
+  end
+  
+  def get_label_string
+    case self.commitment
+    when 0
+      return "label-success"
+    when 1
+      return "label-warning"
+    when 2
+      return "label-danger" 
+    end
+  end
+  
+  def get_display_string
+    case self.commitment
+    when 0
+      return "Going"
+    when 1
+      return "Unsure"
+    when 2
+      return "Not Going" 
+    end
+  end
+
+end

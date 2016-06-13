@@ -35,7 +35,7 @@
                     <% end %>
                     <% if @user.zip_code.blank? == false  && @user.zip_code != 0 %>
                     <p class="list-group-item">
-                        <i class="fa fa-fw"></i> <%= @user.zip_code %>
+                        <i class="fa fa-fw"></i> <%= @user.get_region %>
                     </p>
                     <% end %>
                     <% if @user.description.blank? == false %>

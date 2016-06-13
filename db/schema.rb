@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160605054402) do
+ActiveRecord::Schema.define(version: 20160612152009) do
+
+  create_table "event_registrations", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "commitment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "event_registrations", ["party_id"], name: "index_event_registrations_on_party_id"
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
@@ -25,6 +36,14 @@ ActiveRecord::Schema.define(version: 20160605054402) do
   create_table "events_parties", id: false, force: :cascade do |t|
     t.integer "event_id", null: false
     t.integer "party_id", null: false
+  end
+
+  create_table "join_party_requests", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "link_tos", force: :cascade do |t|
@@ -54,6 +73,16 @@ ActiveRecord::Schema.define(version: 20160605054402) do
 
   add_index "parties_users", ["user_id", "party_id"], name: "by_user_and_party", unique: true
 
+  create_table "party_conversations", force: :cascade do |t|
+    t.integer  "party_id"
+    t.text     "message"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "party_conversations", ["party_id"], name: "index_party_conversations_on_party_id"
+
   create_table "party_invites", force: :cascade do |t|
     t.integer  "party_id"
     t.integer  "src_user_id"
@@ -63,6 +92,16 @@ ActiveRecord::Schema.define(version: 20160605054402) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
+
+  create_table "party_metadata", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "data_type"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "party_metadata", ["party_id"], name: "index_party_metadata_on_party_id"
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "question_id"
@@ -106,6 +145,16 @@ ActiveRecord::Schema.define(version: 20160605054402) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "user_metadata", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "data_type"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_metadata", ["user_id"], name: "index_user_metadata_on_user_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
@@ -116,9 +165,10 @@ ActiveRecord::Schema.define(version: 20160605054402) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-05'
+    t.date     "birthday",            default: '2016-06-07'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
+    t.datetime "last_seen"
   end
 
 end

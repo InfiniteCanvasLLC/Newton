@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  party_id: 
+  message: MyText
+  user_id: 1
+
+two:
+  party_id: 
+  message: MyText
+  user_id: 1

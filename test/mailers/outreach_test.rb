@@ -1,12 +1,11 @@
 require 'test_helper'
+require 'outreach'
 
 class OutreachTest < ActionMailer::TestCase
-  test "new_user" do
-    mail = Outreach.new_user
-    assert_equal "New user", mail.subject
-    assert_equal ["to@example.org"], mail.to
-    assert_equal ["from@example.com"], mail.from
-    assert_match "Hi", mail.body.encoded
+  test "welcome" do
+    user = User.where(email: "support@audicy.us").first
+    Outreach.welcome(user).deliver_now
+    assert_not ActionMailer::Base.deliveries.empty?
   end
 
 end

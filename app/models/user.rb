@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :parties, :uniq => true
   has_many :question_answers
+  has_many :user_metadata
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -16,6 +17,10 @@ class User < ActiveRecord::Base
 
   def party_id
       ""
+  end
+
+  def is_female
+    return self.gender == 0
   end
 
   def question_answers
@@ -71,4 +76,30 @@ class User < ActiveRecord::Base
     end
     return pairs
   end
+
+  @@active_timeout=(300)#5 minutes
+  def is_active
+    return (Time.now - self.last_seen).to_i < @@active_timeout #5 minutes ago
+  end
+
+  def get_distance_from_user(other_user)
+    if other_user.zip_code==0 || self.zip_code == 0
+      return 0
+    end
+
+    source  = other_user.zip_code.to_s.to_latlon.split(',')
+    current_location = Geokit::LatLng.new(source[0].to_f, source[1].to_f)
+    destination = self.zip_code.to_s.to_latlon
+
+    return current_location.distance_to(destination)
+  end
+
+  def get_region
+    if self.zip_code != 0
+      return self.zip_code.to_s.to_region
+    else
+      return ""
+    end
+  end
+
 end

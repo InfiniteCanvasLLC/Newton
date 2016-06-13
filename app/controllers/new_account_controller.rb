@@ -11,6 +11,8 @@ end
 
 class NewAccountController < ApplicationController
 
+    before_action :update_user_last_seen
+    
     def initialize
         super
     end
@@ -19,7 +21,6 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         actions = UserAction.where("user_id = " + user_id.to_s)
 
-        @user = User.find(user_id)
         @num_actions = actions.count
 
         self.manage_actions_dynamically
@@ -69,7 +70,7 @@ class NewAccountController < ApplicationController
       inviteLinkto = LinkTo.get_party_invitation_link #this could be nil, remember, we need to create it manually (only once though).
 
       if @user.get_all_party_invites.empty? == false
-        if @user.is_assigned_linkto( inviteLinkto ) == false
+        if @user.is_assigned_linkto( inviteLinkto ) == false && inviteLinkto != nil
           #create a new action and assign it to the user
           action = UserAction.new
           action.user_id = @user.id
@@ -102,17 +103,15 @@ class NewAccountController < ApplicationController
     end
 
     def edit_user
-        user_id = session[:user_id]
-        user = User.find(user_id)
         #@TODO: SANITIZE!!! :)
-        user.name   = params[:name]
-        user.email  = params[:email]
-        user.secondary_email = params[:secondary_email]
-        user.gender   = params[:gender]
-        user.birthday = params[:birthday]
-        user.zip_code = params[:zip_code]
-        user.description = params[:description]
-        user.save
+        @user.name   = params[:name]
+        @user.email  = params[:email]
+        @user.secondary_email = params[:secondary_email]
+        @user.gender   = params[:gender]
+        @user.birthday = params[:birthday]
+        @user.zip_code = params[:zip_code]
+        @user.description = params[:description]
+        @user.save
 
         redirect_to action: 'profile'
     end
@@ -124,8 +123,6 @@ class NewAccountController < ApplicationController
     end
 
     def switch_party
-        user_id = session[:user_id]
-        @user = User.find(user_id)
         @user.current_party_index = params[:party_index]
         @user.save
         redirect_to action: 'home'
@@ -141,13 +138,11 @@ class NewAccountController < ApplicationController
 
     def create_party
     #@TODO: Check for param validity (eg: is there a party with the same name?)
-        user_id = session[:user_id]
-        @user = User.find(user_id)
 
         party = Party.new
         party.name = params[:name]
         party.description = params[:description]
-        party.owner_user_id = user_id
+        party.owner_user_id = @user.id
         party.save
 
         #since the user created it, they are part of it
@@ -166,9 +161,41 @@ class NewAccountController < ApplicationController
         redirect_to action: 'party'
     end
 
+    def request_to_join_party
+      party = Party.find(params[:party_id])
+      #if the user already requested to join, no need to create a new request
+      if party.did_user_request_to_join(@user.id) == false
+        #create request
+        request = JoinPartyRequest.new
+        request.party_id   = party.id
+        request.user_id    = @user.id
+        request.message    = params[:description]
+        request.save
+
+        #send an email
+        owner_id = party.get_owner.id
+        email_subject = "Party Join Request"
+        email_body = @user.name + " would like to join " + party.name
+        Outreach.mail_to_user_id(owner_id, email_subject, email_body).deliver_now
+      end
+
+      redirect_to action: 'party'
+    end
+
+    def handle_user_request_to_join_party
+      friend = User.find(params[:user_id])
+      @current_party = get_user_current_party(@user)
+      if @current_party.users.exists?(friend.id)#sanity check
+        return
+      end
+
+      @current_party.users << friend
+      @current_party.remove_party_join_requests(params[:user_id])
+
+      redirect_to action: 'party'
+    end
+
     def join_party
-        user_id = session[:user_id]
-        @user = User.find(user_id)
         party = Party.find(params[:party_id])
 
         #make sure user not already in the party
@@ -181,19 +208,25 @@ class NewAccountController < ApplicationController
         redirect_to action: 'party'
     end
 
+    def pull_user_statuses
+      @current_party = get_user_current_party(@user)
+      # Because the controller's method is called pull_user_statuses and there is a file pull_user_statuses.json.erb, 
+      # the file gets executed. The contents of the file are then returned to the ajax 'success' method
+      #This is equalivalent to: render :file => "new_account/pull_user_statuses.json.erb", :content_type => 'application/json'
+    end
+
     def submit_party_invite_request
         friend_first_name = params[:first_name]
         friend_last_name = params[:last_name]
         friend_full_name = friend_first_name + " " + friend_last_name;
         friend_email = params[:email]
-        user_id = session[:user_id]
-        @user = User.find(user_id)
+
         @current_party = get_user_current_party(@user)
 
         #find the friend
         friend =
-        User.where( :name => friend_full_name, :email => friend_email ).first ||
-        User.where( :name => friend_full_name.capitalize, :email => friend_email ).first
+        User.where( :email => friend_email ).first ||
+        User.where( :secondary_email => friend_email ).first
         # if friend == @user (self invite)... just return
         #if friend belongs to @current_party just return
         if friend != nil
@@ -222,23 +255,74 @@ class NewAccountController < ApplicationController
     end
 
     def calendar
-        user_id = session[:user_id]
-        @user = User.find(user_id)
         @current_party = get_user_current_party(@user)
+        @current_party_events = @current_party.events.sort_by &:start
 
         @current_nav_selection = "nav_calendar"
+    end
+    
+    def handle_event_commitment
+       event = Event.find(params[:event_id])
+       @current_party = get_user_current_party(@user)
+
+       reg = @current_party.get_registration(event.id, @user.id)
+       reg.commitment = params[:new_commitment]
+       reg.save
+       
+       redirect_to action: 'calendar'
     end
 
     def stats
         @current_nav_selection = "nav_stats"
     end
+    
+    def chat
+        @current_party = get_user_current_party(@user)
+        
+        #only display the last 20 entries in the chat (maybe a more dynamic scheme in the future)
+        @conversations = @current_party.party_conversations.last(20)
+        @current_nav_selection = "nav_chat"
+    end
+    
+    def handle_chat_post
+       @current_party = get_user_current_party(@user)
+    
+       conversation = PartyConversation.new
+       conversation.party_id = @current_party.id
+       conversation.message  = params[:message]
+       conversation.user_id  = @user.id
+    
+       conversation.save
+       
+       redirect_to action: 'chat'
+    end
+    
+    def handle_chat_update
+       @current_party = get_user_current_party(@user)
+       
+       # there are new messages to display (ie: the front end is not in sync with the back end)
+       if @current_party.party_conversations.empty? == false && 
+          @current_party.party_conversations.last.id != params[:last_message_id].to_i
+           conversations = @current_party.party_conversations.last(20)
+           render json: {"reload_page": true}
+       else
+           #the JQuery is pulling for new messages available
+           #redirect_to action: 'chat'
+           render json: {"reload_page": false}
+       end
+    end
 
     def party
-        user_id = session[:user_id]
-        @user = User.find(user_id)
         @current_user_party = get_user_current_party(@user)
         @all_parties = Party.all
         @party_invites = @user.get_all_party_invites
+
+       #only the owner of a party reviews party join requests
+        if @user.id == @current_user_party.get_owner.id
+          @join_party_requests = @current_user_party.get_all_join_party_requests
+        else
+          @join_party_requests = Array.new
+        end
 
         @current_nav_selection = "nav_party"
     end
@@ -248,8 +332,6 @@ class NewAccountController < ApplicationController
     end
 
     def profile
-        user_id = session[:user_id]
-        @user = User.find(user_id)
         @current_nav_selection = ""
     end
 
@@ -261,13 +343,9 @@ class NewAccountController < ApplicationController
 
     #this function returns the user's current party
     def get_user_current_party(user)
-        #if this is the first time the user logs in (current_party_index nil)
-        if user.current_party_index.nil?
-            user.current_party_index = 0
-        end
-
+        # if this is the first time the user logs in (current_party_index nil)
         # if the @user.current_party_index is invalid in any way, this will returns user.pary[0]
-        if user.current_party_index >= user.parties.count
+        if user.current_party_index.nil? || user.current_party_index >= user.parties.count
             user.current_party_index = 0
             user.save
         end
@@ -284,4 +362,15 @@ class NewAccountController < ApplicationController
         return user.party_at_index( user.current_party_index.to_i )
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    # this is called before any action in the controller is called.
+    # here we get the user, and time stamp them. @user is valid in all 
+    # controller method.
+    def update_user_last_seen
+      user_id = session[:user_id]
+      user = User.find(user_id)
+      user.last_seen = Time.now
+      user.save
+      @user = user
+    end
 end

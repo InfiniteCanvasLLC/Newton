@@ -15,6 +15,15 @@ class PartiesController < ApplicationController
   # GET /parties/1.json
   def show
     @current_nav_selection = "nav_parties"
+
+    # Metadata
+    @metadata = Array.new
+    @metadata_types = PartyMetadatum.type_name_to_type_id_array
+
+    metadata = PartyMetadatum.where("party_id = " + params[:id].to_s)
+    metadata.each do |metadatum|
+      @metadata << metadatum
+    end
   end
 
   # GET /parties/new
@@ -34,15 +43,34 @@ class PartiesController < ApplicationController
     #@party.events << Event.find(1)
   end
 
-  def unregister_event
+  def unregister_for_event
      @party = Party.find(params[:party])
      @event = Event.find(params[:event])
 
+     #remove all the event registration in this party for this event
+     @party.event_registrations.where("event_id" => @event.id).delete_all
+     #remove the event
      @party.events.delete(@event)
 
      redirect_to action: 'edit', id: @party.id
   end
 
+  def register_for_event(event_id)
+    event = Event.find(event_id)
+    #prevents double insert
+    if @party.events.exists?( event.id ) == false
+      @party.events << event
+      #create registration for each member in the party
+      @party.users.each do |user|
+        reg = EventRegistration.new
+        reg.party_id   = @party.id
+        reg.user_id    = user.id
+        reg.event_id   = event.id
+        reg.commitment = EventRegistration.user_going #by default
+        reg.save
+      end
+    end
+  end
 
   # POST /parties
   # POST /parties.json
@@ -63,12 +91,7 @@ class PartiesController < ApplicationController
   # PATCH/PUT /parties/1.json
   def update
     if params[:party][:event_id].nil? == false
-      @event = Event.find(params[:party][:event_id])
-
-      #prevents double insert
-      if @party.events.exists?( @event.id ) == false
-        @party.events << @event
-      end
+      self.register_for_event( params[:party][:event_id] )
     end
 
     respond_to do |format|
@@ -92,10 +115,24 @@ class PartiesController < ApplicationController
     end
   end
 
-  def send_party_email
-    Outreach.mail_to_party_id(params[:party_id], params[:email_subject], params[:email_body]).deliver_now
+  def send_email
+    Outreach.mail_to_party_id(params[:id], params[:email_subject], params[:email_body]).deliver_now
     render nothing: true
   end
+
+    def create_metadata
+        @metadatum           = PartyMetadatum.new
+        @metadatum.party_id  = params[:id]
+        @metadatum.data_type = params[:data_type]
+        @metadatum.data      = params[:data]
+        @metadatum.save
+        render json: @metadatum
+    end
+
+    def destroy_metadata
+        PartyMetadatum.find(params[:metadatum_id]).destroy
+        render nothing: true
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.
