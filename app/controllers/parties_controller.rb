@@ -76,6 +76,9 @@ class PartiesController < ApplicationController
   # POST /parties.json
   def create
     @party = Party.new(party_params)
+    user = User.find(session[:user_id])
+    @party.owner_user_id = user.id #by default, the Admin whom create the party
+
     respond_to do |format|
       if @party.save
         format.html { redirect_to @party, notice: 'Party was successfully created.' }
