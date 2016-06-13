@@ -164,22 +164,20 @@ class NewAccountController < ApplicationController
     def request_to_join_party
       party = Party.find(params[:party_id])
       #if the user already requested to join, no need to create a new request
-      if party.did_user_request_to_join(@user.id) == true
-        return
+      if party.did_user_request_to_join(@user.id) == false
+        #create request
+        request = JoinPartyRequest.new
+        request.party_id   = party.id
+        request.user_id    = @user.id
+        request.message    = params[:description]
+        request.save
+
+        #send an email
+        owner_id = party.get_owner.id
+        email_subject = "Party Join Request"
+        email_body = @user.name + " would like to join " + party.name
+        Outreach.mail_to_user_id(owner_id, email_subject, email_body).deliver_now
       end
-
-      #create request
-      request = JoinPartyRequest.new
-      request.party_id   = party.id
-      request.user_id    = @user.id
-      request.message    = params[:description]
-      request.save
-
-      #send an email
-      owner_id = party.get_owner.id
-      email_subject = "Party Join Request"
-      email_body = @user.name + " would like to join " + party.name
-      Outreach.mail_to_user_id(owner_id, email_subject, email_body).deliver_now
 
       redirect_to action: 'party'
     end
