@@ -161,6 +161,10 @@ class NewAccountController < ApplicationController
         redirect_to action: 'party'
     end
 
+    def request_to_join_party
+      redirect_to action: 'party'
+    end
+
     def join_party
         party = Party.find(params[:party_id])
 
