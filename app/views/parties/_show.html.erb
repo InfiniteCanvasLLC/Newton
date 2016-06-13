@@ -18,7 +18,7 @@
             <% for attribute in @party.attributes.keys %>
               <li>
                 <strong><%= attribute.humanize %>:</strong>
-                <% if attribute == "owner_user_id" %>
+                <% if attribute == "owner_user_id" && @party.owner_user_id? %>
                   <%= @party.get_owner.name %>
                 <% else %>
                   <%= @party.attributes[attribute].to_s %>
