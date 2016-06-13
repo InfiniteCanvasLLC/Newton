@@ -162,6 +162,36 @@ class NewAccountController < ApplicationController
     end
 
     def request_to_join_party
+      party = Party.find(params[:party_id])
+      #if the user already requested to join, no need to create a new request
+      if party.did_user_request_to_join(@user.id) == false
+        #create request
+        request = JoinPartyRequest.new
+        request.party_id   = party.id
+        request.user_id    = @user.id
+        request.message    = params[:description]
+        request.save
+
+        #send an email
+        owner_id = party.get_owner.id
+        email_subject = "Party Join Request"
+        email_body = @user.name + " would like to join " + party.name
+        Outreach.mail_to_user_id(owner_id, email_subject, email_body).deliver_now
+      end
+
+      redirect_to action: 'party'
+    end
+
+    def handle_user_request_to_join_party
+      friend = User.find(params[:user_id])
+      @current_party = get_user_current_party(@user)
+      if @current_party.users.exists?(friend.id)#sanity check
+        return
+      end
+
+      @current_party.users << friend
+      @current_party.remove_party_join_requests(params[:user_id])
+
       redirect_to action: 'party'
     end
 
@@ -286,6 +316,13 @@ class NewAccountController < ApplicationController
         @current_user_party = get_user_current_party(@user)
         @all_parties = Party.all
         @party_invites = @user.get_all_party_invites
+
+       #only the owner of a party reviews party join requests
+        if @user.id == @current_user_party.get_owner.id
+          @join_party_requests = @current_user_party.get_all_join_party_requests
+        else
+          @join_party_requests = Array.new
+        end
 
         @current_nav_selection = "nav_party"
     end
