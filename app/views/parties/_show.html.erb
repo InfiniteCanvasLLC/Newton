@@ -2,34 +2,40 @@
   <div class="modal-content">
 
     <div class="modal-header bg-primary">
-      <h3 class="modal-title"><%= @user.name %></h3>
+      <h3 class="modal-title"><%= @party.name %></h3>
     </div>
 
     <div class="modal-body">
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#tab_user_info">User Info</a></li>
-        <li><a data-toggle="tab" href="#tab_questions">Unanswered Questions</a></li>
-        <li><a data-toggle="tab" href="#tab_question_answers">Answered Questions</a></li>
+        <li class="active"><a data-toggle="tab" href="#tab_party_info">Party Info</a></li>
         <li><a data-toggle="tab" href="#tab_metadata">Metadata</a></li>
         <li><a data-toggle="tab" href="#tab_send_email">Send Email</a></li>
       </ul>
 
       <div class="tab-content">
-        <div id="tab_user_info" class="tab-pane fade in active">
+        <div id="tab_party_info" class="tab-pane fade in active">
           <ul>
-            <% for attribute in @user.attributes.keys %>
+            <% for attribute in @party.attributes.keys %>
               <li>
                 <strong><%= attribute.humanize %>:</strong>
-                <%= @user.attributes[attribute].to_s %>
+                <% if attribute == "owner_user_id" %>
+                  <%= @party.get_owner.name %>
+                <% else %>
+                  <%= @party.attributes[attribute].to_s %>
+                <% end %>
+              </li>
+            <% end %>
+            <li>
+              <strong>Number of events:</strong>
+              <%= @party.events.count %>
+            </li>
+            <% for user in @party.users %>
+              <li>
+                <strong>Member:</strong>
+                <%= user.name %>
               </li>
             <% end %>
           </ul>
-        </div>
-        <div id="tab_questions" class="tab-pane fade">
-          <p><%= render 'show_questions' %></p>
-        </div>
-        <div id="tab_question_answers" class="tab-pane fade">
-          <p><%= render 'show_question_answers' %></p>
         </div>
         <div id="tab_metadata" class="tab-pane fade">
           <p><%= render 'show_metadata' %></p>

@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
   resources :link_tos
   resources :events
-  resources :parties
   resources :user_actions
   resources :questions
 
-  resources :users, shallow: true do
+  resources :users do
+    post 'send_email', on: :member
+    post 'create_metadata', on: :member
+    delete 'destroy_metadata', on: :collection
+  end
+
+  resources :parties do
     post 'send_email', on: :member
     post 'create_metadata', on: :member
     delete 'destroy_metadata', on: :collection
