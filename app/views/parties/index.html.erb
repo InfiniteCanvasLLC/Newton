@@ -34,10 +34,9 @@
           </td>
 
 
-          <td><%= link_to 'Show', party %></td>
+          <td><%= link_to 'Show', party_path(party), remote: true %></td>
           <td><%= link_to 'Edit', edit_party_path(party) %></td>
           <td><%= link_to 'Destroy', party, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= link_to 'Email', "#", data: { toggle: "modal", target: "#send_party_mail_modal", party_id: party.id, party_name: party.name } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -47,6 +46,6 @@
 
   <%= link_to 'New Party', new_party_path %>
 
-  <%= render 'send_party_mail_dialog' %>
+  <div id="my_modal" class="modal fade" role="dialog" />
 
 <% end %>

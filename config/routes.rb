@@ -1,10 +1,20 @@
 Rails.application.routes.draw do
   resources :link_tos
   resources :events
-  resources :parties
   resources :user_actions
   resources :questions
-  resources :users
+
+  resources :users do
+    post 'send_email', on: :member
+    post 'create_metadata', on: :member
+    delete 'destroy_metadata', on: :collection
+  end
+
+  resources :parties do
+    post 'send_email', on: :member
+    post 'create_metadata', on: :member
+    delete 'destroy_metadata', on: :collection
+  end
 
   post 'users/leave_group'
   post 'new_account/switch_party'
@@ -34,7 +44,6 @@ Rails.application.routes.draw do
   post 'login_page/submit_user_signup'
   post 'login_page/submit_user_feedback'
 
-  post 'users/send_user_email'
   post 'parties/send_party_email'
 
   post 'EnterAnswer' => 'new_account#enter_answer'

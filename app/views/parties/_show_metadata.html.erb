@@ -1,0 +1,81 @@
+<div>
+  <table class="table" id="metadata_table">
+    <thead>
+      <tr>
+        <th>Metadatum Type</th>
+        <th>Metadatum</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @metadata.each do |metadatum| %>
+        <tr>
+          <td><%= metadatum.data_type_name %></td>
+          <td><%= metadatum.data %></td>
+          <td><%= button_tag("Delete", class: 'btn btn-primary', data: { confirm: "Are you sure?" }, :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= form_tag({action: "create_metadata", method: "post"}, {role: "form", id: "create_metadata_form", remote: true}) do %>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th class="form-group"><%= select_tag(:data_type, options_for_select(@metadata_types)) %></th>
+          <th class="form-group"><%= text_area_tag(:data, nil, :class => 'form-control', :rows => 1) %></th>
+          <th class="form-group"><%= button_tag("Add", class: 'btn btn-success', id:'create_metadata_button') %></th>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+
+  <script>
+    $("#create_metadata_form").bind("ajax:send",
+      function(event,xhr)
+      {
+        $("#data").val('');
+        $("#create_metadata_button").html("<i class='fa fa-circle-o-notch fa-spin'></i> Adding...");
+        $("#create_metadata_button").prop("disabled", true);
+      });
+
+    $("#create_metadata_form").bind("ajax:success",
+      function(event,data,xhr,status)
+      {
+        var table = document.getElementById("metadata_table");
+        var row = table.insertRow(table.rows.length);
+        row.insertCell(0).innerHTML = data.data_type;
+        row.insertCell(1).innerHTML = data.data;
+        row.insertCell(2);
+        row.insertCell(3);
+      });
+
+    $("#create_metadata_form").bind("ajax:error",
+      function(event,xhr,status,error)
+      {
+        window.alert("Error Adding Metadatum\n" + error);
+      });
+
+    $("#create_metadata_form").bind("ajax:complete",
+      function(event,xhr,status)
+      {
+        $("#create_metadata_button").html("Add");
+        $("#create_metadata_button").prop("disabled", false);
+      });
+
+    function on_delete_metadata_button_clicked(td, metadatum_id)
+    {
+      $.ajax({
+          type: "DELETE",
+          url: "parties/destroy_metadata",
+          data: {
+            'metadatum_id': metadatum_id
+          },
+          success: function(data) {
+            td.closest('tr').remove();
+          }
+      });
+    }
+  </script>
+</div>

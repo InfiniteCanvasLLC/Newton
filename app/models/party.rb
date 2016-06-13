@@ -3,6 +3,7 @@ class Party < ActiveRecord::Base
     has_and_belongs_to_many :events
     has_many :party_conversations
     has_many :event_registrations
+    has_many :party_metadata
 
   # to fix error in <h2>Register for Event</h2>
   def event_id
@@ -20,7 +21,7 @@ class Party < ActiveRecord::Base
 
   def get_registration(event_id, user_id)
     #for a given pary, for a given user and event, there can be only one registration
-    return self.event_registrations.where(:event_id => event_id, :user_id => user_id).first 
+    return self.event_registrations.where(:event_id => event_id, :user_id => user_id).first
   end
 
   def did_user_request_to_join(user_id)
