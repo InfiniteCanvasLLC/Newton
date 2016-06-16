@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :question_answers
   has_one :favorite_info
   before_create :build_default_favorites_info
-
+  has_many :user_metadata
   
   private def build_default_favorites_info
     # build default favorites_info instance. Will use default params.
@@ -83,6 +83,15 @@ class User < ActiveRecord::Base
     else
       return parties[party_index];
     end
+  end
+
+  def self.get_user_name_to_id_array
+    pairs = Array.new
+    User.all.each do |user|
+      pair = [user.name, user.id]
+      pairs << pair
+    end
+    return pairs
   end
 
   @@active_timeout=(300)#5 minutes

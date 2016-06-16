@@ -12,33 +12,22 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
         <div class="navbar-header">
             <a class="navbar-brand" href="<%= administrator_path %>">Audicy Administrator</a>
         </div>
-         
+
         <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav">
                 <!-- Users Menu -->
                 <li class="<%= @current_nav_selection=='nav_users' ? 'selected' : ' ' %>">
-                    <a data-toggle="collapse" href="#collapseUsers">
-                        <span data-toggle="tooltip" title="A user record exists for each unique user. You can update party membership by editing a user record.">
-                            <i class="fa fa-fw fa-user"></i> Users <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_users' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
-                        </span>
+                    <a href="<%= users_path %>" data-toggle="tooltip" title="A user record exists for each unique user. You can update party membership by editing a user record.">
+                        <i class="fa fa-fw fa-user"></i> Users
                     </a>
                 </li>
-                <ul id="collapseUsers" class="panel-collapse collapse <%= @current_nav_selection=='nav_users' ? 'in' : '' %>" style="list-style-type:none">
-                    <li><a href="<%= users_path %>" data-toggle="tooltip" title="View all users">All Users</a></li>
-                </ul>
                 <!-- Parties Menu -->
                 <li class="<%= @current_nav_selection=='nav_parties' ? 'selected' : ' ' %>">
-                    <a data-toggle="collapse" href="#collapseParties">
-                        <span data-toggle="tooltip" title="Parties contain a group of user. These links only allow you to create the parties themselves. You cannot add or remove users from a party using these links.">
-                            <i class="fa fa-fw fa-group"></i> Parties <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_parties' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
-                        </span>
+                    <a href="<%= parties_path %>" data-toggle="tooltip" title="Parties contain a group of user. These links only allow you to create the parties themselves. You cannot add or remove users from a party using these links.">
+                        <i class="fa fa-fw fa-group"></i> Parties
                     </a>
                 </li>
-                <ul id="collapseParties" class="panel-collapse collapse <%= @current_nav_selection=='nav_parties' ? 'in' : '' %>" style="list-style-type:none">
-                    <li><a href="<%= new_party_path %>" data-toggle="tooltip" title="Create a new party">New Party</a></li>
-                    <li><a href="<%= parties_path %>" data-toggle="tooltip" title="View all parties">All Parties</a></li>
-                </ul>
                 <!-- User Actions Menu -->
                 <li class="<%= @current_nav_selection=='nav_user_actions' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseUserActions">
@@ -96,18 +85,18 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
             </ul>
         </div>
     </nav>
-    
+
     <!-- This will be replaced by some code as the template gets instantiated -->
     <%= yield %>
 </div>
 
 <script>
     $(function(){
-        $(".side-nav .collapse").on("hide.bs.collapse", function() {                   
+        $(".side-nav .collapse").on("hide.bs.collapse", function() {
             $(this).prev().find(".fa").eq(1).removeClass("fa-angle-down").addClass("fa-angle-right");
         });
-        $('.side-nav .collapse').on("show.bs.collapse", function() {                        
-            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");        
+        $('.side-nav .collapse').on("show.bs.collapse", function() {
+            $(this).prev().find(".fa").eq(1).removeClass("fa-angle-right").addClass("fa-angle-down");
         });
-    })    
+    })
 </script>

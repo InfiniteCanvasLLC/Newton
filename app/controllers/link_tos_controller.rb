@@ -1,7 +1,7 @@
 class LinkTosController < ApplicationController
   before_action :set_link_to, only: [:show, :edit, :update, :destroy]
   layout "administrator"
-  
+
   # GET /link_tos
   # GET /link_tos.json
   def index
@@ -18,6 +18,7 @@ class LinkTosController < ApplicationController
   # GET /link_tos/new
   def new
     @current_nav_selection = "nav_linktos"
+    @link_to_types_list = LinkTo.get_type_name_to_id_array
     @link_to = LinkTo.new
   end
 

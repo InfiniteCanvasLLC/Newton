@@ -1,0 +1,21 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Question Text</th>
+            <th>Question Type</th>
+            <th>Question Answer</th>
+            <th>Question Link</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @questions_answers.each do |question_answer| %>
+            <tr>
+                <td><%= question_answer.question.text %></td>
+                <td><%= question_answer.question.get_subtype_name() %></td>
+                <td><%= question_answer.answer.get_answer() %></td>
+                <td><%= link_to 'Show', question_path(question_answer.question) %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

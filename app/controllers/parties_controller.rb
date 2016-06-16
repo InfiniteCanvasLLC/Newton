@@ -15,6 +15,15 @@ class PartiesController < ApplicationController
   # GET /parties/1.json
   def show
     @current_nav_selection = "nav_parties"
+
+    # Metadata
+    @metadata = Array.new
+    @metadata_types = PartyMetadatum.type_name_to_type_id_array
+
+    metadata = PartyMetadatum.where("party_id = " + params[:id].to_s)
+    metadata.each do |metadatum|
+      @metadata << metadatum
+    end
   end
 
   # GET /parties/new
@@ -45,7 +54,7 @@ class PartiesController < ApplicationController
 
      redirect_to action: 'edit', id: @party.id
   end
-  
+
   def register_for_event(event_id)
     event = Event.find(event_id)
     #prevents double insert
@@ -67,6 +76,9 @@ class PartiesController < ApplicationController
   # POST /parties.json
   def create
     @party = Party.new(party_params)
+    user = User.find(session[:user_id])
+    @party.owner_user_id = user.id #by default, the Admin whom create the party
+
     respond_to do |format|
       if @party.save
         format.html { redirect_to @party, notice: 'Party was successfully created.' }
@@ -106,10 +118,24 @@ class PartiesController < ApplicationController
     end
   end
 
-  def send_party_email
-    Outreach.mail_to_party_id(params[:party_id], params[:email_subject], params[:email_body]).deliver_now
+  def send_email
+    Outreach.mail_to_party_id(params[:id], params[:email_subject], params[:email_body]).deliver_now
     render nothing: true
   end
+
+    def create_metadata
+        @metadatum           = PartyMetadatum.new
+        @metadatum.party_id  = params[:id]
+        @metadatum.data_type = params[:data_type]
+        @metadatum.data      = params[:data]
+        @metadatum.save
+        render json: @metadatum
+    end
+
+    def destroy_metadata
+        PartyMetadatum.find(params[:metadatum_id]).destroy
+        render nothing: true
+    end
 
   private
     # Use callbacks to share common setup or constraints between actions.

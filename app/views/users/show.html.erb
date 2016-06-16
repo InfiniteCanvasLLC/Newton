@@ -1,37 +1,3 @@
 <%= render :layout => 'administrator/navigation' do %>
-
-  <h3><%= @user.name %> (<%= @user.email %>)</h3>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Question Text</th>
-        <th>Question type</th>
-        <th>Answer</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @questions.each do |question| %>
-        <tr>
-          <td><%= question.text %></td>
-          <td><%= question.get_subtype_name() %></td>
-          <td><b>UNANSWERED</b></td>
-          <td><%= link_to 'Show', question %></td>
-        </tr>
-      <% end %>
-      
-      <tr><td></td><td></td><td></td><td></td><td></td></tr>
-      
-      <% @questions_answers.each do |question_answer| %>
-        <tr>
-          <td><%= question_answer.question.text %></td>
-          <td><%= question_answer.question.get_subtype_name() %></td>
-          <td><%= question_answer.answer.get_answer() %></td>
-          <td><%= link_to 'Show', question_path(question_answer.question) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+    <%= render 'show' %>
 <% end %>

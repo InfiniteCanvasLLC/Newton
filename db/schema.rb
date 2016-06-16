@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20160608152830) do
+ActiveRecord::Schema.define(version: 20160612152009) do
 
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
@@ -49,6 +48,14 @@ ActiveRecord::Schema.define(version: 20160608152830) do
   end
 
   add_index "favorite_infos", ["user_id"], name: "index_favorite_infos_on_user_id"
+
+  create_table "join_party_requests", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "link_tos", force: :cascade do |t|
     t.string   "title"
@@ -97,6 +104,16 @@ ActiveRecord::Schema.define(version: 20160608152830) do
     t.datetime "updated_at",     null: false
   end
 
+  create_table "party_metadata", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "data_type"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "party_metadata", ["party_id"], name: "index_party_metadata_on_party_id"
+
   create_table "question_answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "user_id"
@@ -139,6 +156,16 @@ ActiveRecord::Schema.define(version: 20160608152830) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "user_metadata", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "data_type"
+    t.text     "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_metadata", ["user_id"], name: "index_user_metadata_on_user_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "provider"
     t.string   "uid"
@@ -149,7 +176,7 @@ ActiveRecord::Schema.define(version: 20160608152830) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-05'
+    t.date     "birthday",            default: '2016-06-07'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
     t.datetime "last_seen"

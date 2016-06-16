@@ -9,7 +9,7 @@ class UserActionsController < ApplicationController
   # GET /user_actions.json
   def index
     @current_nav_selection = "nav_user_actions"
-    
+
     @user_actions = UserAction.all
   end
 
@@ -22,9 +22,11 @@ class UserActionsController < ApplicationController
   # GET /user_actions/new
   def new
     @current_nav_selection = "nav_user_actions"
-    
+
     @user_action = UserAction.new
 
+    @user_actions_types_list = UserAction.get_type_name_to_id_array
+    @users_types_list = User.get_user_name_to_id_array
     @users = User.all.to_a
     @questions = Question.all.to_a
     @link_tos  = LinkTo.all.to_a
@@ -33,7 +35,7 @@ class UserActionsController < ApplicationController
   # GET /user_actions/1/edit
   def edit
     @current_nav_selection = "nav_user_actions"
-    
+
     @users = User.all.to_a
     @questions = Question.all.to_a
     @link_tos  = LinkTo.all.to_a
