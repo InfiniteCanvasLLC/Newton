@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160610034033) do
-=======
+
 ActiveRecord::Schema.define(version: 20160608152830) do
 
   create_table "event_registrations", force: :cascade do |t|
@@ -26,7 +24,6 @@ ActiveRecord::Schema.define(version: 20160608152830) do
   end
 
   add_index "event_registrations", ["party_id"], name: "index_event_registrations_on_party_id"
->>>>>>> origin/master
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
