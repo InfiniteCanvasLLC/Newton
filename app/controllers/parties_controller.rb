@@ -1,13 +1,13 @@
 class PartiesController < ApplicationController
   layout "administrator"
-  
+
   before_action :set_party, only: [:show, :edit, :update, :destroy]
 
   # GET /parties
   # GET /parties.json
   def index
     @current_nav_selection = "nav_parties"
-    
+
     @parties = Party.all
   end
 
@@ -20,29 +20,48 @@ class PartiesController < ApplicationController
   # GET /parties/new
   def new
     @current_nav_selection = "nav_parties"
-    
+
     @party = Party.new
   end
 
   # GET /parties/1/edit
   def edit
     @current_nav_selection = "nav_parties"
-    
+
     @all_events = Event.all
     #@party_events = @party.events.to_a #Event.all.to_a
     #party = Party.find(params[:id])
     #@party.events << Event.find(1)
   end
 
-  def unregister_event
+  def unregister_for_event
      @party = Party.find(params[:party])
      @event = Event.find(params[:event])
 
+     #remove all the event registration in this party for this event
+     @party.event_registrations.where("event_id" => @event.id).delete_all
+     #remove the event
      @party.events.delete(@event)
 
      redirect_to action: 'edit', id: @party.id
   end
-
+  
+  def register_for_event(event_id)
+    event = Event.find(event_id)
+    #prevents double insert
+    if @party.events.exists?( event.id ) == false
+      @party.events << event
+      #create registration for each member in the party
+      @party.users.each do |user|
+        reg = EventRegistration.new
+        reg.party_id   = @party.id
+        reg.user_id    = user.id
+        reg.event_id   = event.id
+        reg.commitment = EventRegistration.user_going #by default
+        reg.save
+      end
+    end
+  end
 
   # POST /parties
   # POST /parties.json
@@ -63,12 +82,7 @@ class PartiesController < ApplicationController
   # PATCH/PUT /parties/1.json
   def update
     if params[:party][:event_id].nil? == false
-      @event = Event.find(params[:party][:event_id])
-
-      #prevents double insert
-      if @party.events.exists?( @event.id ) == false
-        @party.events << @event
-      end
+      self.register_for_event( params[:party][:event_id] )
     end
 
     respond_to do |format|
@@ -90,6 +104,11 @@ class PartiesController < ApplicationController
       format.html { redirect_to parties_url, notice: 'Party was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def send_party_email
+    Outreach.mail_to_party_id(params[:party_id], params[:email_subject], params[:email_body]).deliver_now
+    render nothing: true
   end
 
   private

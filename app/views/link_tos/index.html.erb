@@ -12,6 +12,7 @@
       <th>Link text</th>
       <th>Icon style</th>
       <th>Panel style</th>
+      <th>Type ID</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -25,6 +26,7 @@
         <td><%= link_to.link_text %></td>
         <td><%= link_to.icon_style %></td>
         <td><%= link_to.panel_style %></td>
+        <td><%= link_to.get_type_id_string %></td>
         <td><%= link_to 'Show', link_to %></td>
         <td><%= link_to 'Edit', edit_link_to_path(link_to) %></td>
         <td><%= link_to 'Destroy', link_to, method: :delete, data: { confirm: 'Are you sure?' } %></td>

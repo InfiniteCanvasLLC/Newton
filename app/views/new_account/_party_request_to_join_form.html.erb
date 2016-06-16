@@ -1,0 +1,39 @@
+<div id="party_request_to_join_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary">
+        <h3 id="party-request-to-join-title" class="modal-title">Info</h3>
+      </div>
+
+      <%= form_tag({action: "request_to_join_party", method: "post"}, {role: "form", id: "party_request_to_join_form"}) do %>
+      <div class="modal-body">
+       <div id="party-request-to-join-content" class="modal-body edit-content">
+       </div>
+       
+       <div class="form-group">
+       <%= label_tag(:description, "Tell the party owner why you would like to join") %>
+       <br />
+       <%= text_area_tag(:description, nil, :class => 'form-control', :rows => 5) %>
+       </div>
+       
+       <div class="modal-footer bg-dark">
+       <%= submit_tag("Join!", class: 'btn btn-success') %>
+       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+       </div>
+       <%= hidden_field_tag(:party_id) %>
+      </div>
+      <% end %>
+
+       <script>
+        $("#party_request_to_join_modal").submit(
+        function (event)
+        {
+            $("#party_request_to_join_modal").modal('hide');
+        });
+      </script>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div id="send_party_mail_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary">
+        <h3 class="modal-title" id="send_party_mail_header"></h3>
+      </div>
+
+      <%= form_tag({action: "send_party_email", method: "post"}, {role: "form", id: "send_party_mail_form", remote: true}) do %>
+        <div class="modal-body">
+          <div class="form-group">
+            <%= hidden_field_tag("party_id") %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag(:email_subject, "Subject") %><br>
+            <%= text_area_tag(:email_subject, nil, :class => 'form-control', :rows => 1) %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag(:email_body, "Body") %><br>
+            <%= text_area_tag(:email_body, nil, :class => 'form-control', :rows => 5) %>
+          </div>
+        </div>
+
+        <div class="modal-footer bg-dark">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= submit_tag("Send", class: 'btn btn-success', id:'submit_email') %>
+        </div>
+      <% end %>
+
+      <script>
+        $("#send_party_mail_modal").on("show.bs.modal",
+          function (e)
+          {
+            $("#send_party_mail_header").html($(e.relatedTarget).data('party-name'));
+            $("#party_id").val($(e.relatedTarget).data('party-id'));
+            $("#email_subject").val('');
+            $("#email_body").val('');
+          });
+
+        $("#send_party_mail_form").submit(
+          function (event)
+          {
+            $("#send_party_mail_modal").modal('hide');
+          });
+      </script>
+    </div>
+  </div>
+</div>

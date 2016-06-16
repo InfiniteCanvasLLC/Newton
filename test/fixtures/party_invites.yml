@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  party_id: 1
+  src_user_id: 1
+  dst_user_id: 1
+  dst_user_name: MyString
+  dst_user_email: MyString
+
+two:
+  party_id: 1
+  src_user_id: 1
+  dst_user_id: 1
+  dst_user_name: MyString
+  dst_user_email: MyString

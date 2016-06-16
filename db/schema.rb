@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160610034033) do
+=======
+ActiveRecord::Schema.define(version: 20160608152830) do
+
+  create_table "event_registrations", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.integer  "commitment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "event_registrations", ["party_id"], name: "index_event_registrations_on_party_id"
+>>>>>>> origin/master
 
   create_table "events", force: :cascade do |t|
     t.text     "description"
@@ -45,8 +60,9 @@ ActiveRecord::Schema.define(version: 20160610034033) do
     t.string   "link_text"
     t.string   "icon_style"
     t.string   "panel_style"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "type_id",     default: 0
   end
 
   create_table "parties", force: :cascade do |t|
@@ -63,6 +79,26 @@ ActiveRecord::Schema.define(version: 20160610034033) do
   end
 
   add_index "parties_users", ["user_id", "party_id"], name: "by_user_and_party", unique: true
+
+  create_table "party_conversations", force: :cascade do |t|
+    t.integer  "party_id"
+    t.text     "message"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "party_conversations", ["party_id"], name: "index_party_conversations_on_party_id"
+
+  create_table "party_invites", force: :cascade do |t|
+    t.integer  "party_id"
+    t.integer  "src_user_id"
+    t.integer  "dst_user_id"
+    t.string   "dst_user_name"
+    t.string   "dst_user_email"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "question_answers", force: :cascade do |t|
     t.integer  "question_id"
@@ -111,9 +147,15 @@ ActiveRecord::Schema.define(version: 20160610034033) do
     t.string   "uid"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.integer  "current_party_index"
+    t.string   "secondary_email",     default: ""
+    t.integer  "gender",              default: 0
+    t.date     "birthday",            default: '2016-06-05'
+    t.integer  "zip_code",            default: 0
+    t.text     "description",         default: ""
+    t.datetime "last_seen"
   end
 
 end

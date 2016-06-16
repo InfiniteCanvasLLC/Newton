@@ -12,7 +12,15 @@ Rails.application.routes.draw do
   post 'new_account/edit_party'
   post 'new_account/leave_party'
   post 'new_account/join_party'
+  post 'new_account/request_to_join_party'
+  post 'new_account/submit_party_invite_request'
+  post 'new_account/edit_user'
+  post 'new_account/handle_chat_post'
+  post 'new_account/handle_chat_update'
+  post 'new_account/pull_user_statuses'
   post 'parties/unregister_event'
+  post 'new_account/handle_event_commitment'
+  post 'parties/unregister_for_event'
 
   get 'sessions/new'
 
@@ -24,12 +32,16 @@ Rails.application.routes.draw do
 
   post 'login_page/submit_user_signup'
   post 'login_page/submit_user_feedback'
-  
+
+  post 'users/send_user_email'
+  post 'parties/send_party_email'
+
   post 'EnterAnswer' => 'new_account#enter_answer'
 
   get 'Home'     => 'new_account#home',       :as => :home
   get 'Calendar' => 'new_account#calendar',   :as => :calendar
   get 'Stats'    => 'new_account#stats',      :as => :stats
+  get 'Chat'     => 'new_account#chat',       :as => :chat
   get 'Party'    => 'new_account#party',      :as => :party_user_page
   get 'Feedback' => 'new_account#feedback',   :as => :feedback
 
@@ -44,7 +56,7 @@ Rails.application.routes.draw do
   get '/signin' => 'sessions#new', :as => :signin
 
   get 'user_feedbacks' => 'user_feedbacks#index',   :as => :user_feedbacks
-  
+
   get 'creatives/index'
 
   get 'administrator' => 'administrator#index'

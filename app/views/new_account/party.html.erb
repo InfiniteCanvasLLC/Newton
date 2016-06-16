@@ -15,8 +15,9 @@
                 <div class="list-group">
                     <% @current_user_party.users.each_with_index do |user, i| %>
                         <p class="list-group-item">
-                            <i class="fa fa-female fa-fw"></i> <%= @user.name %><!-- Male/Female is not available for the moment -->
-                            <span class="pull-right label label-success"><em>Active</em><!-- Optional information regarding the user -->
+                            <i class="<%= user.is_female ? 'fa fa-female fa-fw' : 'fa fa-male fa-fw' %>"></i> <%= user.name %>
+                            <span id="user-status-label-<%=user.id%>" class="<%= user.is_active ? 'pull-right label label-success' : 'pull-right label label-warning' %>" >
+                              <em id="user-status-text-<%=user.id%>"> <%= user.is_active ? 'Active' : 'Inactive' %> </em>
                             </span>
                         </p>
                     <% end %>
@@ -34,7 +35,7 @@
                         <a class="btn btn-default btn-block" id="edit-party-button" party="<%= @current_user_party.id %>" >Edit party</a>
                     </div>
                     <div class="col-sm-3">
-                        <a class="btn btn-default btn-block" id="invite-member-button">Invite</a>
+                        <a class="btn btn-default btn-block" id="invite-friend-button" party="<%= @current_user_party.id %>">Invite</a>
                     </div>
                 <% end %>
                </div>
@@ -68,6 +69,31 @@
             <!-- /.panel-body -->
         </div>
 
+        <!-- All Party invites -->
+        <% if @party_invites.empty? == false %>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-link fa-fw"></i> Party Invites
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="list-group">
+                    <% @party_invites.each do |invite| %>
+                        <a style="cursor:pointer;" class="list-group-item" id="invite-join-party-button" party="<%= invite.get_party.id %>" desc="<%= invite.get_party.description %>" owner="<%= invite.get_party.get_owner.name %>"=>
+                            <i class="fa fa-group fa-fw"></i> <%= invite.get_party.name %>
+                            <span class="pull-right text-muted small">
+                                <em><%= invite.get_party.users.count%> <%= invite.get_party.users.count == 1 ? 'person' : 'people' %></em>
+                            </span>
+                        </a>
+                    <% end %>
+               </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <% end %>
+
+
+
         <!-- All parties in the system -->
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -78,8 +104,12 @@
                 <div class="list-group">
                     <% @all_parties.each do |party| %>
                         <% if party.users.exists?(@user.id) == false %> <!-- make sure the user is not already in the party -->
-                            <a class="list-group-item" id="join-party-button" party="<%= party.id %>" =>
+                            <a style="cursor:pointer;" class="list-group-item" id="request-join-party-button" party="<%= party.id %>" desc="<%= party.description %>" owner="<%= party.get_owner.name %>"=>
                                 <i class="fa fa-group fa-fw"></i> <%= party.name %>
+                                <% if ((@user.zip_code) != 0 && (party.get_owner.zip_code) != 0) %>
+                                  <%= ', ' + @user.get_region + ','%>
+                                  <%= '(' + party.get_owner.get_distance_from_user(@user).to_i.to_s + ' miles from you)'%>
+                                <% end %>
                                 <span class="pull-right text-muted small">
                                     <em><%= party.users.count%> <%= party.users.count == 1 ? 'person' : 'people' %></em>
                                 </span>
@@ -100,6 +130,9 @@
 <%= render 'party_create_form' %>
 <%= render 'party_edit_form' %>
 <%= render 'party_join_form' %>
+<%= render 'party_request_to_join_form' %>
+<%= render :partial => 'party_invite_form', :locals => {:party_name => @current_user_party.name } %>
+
 
 <script>
 $(document).click(function(event) {
@@ -170,14 +203,86 @@ $(document).click(function(event) {
         location.reload();
     }
 
-    //join a party button
-    else if(id == 'join-party-button')
+    //You were invited to join a party, you just have to accept
+    else if(id == 'invite-join-party-button')
     {
         var party_id = parseInt( $(event.target).attr('party'), 10);
 
+        var party_owner =  $(event.target).attr('owner')
+        var party_desc =  $(event.target).attr('desc')
+
+        var party_join_form = $('#party_join_modal')
+
+        document.getElementById("party-join-title").innerHTML = "Join " + party_owner + "'s party!"
+        document.getElementById("party-join-content").innerHTML = "Description: " + party_desc
+
+        party_join_form.find("#party_id").val(party_id);
+
         //don't do that just yet, we need a better way
-        //$('#party_join_modal').modal('show');
+        $('#party_join_modal').modal('show');
+    }
+    //you would like to join a party, you need to send a petition for joining a party
+    else if(id == 'request-join-party-button')
+    {
+        var party_id = parseInt( $(event.target).attr('party'), 10);
+
+        var party_owner =  $(event.target).attr('owner')
+        var party_desc =  $(event.target).attr('desc')
+
+        var party_request_join_form = $('#party_request_to_join_modal')
+
+        document.getElementById('party-request-to-join-title').innerHTML = "Join " + party_owner + "'s party!"
+        document.getElementById('party-request-to-join-content').innerHTML = "Description: " + party_desc
+
+        party_request_join_form.find("#party_id").val(party_id);
+
+        party_request_join_form.modal('show');
+    }
+
+    //invite friend
+    else if(id == 'invite-friend-button')
+    {
+        //var party_id = parseInt( $(event.target).attr('party'), 10);
+        $('#party_invite_modal').modal('show');
     }
 });
 
+
+//This pulls the server every minute for a new message.
+//If such is found, reload the page.
+function worker() {
+
+  $.ajax({
+      dataType: 'json',
+      type: "POST",
+      url: "new_account/pull_user_statuses",
+      success: function(data) {
+          for (i = 0; i < data.length; i++)
+          {
+              //status of the user
+              var active = data[i]["user_active"];
+
+              //query the laber to update its color and the text to change its value
+              var label_id = "user-status-label-" + data[i]["user_id"];
+              var text_id  = "user-status-text-" + data[i]["user_id"];
+              var label = $("#" + label_id)
+              var span  = $("#" + text_id)
+              
+              span.text( active ? "Active" : "Inactive" );
+              
+              label.removeClass( "label-success" )//.addClass
+              label.removeClass( "label-warning" )//.addClass
+              label.addClass(  active ? "label-success" : "label-warning" );
+          }
+      }
+  });
+
+  //re-issue a call in the next minute
+  setTimeout(worker, 60000);
+}
+
+$(document).ready(function() {
+  // run the first time; all subsequent calls will take care of themselves
+  setTimeout(worker, 60000);
+});
 </script>

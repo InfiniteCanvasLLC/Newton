@@ -5,16 +5,17 @@ end
 
 class UsersController < ApplicationController
     layout "administrator"
-    
+    before_action :set_user, only: [:show, :edit, :update]
+
     def index
         @current_nav_selection = "nav_users"
-    
+
         @users = User.all
     end
 
     def edit
         @current_nav_selection = "nav_users"
-        
+
         @user = User.find(params[:id])
         @all_parties = Party.all
         @user_parties = @user.parties;
@@ -22,12 +23,12 @@ class UsersController < ApplicationController
 
     def show
         @current_nav_selection = "nav_users"
-        
+
         user_id = params[:id]
         @user = User.find(params[:id])
-        
+
         @questions = Array.new
-        
+
         actions = UserAction.where("user_id = " + user_id.to_s)
         actions.to_a.each do |action|
             if (action.action_type == 0) #0 = Question
@@ -36,9 +37,9 @@ class UsersController < ApplicationController
                 #TODO
             end
         end
-        
+
         @questions_answers = Array.new
-        
+
         answers = QuestionAnswer.where("user_id = " + user_id.to_s)
         answers.to_a.each do |answer|
             qaPair = QuestionAnswerPair.new
@@ -50,7 +51,7 @@ class UsersController < ApplicationController
         end
     end
 
-    def update        
+    def update
         @user = User.find(params[:id])
         @party = Party.find(params[:user][:party_id])
 
@@ -71,5 +72,15 @@ class UsersController < ApplicationController
         @user.parties.delete(@party)
 
         redirect_to action: 'edit', id: @user.id
+    end
+
+    def send_user_email
+        Outreach.mail_to_user_id(params[:user_id], params[:email_subject], params[:email_body]).deliver_now
+        render nothing: true
+    end
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+        @user = User.find(params[:id])
     end
 end

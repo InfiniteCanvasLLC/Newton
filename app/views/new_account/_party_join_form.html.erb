@@ -2,22 +2,24 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     <div class="modal-content">
-    
+
       <div class="modal-header bg-primary">
-        <h3 class="modal-title">Info</h3>
+        <h3 id="party-join-title" class="modal-title">Info</h3>
       </div>
-      
-       <div class="modal-body edit-content">
-            Do you want to join this party? By sending a request, the owner of the party will 
-            get the chance to review your profile and either accept or reject your request. 
+
+      <%= form_tag({action: "join_party", method: "post"}, {role: "form", id: "party_join_form"}) do %>
+       <div id="party-join-content" class="modal-body edit-content">
        </div>
-      
+
         <div class="modal-footer bg-dark">
+           <%= submit_tag("Join!", class: 'btn btn-success') %>
+           <button type="button" class="btn btn-default" data-dismiss="modal">Reject</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <%= submit_tag("Send request", class: 'btn btn-success') %>
         </div>
-      
-       <script>    
+        <%= hidden_field_tag(:party_id) %>
+       <% end %>
+
+       <script>
         $("#party_join_modal").submit(
         function (event)
         {

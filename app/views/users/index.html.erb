@@ -2,7 +2,7 @@
 
   <h1>Listing Users</h1>
 
-  <table class="table">
+  <table class="table" id="user_table">
     <thead>
       <tr>
         <th>Name</th>
@@ -14,12 +14,14 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= user.email %></td>
+          <td><%= link_to user.email, "#", data: { toggle: "modal", target: "#send_user_mail_modal", user_id: user.id, user_email: user.email } %></td>
           <td><%= link_to 'Show', user_path(user) %></td>
           <td><%= link_to 'Edit', edit_user_path(user) %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <%= render 'send_user_mail_dialog' %>
 
 <% end %>
