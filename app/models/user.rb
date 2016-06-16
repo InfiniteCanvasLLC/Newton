@@ -79,6 +79,12 @@ class User < ActiveRecord::Base
 
   @@active_timeout=(300)#5 minutes
   def is_active
+    last_seen = self.last_seen
+
+    if (last_seen.nil?)
+      return false
+    end
+
     return (Time.now - self.last_seen).to_i < @@active_timeout #5 minutes ago
   end
 

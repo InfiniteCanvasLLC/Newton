@@ -82,6 +82,7 @@ Once that's done, add two new environment variables:
 #### Running tests
 Within your project directory, run ```rake test```.  This will run all tests.  If the tests complete successfully, you'll see something like:
 
+
 ```
 Run options: --seed 48477
 
@@ -93,6 +94,7 @@ Finished in 2.484632s, 15.2940 runs/s, 28.5757 assertions/s.
 
 38 runs, 71 assertions, 0 failures, 0 errors, 0 skips
 ```
+
 
 ### Updating your database
 
@@ -173,9 +175,22 @@ rails console
 
 ```
 
+### Custom Rake Tasks
 
-### Conclusion
-This is still very early in development, please ask questions on the #newton channel on Slack.
+We have a few rake tasks for various housekeeping tasks.  These can be found in ```lib/tasks```
+
+To run a rake task on Heroku to update the production database, the syntax is very similar.  You would do ```heroku run rake foo``` instead of ```rake foo```
+
+** Be extremely careful before updating production after we release.  The database would need to be backed up before we run a rake task that updates the database **
+
+#### Fixing party owners in the database
+
+*Syntax*
+```
+rake db_fix:assign_party_owners <user_id>
+```
+
+*user_id:* The user id of a user that should be made the owner of any parties that have a nil party owner.  Will also be made the owner of any parties with an invalid party owner (eg: a deleted or non-existent user)
 
 
 ### Accounts
