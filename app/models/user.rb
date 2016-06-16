@@ -80,9 +80,9 @@ class User < ActiveRecord::Base
   @@active_timeout=(300)#5 minutes
   def is_active
     puts "is_active"
-    puts self.last_seen
-    puts (Time.now - self.last_seen).to_i
-    
+    puts "Last seen " + self.last_seen.to_s
+    puts "Delta Time " + (Time.now - self.last_seen).to_s
+
     return (Time.now - self.last_seen).to_i < @@active_timeout #5 minutes ago
   end
 
