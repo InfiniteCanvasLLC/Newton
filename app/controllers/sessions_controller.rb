@@ -105,7 +105,6 @@ class SessionsController < ApplicationController
         # convert topArtists to a hash to save to the database
         #topArtistsHash = JSON.parse( topArtists["items"].to_s[1...-1] )
         #topArtistsHash = JSON.parse( topArtists )
-        byebug
         user = User.find( session[:user_id] )
         user.favorite_info.top_artists = topArtistsHash
         user.favorite_info.top_songs = topTracksHash
