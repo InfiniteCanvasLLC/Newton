@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(version: 20160612152009) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-07'
+    t.date     "birthday",            default: '2016-06-05'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
     t.datetime "last_seen"
