@@ -9,7 +9,7 @@
       
       <%= form_tag({action: "submit_user_feedback", method: "post"}, {role: "form", id: "feedback_form", remote: true}) do %>
         <div class="modal-body">
-          <div class="form-group">    
+          <div class="form-group">
             <label>How was your experience?</label>
             <br />
             <%= radio_button_tag(:sentiment, 'good', true, class: 'sentiment') %>
