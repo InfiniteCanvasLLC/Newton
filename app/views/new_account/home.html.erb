@@ -1,12 +1,13 @@
 <%= render :layout => 'navigation' do %>
 	<div class="row"> <!-- This needs to be re-worked, this looks absolutely terrible -->
 		<div class="col-lg-12">
-			<div class="panel">
+			<div>
+			    <img src="//placehold.it/1624x300" class="img-responsive">
 				<img class="party_image img-circle" src="http://placehold.it/120x120" alt="...">
 				<div class="btn-group">
-					<button type="button" class="btn dropdown-toggle party_image" style="width:200px;" data-toggle="dropdown"> <%= @current_user_party_name %> <span class="caret"></span>
+					<button type="button" class="btn dropdown-toggle party_drop_down_button" style="width:200px;" data-toggle="dropdown"> <%= @current_user_party_name %> <span class="caret"></span>
 					</button>
-					<ul class="dropdown-menu dropdown-menu-right party_image" role="menu">
+					<ul class="dropdown-menu dropdown-menu-right party_drop_down_menu" role="menu">
 						<% @user.parties.each_with_index do |party, i| %>
 							<li><%= link_to party.name, {:party_index => i, :party_id => party.id, :action => 'switch_party'}, method: :post %></li>
 						<% end %>
@@ -16,7 +17,7 @@
 		</div>
 	</div>
 
-	<div class="row" style="margin-top: 100px;">
+	<div class="row" style="margin-top: 50px;">
 		<% @questions.each_with_index do |cur_question, i| %>
 		<div class="col-lg-3 col-md-6" id= <%= "question_" + cur_question.action_id.to_s %> >
 			<div class="panel panel-primary">
