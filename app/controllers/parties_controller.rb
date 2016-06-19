@@ -75,16 +75,28 @@ class PartiesController < ApplicationController
   # POST /parties
   # POST /parties.json
   def create
-    @party = Party.new(party_params)
-    user = User.find(session[:user_id])
-    @party.owner_user_id = user.id #by default, the Admin whom create the party
+    user = nil
+    fail = false
+
+    if (session[:user_id] != nil)
+      user = User.find(session[:user_id])
+    else
+      fail = true
+    end
+
+    if (user != nil)
+      @party = Party.new(party_params)
+      @party.owner_user_id = user.id #by default, the Admin whom create the party
+    else
+      fail = true
+    end
 
     respond_to do |format|
-      if @party.save
+      if !fail && @party.save
         format.html { redirect_to @party, notice: 'Party was successfully created.' }
         format.json { render :show, status: :created, location: @party }
       else
-        format.html { render :new }
+        format.html { render(:file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false) }
         format.json { render json: @party.errors, status: :unprocessable_entity }
       end
     end
