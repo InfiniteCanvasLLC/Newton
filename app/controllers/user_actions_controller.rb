@@ -50,7 +50,7 @@ class UserActionsController < ApplicationController
         format.html { redirect_to @user_action, notice: 'User action was successfully created.' }
         format.json { render :show, status: :created, location: @user_action }
       else
-        format.html { render :new }
+        format.html { render(:file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false) }
         format.json { render json: @user_action.errors, status: :unprocessable_entity }
       end
     end

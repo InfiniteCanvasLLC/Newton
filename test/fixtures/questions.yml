@@ -10,7 +10,7 @@ one:
 
 two:
   text: MyString
-  question_type: 1
+  question_type: 0
   metadata_one: MyString
   metadata_two: MyString
   metadata_three: MyString
