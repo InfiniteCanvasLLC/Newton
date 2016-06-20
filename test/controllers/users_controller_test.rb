@@ -31,7 +31,15 @@ class UsersControllerTest < ActionController::TestCase
     test "get specific user" do
         test_user = User.all.first
 
+        Rails::logger.debug test_user.inspect
+        Rails::logger.debug QuestionAnswer.where("user_id = " + test_user.id.to_s).to_a
+        Rails::logger.debug QuestionAnswer.all.to_a
+        Rails::logger.debug Question.all.to_a
+
         get :show, {'id' => test_user.id}
+
+        #Rails::logger.debug @response.inspect
+
         assert_response :success
     end
 
