@@ -24,3 +24,6 @@
 
 # Mac OS X Specific Files
 .DS_Store
+
+# Ignore bye bug stuffs
+.byebug_history

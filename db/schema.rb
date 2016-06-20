@@ -38,6 +38,17 @@ ActiveRecord::Schema.define(version: 20160612152009) do
     t.integer "party_id", null: false
   end
 
+  create_table "favorite_infos", force: :cascade do |t|
+    t.text     "top_artists"
+    t.text     "top_songs"
+    t.text     "top_genre"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "favorite_infos", ["user_id"], name: "index_favorite_infos_on_user_id"
+
   create_table "join_party_requests", force: :cascade do |t|
     t.integer  "party_id"
     t.integer  "user_id"
@@ -165,7 +176,7 @@ ActiveRecord::Schema.define(version: 20160612152009) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-07'
+    t.date     "birthday",            default: '2016-06-05'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
     t.datetime "last_seen"

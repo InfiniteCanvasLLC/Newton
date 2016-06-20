@@ -275,7 +275,7 @@ class NewAccountController < ApplicationController
     def stats
         @current_nav_selection = "nav_stats"
     end
-    
+
     def chat
         @current_party = get_user_current_party(@user)
         
@@ -283,23 +283,23 @@ class NewAccountController < ApplicationController
         @conversations = @current_party.party_conversations.last(20)
         @current_nav_selection = "nav_chat"
     end
-    
+
     def handle_chat_post
        @current_party = get_user_current_party(@user)
-    
+
        conversation = PartyConversation.new
        conversation.party_id = @current_party.id
        conversation.message  = params[:message]
        conversation.user_id  = @user.id
-    
+
        conversation.save
-       
+
        redirect_to action: 'chat'
     end
-    
+
     def handle_chat_update
        @current_party = get_user_current_party(@user)
-       
+
        # there are new messages to display (ie: the front end is not in sync with the back end)
        if @current_party.party_conversations.empty? == false && 
           @current_party.party_conversations.last.id != params[:last_message_id].to_i
@@ -337,6 +337,29 @@ class NewAccountController < ApplicationController
 
     def settings
         @current_nav_selection = ""
+    end
+
+    def submit_user_feedback
+      user_feedback = UserFeedback.new
+
+      user_feedback.sentiment = 0;#by default, at this point we care more about the message
+
+      case params[:issue_type]
+        when "feature"
+          user_feedback.issue_type = 1000
+
+        when "bug"
+          user_feedback.issue_type = 2000
+
+        when "other"
+          user_feedback.issue_type = 3000
+      end
+
+      user_feedback.email = @user.email
+      user_feedback.description = params[:description]
+
+      user_feedback.save
+      redirect_to action: 'feedback'
     end
 
     private

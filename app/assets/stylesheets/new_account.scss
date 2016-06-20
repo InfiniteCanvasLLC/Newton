@@ -2,15 +2,27 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.party_image {
-    margin-top: 50px;
-    width: 120px;
-    margin-left: 50px;
-    margin-bottom: -60px;
+.widget{
+   margin-top: -60px;
+   margin-left: 50px;
+   border: 1px solid black;
 }
 
-.party_drop_down {
-	margin-left: 25%;
+.party_image {
+    @extend .widget;
+    width: 120px;
+}
+
+.party_drop_down_button {
+    @extend .widget;
+}
+
+.party_drop_down_menu {
+    @extend .widget;
+}
+
+.dropdown-menu {
+  width: 100%;
 }
 
 .name {

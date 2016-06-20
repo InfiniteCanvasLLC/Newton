@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  top_artists: MyText
+  top_songs: MyText
+  top_genre: MyText
+  user_id: 
+
+two:
+  top_artists: MyText
+  top_songs: MyText
+  top_genre: MyText
+  user_id: 
