@@ -44,4 +44,19 @@ namespace :fix_db do
         print_parties()
 
     end
+
+    task :clean_user_actions => :environment do
+
+        num_records_deleted = 0
+
+        UserAction.all.each do |cur_action|
+            if (cur_action.user == nil)
+                cur_action.destroy
+                num_records_deleted += 1
+            end
+        end
+
+        puts "Deleted " + num_records_deleted.to_s + " records"
+
+    end
 end

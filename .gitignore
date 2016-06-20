@@ -19,6 +19,9 @@
 # Ignore application configuration
 /config/application.yml
 
+# Ignore test coverage report
+/coverage
+
 # Mac OS X Specific Files
 .DS_Store
 
