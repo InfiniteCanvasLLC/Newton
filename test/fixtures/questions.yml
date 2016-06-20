@@ -15,3 +15,11 @@ lady_gaga:
   metadata_two: MyString
   metadata_three: MyString
   metadata_four: MyString
+
+spotify_rate:
+  text: Rate your satisfaction with Spotify
+  question_type: 2
+  metadata_one:
+  metadata_two:
+  metadata_three:
+  metadata_four:
