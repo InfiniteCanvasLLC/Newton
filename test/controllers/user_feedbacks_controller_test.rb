@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserFeedbacksControllerTest < ActionController::TestCase
 
-  test "blahblahblah" do
+  test "load_page" do
     get :index
     assert_response :success
   end

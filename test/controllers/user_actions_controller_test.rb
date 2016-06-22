@@ -25,7 +25,8 @@ class UserActionsControllerTest < ActionController::TestCase
   end
 
   test "should create invalid user action" do
-      post :create, user_action: { action_id: @user_action.action_id, action_type: @user_action.action_type }
+      post :create, user_action: { action_id: @user_action.action_id, action_type: @user_action.action_type, user_id: 0 }
+      assert_response(500)
   end
 
   test "should show user_action" do

@@ -45,6 +45,8 @@ class UserActionsController < ApplicationController
   def create
     @user_action = UserAction.new(user_action_params)
 
+    puts "User Action is " + @user_action.inspect
+
     respond_to do |format|
       if @user_action.save
         format.html { redirect_to @user_action, notice: 'User action was successfully created.' }
