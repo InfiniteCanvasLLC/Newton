@@ -1,17 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  text: MyString
+ice_cream:
+  text: What is your favorite ice cream flavor?
+  question_type: 0
+  metadata_one: "Mango"
+  metadata_two: "Salted Caramel"
+  metadata_three: "Cardamom"
+  metadata_four: "Malt Chocolate"
+
+lady_gaga:
+  text: Do you like Lady Gaga
   question_type: 1
   metadata_one: MyString
   metadata_two: MyString
   metadata_three: MyString
   metadata_four: MyString
 
-two:
-  text: MyString
-  question_type: 1
-  metadata_one: MyString
-  metadata_two: MyString
-  metadata_three: MyString
-  metadata_four: MyString
+spotify_rate:
+  text: Rate your satisfaction with Spotify
+  question_type: 2
+  metadata_one:
+  metadata_two:
+  metadata_three:
+  metadata_four:

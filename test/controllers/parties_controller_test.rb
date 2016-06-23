@@ -17,11 +17,20 @@ class PartiesControllerTest < ActionController::TestCase
   end
 
   test "should create party" do
+
+    session[:user_id] = User.first.id
+
     assert_difference('Party.count') do
       post :create, party: { name: @party.name }
     end
 
     assert_redirected_to party_path(assigns(:party))
+  end
+
+  test "should fail to create party" do
+    post :create, party: { name: @party.name }
+
+    assert_response(500)
   end
 
   test "should show party" do

@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   layout "administrator"
 
   before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question_types, only: [:new, :edit]
 
   # GET /questions
   # GET /questions.json
@@ -23,7 +24,6 @@ class QuestionsController < ApplicationController
     @current_nav_selection = "nav_questions"
 
     @question = Question.new
-    @question_types_list = Question.get_type_name_to_id_array
   end
 
   # GET /questions/1/edit
@@ -75,6 +75,10 @@ class QuestionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_question
       @question = Question.find(params[:id])
+    end
+
+    def set_question_types
+      @question_types_list = Question.get_type_name_to_id_array
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

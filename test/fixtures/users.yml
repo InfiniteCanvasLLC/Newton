@@ -1,12 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+steve_jobs:
   provider: 'facebook'
   uid: '23456'
   name: 'Steve Jobs'
   email: 'support@audicy.us'
 
-two:
+steve_wozniak:
   provider: 'facebook'
   uid: '23499'
   name: 'Steve Wozniak'
