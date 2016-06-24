@@ -11,7 +11,6 @@ class User < ActiveRecord::Base
   private def build_default_favorites_info
     # build default favorites_info instance. Will use default params.
     # The foreign key to the owning User model is set automatically
-    byebug
     build_favorite_info
     true # Always return true in callbacks as the normal 'continue' state
         # Assumes that the default_profile can **always** be created.
