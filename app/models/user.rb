@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   before_create :build_default_favorites_info
   has_many :user_metadata
   
+  # http://stackoverflow.com/questions/3808782/rails-best-practice-how-to-create-dependent-has-one-relations
+  # required by the has_one relationship otherwise runtime errors occur trying to access user.favorite_info
   private def build_default_favorites_info
     # build default favorites_info instance. Will use default params.
     # The foreign key to the owning User model is set automatically
