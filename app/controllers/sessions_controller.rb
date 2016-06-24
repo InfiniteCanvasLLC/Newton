@@ -106,12 +106,11 @@ class SessionsController < ApplicationController
         #topArtistsHash = JSON.parse( topArtists["items"].to_s[1...-1] )
         #topArtistsHash = JSON.parse( topArtists )
         user = User.find( session[:user_id] )
-        user.favorite_info.top_artists = topArtistsHash
-        user.favorite_info.top_songs = topTracksHash
-        user.favorite_info.top_genre = topGenresArray
+        user.favorite_info.top_artists = topArtistsHash.to_json.to_s
+        user.favorite_info.top_songs = topTracksHash.to_json.to_s
+        user.favorite_info.top_genre = topGenresArray.to_json.to_s
 
         user.favorite_info.save
-        user.save
 
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home'
