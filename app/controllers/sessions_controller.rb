@@ -111,7 +111,6 @@ class SessionsController < ApplicationController
         user.favorite_info.top_genre = topGenresArray
 
         user.favorite_info.save
-        user.save
 
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home'
