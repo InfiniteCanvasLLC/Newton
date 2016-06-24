@@ -1,8 +1,20 @@
-<pre id="top_artists" />
-<br />
-<pre id="top_songs" />
-<br />
-<pre id="top_genre" />
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab_top_artists">Top Artists</a></li>
+    <li><a data-toggle="tab" href="#tab_top_songs">Top Songs</a></li>
+    <li><a data-toggle="tab" href="#tab_top_genre">Top Genres</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="tab_top_artists" class="tab-pane fade in active">
+        <pre id="top_artists" />
+    </div>
+    <div id="tab_top_songs" class="tab-pane fade">
+        <pre id="top_songs" />
+    </div>
+    <div id="tab_top_genre" class="tab-pane fade">
+        <pre id="top_genre" />
+    </div>
+</div>
 
 <script>
     $('document').ready(function() {
