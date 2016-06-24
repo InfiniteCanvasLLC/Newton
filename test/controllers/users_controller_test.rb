@@ -2,38 +2,45 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
 
-  test "get all users" do
-    get :index
-    assert_response :success
-    assert_select '#user_table', 1
+    test "get all users" do
+        get :index
+        assert_response :success
+        assert_select '#user_table', 1
 
-    users = User.all
-    index = 0
-
-    assert_select '#user_table > tbody > tr' do |rows|
-
+        users = User.all
         index = 0
 
-        rows.each do |cur_row|
+        assert_select '#user_table > tbody > tr' do |rows|
 
-            cur_user = users[index]
+            index = 0
 
-            cur_cells = cur_row > 'td'
-            assert cur_cells[0].children[0].content == cur_user.name
-            assert cur_cells[1].children[0].content == cur_user.email
+            rows.each do |cur_row|
 
-            index += 1
+                cur_user = users[index]
+
+                cur_cells = cur_row > 'td'
+                assert cur_cells[0].children[0].content == cur_user.name
+                assert cur_cells[1].children[0].content == cur_user.email
+
+                index += 1
+            end
+
         end
-
     end
 
-  end
+    test "get specific user" do
+        test_user = User.all.first
 
-  test "get specific user" do
-    test_user = User.all.first
+        get :show, {'id' => test_user.id}
 
-    get :show, {'id' => test_user.id}
-    assert_response :success
-  end
+        assert_response :success
+    end
+
+    test "edit specific user" do
+        test_user = User.all.first
+
+        get :edit, {'id' => test_user.id}
+        assert_response :success
+    end
 
 end

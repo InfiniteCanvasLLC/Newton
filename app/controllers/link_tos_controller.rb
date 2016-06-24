@@ -1,5 +1,7 @@
 class LinkTosController < ApplicationController
   before_action :set_link_to, only: [:show, :edit, :update, :destroy]
+  before_action :set_link_to_types, only: [:new, :edit]
+
   layout "administrator"
 
   # GET /link_tos
@@ -18,7 +20,6 @@ class LinkTosController < ApplicationController
   # GET /link_tos/new
   def new
     @current_nav_selection = "nav_linktos"
-    @link_to_types_list = LinkTo.get_type_name_to_id_array
     @link_to = LinkTo.new
   end
 
@@ -71,6 +72,10 @@ class LinkTosController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_link_to
       @link_to = LinkTo.find(params[:id])
+    end
+
+    def set_link_to_types
+      @link_to_types_list = LinkTo.get_type_name_to_id_array
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

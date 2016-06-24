@@ -185,6 +185,8 @@ To run a rake task on Heroku to update the production database, the syntax is ve
 
 #### Fixing party owners in the database
 
+It is possible for parties to have no owner, if the party was created some time ago.  Similarly if a user is deleted, the party can have an invalid owner.  This rake task will assign a valid owner to those parties.
+
 *Syntax*
 ```
 rake db_fix:assign_party_owners <user_id>
@@ -192,6 +194,14 @@ rake db_fix:assign_party_owners <user_id>
 
 *user_id:* The user id of a user that should be made the owner of any parties that have a nil party owner.  Will also be made the owner of any parties with an invalid party owner (eg: a deleted or non-existent user)
 
+#### Delete stale user actions
+
+This task will delete user actions that are not assigned to a valid user (typically a deleted user).
+
+*Syntax*
+```
+rake db_fix:clean_user_actions
+```
 
 ### Accounts
 The following are the accounts create for support of the Newton service:
