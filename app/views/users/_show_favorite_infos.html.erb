@@ -1,11 +1,16 @@
-<div id="top_artists">
-    <%= @user.favorite_info.top_artists %>
-</div>
+<pre id="top_artists" />
 <br />
-<div id="top_songs">
-    <%= @user.favorite_info.top_songs %>
-</div>
+<pre id="top_songs" />
 <br />
-<div id="top_genre">
-    <%= @user.favorite_info.top_genre %>
-</div>
+<pre id="top_genre" />
+
+<script>
+    $('document').ready(function() {
+        $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists %>"));
+        $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs %>"));
+        $("#top_genre").text(pretty_print("<%= @user.favorite_info.top_genre %>"));
+    });
+    function pretty_print(str) {
+        return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
+    }
+</script>
