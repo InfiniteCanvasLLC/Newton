@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160612152009) do
+ActiveRecord::Schema.define(version: 20160622080907) do
 
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
@@ -176,10 +176,11 @@ ActiveRecord::Schema.define(version: 20160612152009) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-05'
+    t.date     "birthday",            default: '2016-06-13'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
     t.datetime "last_seen"
+    t.integer  "permissions",         default: 0
   end
 
 end

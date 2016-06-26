@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   has_one :favorite_info
   before_create :build_default_favorites_info
   has_many :user_metadata
+
+  PERMISSION_USER          = 0
+  PERMISSION_ADMINISTRATOR = 1 << 0
   
   private def build_default_favorites_info
     # build default favorites_info instance. Will use default params.

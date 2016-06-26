@@ -44,4 +44,9 @@ namespace :fix_db do
         print_parties()
 
     end
+
+    task :assign_administrator => :environment do
+    end
+
+
 end
