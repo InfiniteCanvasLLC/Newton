@@ -7,6 +7,8 @@ class UsersController < ApplicationController
     layout "administrator"
     before_action :set_user, only: [:show, :edit, :update]
 
+    before_filter :verify_administrator
+
     def index
         @current_nav_selection = "nav_users"
 
