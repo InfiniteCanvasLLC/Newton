@@ -45,7 +45,26 @@ namespace :fix_db do
 
     end
 
-    task :assign_administrator => :environment do
+    task :set_nonadmin => :environment do
+        ARGV.each { |a| task a.to_sym do ; end }
+
+        admin_id = ARGV[1]
+        admin = User.find(admin_id)
+
+        admin.permissions = User::PERMISSION_USER
+        admin.save
+    end
+
+    task :set_admin => :environment do
+
+        ARGV.each { |a| task a.to_sym do ; end }
+
+        admin_id = ARGV[1]
+        admin = User.find(admin_id)
+
+        admin.permissions = User::PERMISSION_ADMINISTRATOR
+        admin.save
+
     end
 
     task :clean_user_actions => :environment do
