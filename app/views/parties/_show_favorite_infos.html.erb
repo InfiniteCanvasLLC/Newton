@@ -1,0 +1,38 @@
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab_top_artists">Top Artists</a></li>
+    <li><a data-toggle="tab" href="#tab_top_songs">Top Songs</a></li>
+    <li><a data-toggle="tab" href="#tab_top_genre">Top Genres</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="tab_top_artists" class="tab-pane fade in active">
+        <pre id="top_artists" />
+    </div>
+    <div id="tab_top_songs" class="tab-pane fade">
+        <pre id="top_songs" />
+    </div>
+    <div id="tab_top_genre" class="tab-pane fade">
+        <pre id="top_genre" />
+    </div>
+</div>
+
+<script>
+    $('document').ready(function() {
+        <% top_artists = "" %>
+        <% top_songs = "" %>
+        <% top_genre = "" %>
+        <% @party.users.each do |user| %>
+            <% pre = "{\"" + user.name + "\":" %>
+            <% post = "}" %>
+            <% top_artists += pre + user.favorite_info.top_artists + post %>
+            <% top_songs   += pre + user.favorite_info.top_songs + post %>
+            <% top_genre   += pre + user.favorite_info.top_genre + post %>
+        <% end %>
+        $("#top_artists").text(pretty_print("<%= top_artists %>"));
+        $("#top_songs").text(pretty_print("<%= top_songs %>"));
+        $("#top_genre").text(pretty_print("<%= top_genre %>"));
+    });
+    function pretty_print(str) {
+        return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
+    }
+</script>
