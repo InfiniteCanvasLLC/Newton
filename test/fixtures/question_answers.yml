@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  question_id: 
-  user_id: 
-  answer_integer: 1
-  answer_text: MyText
+  question: ice_cream
+  user: steve_jobs
+  answer_integer: 3
+  answer_text: Foobar
 
 two:
-  question_id: 
-  user_id: 
-  answer_integer: 1
-  answer_text: MyText
+  question: lady_gaga
+  user: steve_jobs
+  answer_integer: 0
+  answer_text: barbar

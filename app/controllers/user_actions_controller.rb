@@ -4,6 +4,7 @@ class UserActionsController < ApplicationController
   layout "administrator"
 
   before_action :set_user_action, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_action_types, only: [:new, :edit]
 
   # GET /user_actions
   # GET /user_actions.json
@@ -25,8 +26,6 @@ class UserActionsController < ApplicationController
 
     @user_action = UserAction.new
 
-    @user_actions_types_list = UserAction.get_type_name_to_id_array
-    @users_types_list = User.get_user_name_to_id_array
     @users = User.all.to_a
     @questions = Question.all.to_a
     @link_tos  = LinkTo.all.to_a
@@ -51,7 +50,7 @@ class UserActionsController < ApplicationController
         format.html { redirect_to @user_action, notice: 'User action was successfully created.' }
         format.json { render :show, status: :created, location: @user_action }
       else
-        format.html { render :new }
+        format.html { render(:file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false) }
         format.json { render json: @user_action.errors, status: :unprocessable_entity }
       end
     end
@@ -85,6 +84,11 @@ class UserActionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user_action
       @user_action = UserAction.find(params[:id])
+    end
+
+    def set_user_action_types
+      @user_actions_types_list = UserAction.get_type_name_to_id_array
+      @users_types_list = User.get_user_name_to_id_array
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
