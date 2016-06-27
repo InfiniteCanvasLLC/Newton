@@ -1,6 +1,7 @@
 class LinkTosController < ApplicationController
   before_action :set_link_to, only: [:show, :edit, :update, :destroy]
   before_action :set_link_to_types, only: [:new, :edit]
+  before_filter :verify_administrator
 
   layout "administrator"
 
