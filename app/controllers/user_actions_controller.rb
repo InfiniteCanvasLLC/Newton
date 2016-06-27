@@ -18,6 +18,7 @@ class UserActionsController < ApplicationController
   # GET /user_actions/1
   # GET /user_actions/1.json
   def show
+    Rails::logger.debug User.find(session[:user_id]).inspect
     @current_nav_selection = "nav_user_actions"
   end
 
