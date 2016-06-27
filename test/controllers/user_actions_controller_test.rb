@@ -83,8 +83,15 @@ class UserActionsControllerTest < ActionController::TestCase
   end
 
   test "should update user_action" do
+    session[:user_id] = users(:steve_jobs).id
     patch :update, id: @user_action, user_action: { action_id: @user_action.action_id, action_type: @user_action.action_type, user_id: @user_action.user_id }
     assert_redirected_to user_action_path(assigns(:user_action))
+  end
+
+  test "should update user_action non_admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    patch :update, id: @user_action, user_action: { action_id: @user_action.action_id, action_type: @user_action.action_type, user_id: @user_action.user_id }
+    assert_response(500)
   end
 
   test "should destroy user_action" do

@@ -3,6 +3,8 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
 
     test "get all users" do
+        session[:user_id] = users(:steve_jobs).id
+
         get :index
         assert_response :success
         assert_select '#user_table', 1
@@ -28,7 +30,16 @@ class UsersControllerTest < ActionController::TestCase
         end
     end
 
+    test "get all users non_admin" do
+        session[:user_id] = users(:steve_wozniak).id
+
+        get :index
+        assert_response(500)
+    end
+
     test "get specific user" do
+        session[:user_id] = users(:steve_jobs).id
+
         test_user = User.all.first
 
         get :show, {'id' => test_user.id}
@@ -36,11 +47,32 @@ class UsersControllerTest < ActionController::TestCase
         assert_response :success
     end
 
+    test "get specific user non_admin" do
+        session[:user_id] = users(:steve_wozniak).id
+
+        test_user = User.all.first
+
+        get :show, {'id' => test_user.id}
+
+        assert_response(500)
+    end
+
     test "edit specific user" do
+        session[:user_id] = users(:steve_jobs).id
+
         test_user = User.all.first
 
         get :edit, {'id' => test_user.id}
         assert_response :success
+    end
+
+    test "edit specific user non_admin" do
+        session[:user_id] = users(:steve_wozniak).id
+
+        test_user = User.all.first
+
+        get :edit, {'id' => test_user.id}
+        assert_response(500)
     end
 
 end
