@@ -46,6 +46,8 @@ The production version of the app is hosted at [http://canvasnewton.herokuapp.co
 
 If you want to deploy to Heroku, that is certainly fine.  Please ask Rishi to add you as a collaborator to the account.
 
+For more information on Heroku, please go to the [Heroku](docs/Heroku.md) article
+
 ### Questions
 
 See the [Questions](docs/Questions.md) article
