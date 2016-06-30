@@ -59,9 +59,20 @@ class UsersController < ApplicationController
     end
 
     def update
-        @party = Party.find(params[:user][:party_id])
+        party_id = params[:user][:party_id];
 
-        @user.parties << @party
+        if (!party_id.nil?)
+            @party = Party.find(party_id)
+
+            @user.parties << @party
+        end
+
+        permissions = params[:user][:permissions];
+
+        if (!permissions.nil?)
+            @user.permissions = permissions
+            @user.save
+        end
 
         redirect_to :action => 'index'
     end

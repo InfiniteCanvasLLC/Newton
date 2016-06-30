@@ -62,6 +62,22 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Permissions</h2>
+
+        <% if @user.id == User.find(session[:user_id]).id %>
+          <%= "Administrator (this is you, and not editable)" %>
+        <% else %>
+          <%= form_for(@user) do |f| %>
+            <%= f.label :permissions, "Administrator" %><br>
+            <%= f.check_box :permissions %><br>
+            <%= f.submit %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
   </div>
 
 <% end %>

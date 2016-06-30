@@ -48,6 +48,9 @@ If you want to deploy to Heroku, that is certainly fine.  Please ask Rishi to ad
 
 For more information on Heroku, please go to the [Heroku](docs/Heroku.md) article
 
+### Other Setup
+You will need to make yourself an administrator if you want to use the administrator page, and perform actions like create new questions, view user feedback, etc.  To that, see the [docs/Administrator](docs/Administrator.md) article
+
 ### Questions
 
 See the [Questions](docs/Questions.md) article
