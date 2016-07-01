@@ -17,13 +17,8 @@ class PartiesController < ApplicationController
     @current_nav_selection = "nav_parties"
 
     # Metadata
-    @metadata = Array.new
+    @metadata = PartyMetadatum.where("party_id = " + params[:id].to_s).to_a
     @metadata_types = PartyMetadatum.type_name_to_type_id_array
-
-    metadata = PartyMetadatum.where("party_id = " + params[:id].to_s)
-    metadata.each do |metadatum|
-      @metadata << metadatum
-    end
   end
 
   # GET /parties/new

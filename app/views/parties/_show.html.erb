@@ -8,6 +8,7 @@
     <div class="modal-body">
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab_party_info">Party Info</a></li>
+        <li><a data-toggle="tab" href="#tab_favorite_infos">Spotify</a></li>
         <li><a data-toggle="tab" href="#tab_metadata">Metadata</a></li>
         <li><a data-toggle="tab" href="#tab_send_email">Send Email</a></li>
       </ul>
@@ -36,6 +37,9 @@
               </li>
             <% end %>
           </ul>
+        </div>
+        <div id="tab_favorite_infos" class="tab-pane fade">
+          <p><%= render 'show_favorite_infos' %></p>
         </div>
         <div id="tab_metadata" class="tab-pane fade">
           <p><%= render 'show_metadata' %></p>

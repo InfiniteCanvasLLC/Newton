@@ -46,14 +46,12 @@ class UsersController < ApplicationController
             @questions_answers << qaPair
         end
 
-        # Metadata
-        @metadata = Array.new
-        @metadata_types = UserMetadatum.type_name_to_type_id_array
+        # Spotify
+        @favorite_info = FavoriteInfo.where("user_id = " + params[:id].to_s)
 
-        metadata = UserMetadatum.where("user_id = " + params[:id].to_s)
-        metadata.each do |metadatum|
-            @metadata << metadatum
-        end
+        # Metadata
+        @metadata = UserMetadatum.where("user_id = " + params[:id].to_s).to_a
+        @metadata_types = UserMetadatum.type_name_to_type_id_array
     end
 
     def update
