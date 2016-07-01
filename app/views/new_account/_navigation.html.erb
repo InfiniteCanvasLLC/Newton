@@ -55,6 +55,11 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 	            <li class="<%= @current_nav_selection=='nav_calendar' ? 'selected' : ' ' %>">
 	                <a href="<%= calendar_path %>"><i class="fa fa-fw fa-calendar"></i> Music Events</a>
 	            </li>
+                <% if (@user.permissions & User::PERMISSION_ADMINISTRATOR) > 0 %>
+                    <li>
+                        <a href="<%= administrator_path %>"><i class="fa fa-fw fa-desktop"></i> Administrator</a>
+                    </li>
+                <% end %>
 				<!--
 	            <li class="<%= @current_nav_selection=='nav_stats' ? 'selected' : ' ' %>">
 	                <a href="<%= stats_path %>"><i class="fa fa-fw fa-bar-chart-o"></i> Stats</a>

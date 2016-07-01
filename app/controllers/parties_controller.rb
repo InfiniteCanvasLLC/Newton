@@ -2,6 +2,7 @@ class PartiesController < ApplicationController
   layout "administrator"
 
   before_action :set_party, only: [:show, :edit, :update, :destroy]
+  before_filter :verify_administrator
 
   # GET /parties
   # GET /parties.json

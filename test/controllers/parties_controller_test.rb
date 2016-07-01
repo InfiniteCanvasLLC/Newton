@@ -6,14 +6,28 @@ class PartiesControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
+    session[:user_id] = users(:steve_jobs).id
     get :index
     assert_response :success
     assert_not_nil assigns(:parties)
   end
 
+  test "should get index non-admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    get :index
+    assert_response(500)
+  end
+
   test "should get new" do
+    session[:user_id] = users(:steve_jobs).id
     get :new
     assert_response :success
+  end
+
+  test "should get new non_admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    get :new
+    assert_response(500)
   end
 
   test "should create party" do
@@ -34,21 +48,43 @@ class PartiesControllerTest < ActionController::TestCase
   end
 
   test "should show party" do
+    session[:user_id] = users(:steve_jobs).id
     get :show, id: @party
     assert_response :success
   end
 
+  test "should show party non_admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    get :show, id: @party
+    assert_response(500)
+  end
+
   test "should get edit" do
+    session[:user_id] = users(:steve_jobs).id
     get :edit, id: @party
     assert_response :success
   end
 
+  test "should get edit non_admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    get :edit, id: @party
+    assert_response(500)
+  end
+
   test "should update party" do
+    session[:user_id] = users(:steve_jobs).id
     patch :update, id: @party, party: { name: @party.name }
     assert_redirected_to party_path(assigns(:party))
   end
 
+  test "should update party non_admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    patch :update, id: @party, party: { name: @party.name }
+    assert_response(500)
+  end
+
   test "should destroy party" do
+    session[:user_id] = users(:steve_jobs).id
     assert_difference('Party.count', -1) do
       delete :destroy, id: @party
     end

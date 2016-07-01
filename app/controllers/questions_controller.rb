@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :set_question_types, only: [:new, :edit]
 
+  before_filter :verify_administrator
+
   # GET /questions
   # GET /questions.json
   def index

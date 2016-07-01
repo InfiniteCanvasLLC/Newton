@@ -7,6 +7,7 @@
       <tr>
         <th>Name</th>
         <th>E-mail</th>
+        <th>Permissions</th>
       </tr>
     </thead>
 
@@ -15,6 +16,7 @@
         <tr>
           <td><%= user.name %></td>
           <td><%= user.email %></td>
+          <td><%= user.permissions == 1 ? "Administrator" : "Regular" %></td>
           <td><%= link_to 'Show', user_path(user), remote: true %></td>
           <td><%= link_to 'Edit', edit_user_path(user) %></td>
         </tr>

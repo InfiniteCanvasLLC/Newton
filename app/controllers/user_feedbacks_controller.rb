@@ -1,5 +1,7 @@
 class UserFeedbacksController < ApplicationController
 
+    before_filter :verify_administrator
+
     layout "administrator"
   
     # GET /user_feedbacks

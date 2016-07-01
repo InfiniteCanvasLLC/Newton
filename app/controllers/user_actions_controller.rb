@@ -5,6 +5,7 @@ class UserActionsController < ApplicationController
 
   before_action :set_user_action, only: [:show, :edit, :update, :destroy]
   before_action :set_user_action_types, only: [:new, :edit]
+  before_filter :verify_administrator
 
   # GET /user_actions
   # GET /user_actions.json

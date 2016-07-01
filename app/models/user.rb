@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
   has_one :favorite_info
   before_create :build_default_favorites_info
   has_many :user_metadata
+
+  PERMISSION_USER          = 0
+  PERMISSION_ADMINISTRATOR = 1 << 0
   
   # http://stackoverflow.com/questions/3808782/rails-best-practice-how-to-create-dependent-has-one-relations
   # required by the has_one relationship otherwise runtime errors occur trying to access user.favorite_info
