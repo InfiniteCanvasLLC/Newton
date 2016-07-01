@@ -17,6 +17,14 @@ class Outreach < ApplicationMailer
     mail to: dest_email
   end
 
+  def party_join_request(party, src, dest_name, dest_email, link)
+    @header_message = "Hi " + dest_name
+    @message = src.name + " would like to join your party " + party.name + "!\n\n"
+    @link = link
+    @footer_message = "Your friends at Audicy :) "
+    mail to: dest_email
+  end
+
   def mail_to_user_id(user_id, email_subject, email_body)
     user = User.find(user_id)
     mail_to_user(user, email_subject, email_body)
