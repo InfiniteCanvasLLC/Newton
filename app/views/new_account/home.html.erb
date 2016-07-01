@@ -104,7 +104,7 @@
 					<div><%= cur_link_to.link_to.description %></div>
 				</div>
 
-				<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => "link_to_button" do %>
+				<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
 					<div class="panel-footer">
 						<span class="pull-left"><%= cur_link_to.link_to.link_text %></span>
 						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -128,5 +128,15 @@ $(document).ready(function() {
 		action_id = $(this).attr("action_id");
 		$('#question_' + action_id).remove();
 	});
+
+	<% @link_tos.each_with_index do |cur_link_to, i| %>
+	  <% if cur_link_to.link_to.is_standard_linkto %>
+	  $('#<%= 'linkto'  +  cur_link_to.link_to.id.to_s %>').click(function() {
+		  //necessary because we delete the linkto and if it is sill on the page, and visible to the user,
+		  // they might click on it again, causing an error (cannot find linkto)
+		  location.reload();
+	  });
+	  <% end %>
+	<% end %>
 });
 </script>
