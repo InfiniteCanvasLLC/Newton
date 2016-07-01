@@ -11,12 +11,12 @@ class ApplicationController < ActionController::Base
 
 		if (current_user_id.nil?)
 			admin = false
-		end
+		else
+			current_user = User.find_by_id(current_user_id)
 
-		current_user = User.find_by_id(current_user_id)
-
-		if ((current_user.nil?) || (current_user.permissions.nil?) || ((current_user.permissions & User::PERMISSION_ADMINISTRATOR) == 0))
-			admin = false
+			if ((current_user.nil?) || (current_user.permissions.nil?) || ((current_user.permissions & User::PERMISSION_ADMINISTRATOR) == 0))
+				admin = false
+			end
 		end
 
 		return admin
