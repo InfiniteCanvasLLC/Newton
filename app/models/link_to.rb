@@ -51,6 +51,10 @@ class LinkTo < ActiveRecord::Base
     return 4
   end
 
+  def is_standard_linkto
+     return (self.type_id == LinkTo.standard_type)
+  end
+
   #query spacial linktos (nil if the linkto is not persent in the database)
   def self.get_sync_spotify_link
     return LinkTo.where("type_id = " + LinkTo.sync_spotify_type.to_s ).first
