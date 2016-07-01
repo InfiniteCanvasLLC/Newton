@@ -62,6 +62,20 @@ class User < ActiveRecord::Base
     PartyInvite.where(:party_id => party_id, :dst_user_email => self.secondary_email).delete_all
   end
 
+  def get_owned_parties
+    return Party.where(:owner_user_id => self.id)
+  end
+
+  def any_join_party_requests
+    parties = self.get_owned_parties
+    parties.each do |party|
+      if JoinPartyRequest.where(:party_id => party.id).empty? == false
+        return true
+      end
+    end
+    return false
+  end
+
   def is_assigned_linkto( linkto )
     #sanity check
     if linkto.nil? == true

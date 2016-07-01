@@ -68,7 +68,35 @@ class NewAccountController < ApplicationController
     # But also some party related requests might be in their queue
     def manage_actions_dynamically
       inviteLinkto = LinkTo.get_party_invitation_link #this could be nil, remember, we need to create it manually (only once though).
+      partyJoinRequestLinkTo = LinkTo.get_request_to_join_party_link #this could be nil, remember, we need to create it manually (only once though).
+      syncSpotifyLinkto = LinkTo.get_sync_spotify_link #this could be nil, remember, we need to create it manually (only once though).
+      inviteFriendLinkto = LinkTo.get_invite_friend_link #this could be nil, remember, we need to create it manually (only once though).
 
+      #########These stay########
+      if syncSpotifyLinkto.nil? == false
+        if @user.is_assigned_linkto( syncSpotifyLinkto ) == false #if this is not already assigned
+          #create a new action and assign it to the user
+          action = UserAction.new
+          action.user_id = @user.id
+          action.action_type = UserAction.linkto_type
+          action.action_id = syncSpotifyLinkto.id
+          action.save
+        end
+      end
+
+      if inviteFriendLinkto.nil? == false
+        if @user.is_assigned_linkto( inviteFriendLinkto ) == false #if this is not already assigned
+          #create a new action and assign it to the user
+          action = UserAction.new
+          action.user_id = @user.id
+          action.action_type = UserAction.linkto_type
+          action.action_id = inviteFriendLinkto.id
+          action.save
+        end
+      end
+      ############################
+
+      ######### Optional ########
       if @user.get_all_party_invites.empty? == false
         if @user.is_assigned_linkto( inviteLinkto ) == false && inviteLinkto != nil
           #create a new action and assign it to the user
@@ -84,6 +112,23 @@ class NewAccountController < ApplicationController
           @user.get_actions.where("action_id" => inviteLinkto.id).delete_all
         end
       end
+
+      if @user.any_join_party_requests == true
+        if @user.is_assigned_linkto( partyJoinRequestLinkTo ) == false && partyJoinRequestLinkTo != nil
+          #create a new action and assign it to the user
+          action = UserAction.new
+          action.user_id = @user.id
+          action.action_type = UserAction.linkto_type
+          action.action_id = partyJoinRequestLinkTo.id
+          action.save
+        end
+      else #the invites are empty we might have to remove the linkto
+        if @user.is_assigned_linkto( partyJoinRequestLinkTo ) == true
+          #remove it
+          @user.get_actions.where("action_id" => partyJoinRequestLinkTo.id).delete_all
+        end
+      end
+    ############################
     end
 
     def enter_answer
