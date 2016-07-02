@@ -140,7 +140,9 @@ $(document).ready(function() {
 	  $('#<%= 'linkto'  +  cur_link_to.link_to.id.to_s %>').click(function() {
 		  //necessary because we delete the linkto and if it is sill on the page, and visible to the user,
 		  // they might click on it again, causing an error (cannot find linkto)
-		  location.reload();
+		  setTimeout(function(){
+			location.reload();
+		   }, 500);//wait otherwise we reload the page to fast and the database has not bee updated yet
 	  });
 	  <% end %>
 	<% end %>
