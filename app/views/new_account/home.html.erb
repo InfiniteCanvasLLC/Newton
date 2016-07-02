@@ -102,6 +102,12 @@
 
 				<div class="panel-body">
 					<div><%= cur_link_to.link_to.description %></div>
+					<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
+					<iframe width="100%" height="100%" src="<%= cur_link_to.link_to.url %>" frameborder="0" allowfullscreen></iframe>
+					<% end %>
+					<% if cur_link_to.link_to.is_tweet_linkto %>
+					<iframe width="100%" height="100%" src="<%='http://twitframe.com/show?url=' + cur_link_to.link_to.url.to_s %>" frameborder="0"></iframe>
+					<% end %>
 				</div>
 
 				<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
