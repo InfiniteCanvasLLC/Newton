@@ -32,7 +32,6 @@ class NewAccountController < ApplicationController
         @current_nav_selection = "nav_home"
 
         #if current user id invalid (party deleted for instance)
-        @current_user_party = get_user_current_party(@user)
         @current_user_party_name = @current_user_party.name;
 
         actions_array.each do |cur_action|
@@ -365,7 +364,6 @@ class NewAccountController < ApplicationController
     end
 
     def party
-        @current_user_party = get_user_current_party(@user)
         @all_parties = Party.all
         @party_invites = @user.get_all_party_invites
 
@@ -447,5 +445,6 @@ class NewAccountController < ApplicationController
       user.last_seen = Time.now
       user.save
       @user = user
+      @current_user_party = get_user_current_party(@user)
     end
 end
