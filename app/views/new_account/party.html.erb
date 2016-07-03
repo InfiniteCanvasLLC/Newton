@@ -71,7 +71,7 @@
 
         <!-- All Party invites -->
         <% if @party_invites.empty? == false %>
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
             <div class="panel-heading">
                 <i class="fa fa-link fa-fw"></i> Party Invites
             </div>
@@ -95,7 +95,7 @@
 
         <!-- All Join party requests -->
         <% if @join_party_requests.empty? == false %>
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
             <div class="panel-heading">
                 <i class="fa fa-link fa-fw"></i> Join <%= @current_user_party.name%> Request(s)
             </div>
