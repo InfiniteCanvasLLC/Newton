@@ -328,18 +328,14 @@ class NewAccountController < ApplicationController
     end
 
     def chat
-        @current_party = get_user_current_party(@user)
-        
         #only display the last 20 entries in the chat (maybe a more dynamic scheme in the future)
-        @conversations = @current_party.party_conversations.last(20)
+        @conversations = @current_user_party.party_conversations.last(20)
         @current_nav_selection = "nav_chat"
     end
 
     def handle_chat_post
-       @current_party = get_user_current_party(@user)
-
        conversation = PartyConversation.new
-       conversation.party_id = @current_party.id
+       conversation.party_id = @current_user_party.id
        conversation.message  = params[:message]
        conversation.user_id  = @user.id
 
@@ -349,12 +345,10 @@ class NewAccountController < ApplicationController
     end
 
     def handle_chat_update
-       @current_party = get_user_current_party(@user)
-
        # there are new messages to display (ie: the front end is not in sync with the back end)
-       if @current_party.party_conversations.empty? == false && 
-          @current_party.party_conversations.last.id != params[:last_message_id].to_i
-           conversations = @current_party.party_conversations.last(20)
+       if @current_user_party.party_conversations.empty? == false &&
+          @current_user_party.party_conversations.last.id != params[:last_message_id].to_i
+           conversations = @current_user_party.party_conversations.last(20)
            render json: {"reload_page": true}
        else
            #the JQuery is pulling for new messages available
