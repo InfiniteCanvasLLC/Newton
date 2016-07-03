@@ -37,5 +37,13 @@ body {
   height: 100%;
 }
 
+.badge_notification {
+  background: red;
+  padding-left: 7px;
+  padding-right: 7px;
+  border-radius: 25px;
+  color: white
+}
+
 @import "sb-admin";
 @import "chat";
