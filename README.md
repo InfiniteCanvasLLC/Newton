@@ -188,6 +188,16 @@ To run a rake task on Heroku to update the production database, the syntax is ve
 
 ** Be extremely careful before updating production after we release.  The database would need to be backed up before we run a rake task that updates the database **
 
+#### Adding some basic linktos needed by the system
+
+Anytime we drop a database, a update it in some way, that deletes linktos, we need to re-generate some linktos that the service needes
+to communicate to the user.
+
+*Syntax*
+```
+rake populate_db:create_linktos
+```
+
 #### Fixing party owners in the database
 
 It is possible for parties to have no owner, if the party was created some time ago.  Similarly if a user is deleted, the party can have an invalid owner.  This rake task will assign a valid owner to those parties.
