@@ -190,7 +190,7 @@ To run a rake task on Heroku to update the production database, the syntax is ve
 
 #### Adding some basic linktos needed by the system
 
-Anytime we drop a database, a update it in some way, that deletes linktos, we need to re-generate some linktos that the service needes
+Anytime we drop a database, or update it in some way that deletes linktos, we need to re-generate those linktos that the service needes
 to communicate to the user.
 
 *Syntax*
