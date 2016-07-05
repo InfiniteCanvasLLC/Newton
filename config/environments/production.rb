@@ -89,4 +89,8 @@ Rails.application.configure do
     password: ENV["GMAIL_PASSWORD"],
   }
   config.action_mailer.default_url_options = { host: "audicy.us"}
+
+  # Force SSL in production
+  config.force_ssl = true
+  
 end
