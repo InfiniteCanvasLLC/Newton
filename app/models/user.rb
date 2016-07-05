@@ -15,6 +15,11 @@ class User < ActiveRecord::Base
     # build default favorites_info instance. Will use default params.
     # The foreign key to the owning User model is set automatically
     build_favorite_info
+    #Set default data
+    favorite_info.top_artists = ""
+    favorite_info.top_songs   = ""
+    favorite_info.top_genre   = ""
+    favorite_info.user_id     = 0
     true # Always return true in callbacks as the normal 'continue' state
         # Assumes that the default_profile can **always** be created.
         # or
@@ -60,6 +65,20 @@ class User < ActiveRecord::Base
   def remove_party_invites(party_id)
     PartyInvite.where(:party_id => party_id, :dst_user_email => self.email).delete_all
     PartyInvite.where(:party_id => party_id, :dst_user_email => self.secondary_email).delete_all
+  end
+
+  def get_owned_parties
+    return Party.where(:owner_user_id => self.id)
+  end
+
+  def any_join_party_requests
+    parties = self.get_owned_parties
+    parties.each do |party|
+      if JoinPartyRequest.where(:party_id => party.id).empty? == false
+        return true
+      end
+    end
+    return false
   end
 
   def is_assigned_linkto( linkto )
