@@ -24,10 +24,17 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 </li>
                 <!-- Parties Menu -->
                 <li class="<%= @current_nav_selection=='nav_parties' ? 'selected' : ' ' %>">
-                    <a href="<%= parties_path %>" data-toggle="tooltip" title="Parties contain a group of user. These links only allow you to create the parties themselves. You cannot add or remove users from a party using these links.">
-                        <i class="fa fa-fw fa-group"></i> Parties
+                    <a href="#collapseParties" data-toggle="collapse">
+                        <span data-toggle="tooltip" title="Parties contain a group of user. These links only allow you to create the parties themselves. You cannot add or remove users from a party using these links.">
+                            <i class="fa fa-fw fa-group"></i> Parties <i class="fa fa-fw pull-right <%= @current_nav_selection=='nav_parties' ? 'fa-angle-down' : 'fa-angle-right' %>"></i>
+                        </span>
                     </a>
                 </li>
+                <ul id="collapseParties" class="panel-collapse collapse <%= @current_nav_selection=='nav_parties' ? 'in' : '' %>" style="list-style-type:none">
+                    <li><a href="<%= parties_path %>" data-toggle="tooltip" title="View all parties">All Parties</a></li>
+                    <li><a href="<%= view_party_invites_path %>" data-toggle="tooltip" title="View all requests to join party">All Requests To Join Party</a></li>
+                </ul>
+
                 <!-- User Actions Menu -->
                 <li class="<%= @current_nav_selection=='nav_user_actions' ? 'selected' : ' ' %>">
                     <a data-toggle="collapse" href="#collapseUserActions">

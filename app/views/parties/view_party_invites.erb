@@ -1,0 +1,29 @@
+<%= render :layout => 'administrator/navigation' do %>
+
+  <p id="notice"><%= notice %></p>
+
+  <h1>Listing Parties</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @party_invites.each do |party| %>
+        <tr>
+          <td><%= party.name %></td>
+
+          <td><%= link_to 'Show', party_path(party), remote: true %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <div id="my_modal" class="modal fade" role="dialog" />
+
+<% end %>
