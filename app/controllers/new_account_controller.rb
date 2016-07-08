@@ -21,6 +21,11 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         actions = UserAction.where("user_id = " + user_id.to_s)
 
+        if params[:from_handle_spotify_auth] == "true"
+            @spotify_sync_success = true
+            params[:from_handle_spotify_auth] = false # until next time
+        end
+
         @num_actions = actions.count
 
         self.manage_actions_dynamically

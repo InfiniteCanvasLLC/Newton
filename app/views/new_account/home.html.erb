@@ -127,6 +127,7 @@
 
 <% end %>
 
+<%= render :partial => 'user_notification' %>
 
 <script>
 $(document).ready(function() {
@@ -148,4 +149,15 @@ $(document).ready(function() {
 	  <% end %>
 	<% end %>
 });
+
+$(document).ready(function(){
+	<% if defined?(@spotify_sync_success) %>
+    var notification_form = $('#notification_modal')
+    notification_form.find("#notification-modal-header-id").text("Thank You");
+    notification_form.find("#notification-modal-content-id").text("Your Spotify info has been synced");
+    notification_form.modal('show');
+	<% end %>
+
+});
+
 </script>
