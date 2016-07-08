@@ -14,7 +14,7 @@
     <tbody>
       <% @party_invites.each do |party| %>
         <tr>
-          <td><%= party.name %></td>
+          <td><%= party.party.name %></td>
 
           <td><%= link_to 'Show', party_path(party), remote: true %></td>
         </tr>
