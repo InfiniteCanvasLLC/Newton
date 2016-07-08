@@ -65,7 +65,7 @@ class SessionsController < ApplicationController
         topArtistsSpotifyData = client.me_top_artists
         
         topArtistsHash = {}
-        topGenresArray = []
+        topGenresHash = {}
         topArtistsSpotifyData["items"].each_with_index do |spotifyArtistData, index|
             # create artist hash for database
             artistHash = {}
@@ -79,11 +79,12 @@ class SessionsController < ApplicationController
 
             # add this artists various genres
             spotifyArtistData["genres"].each do |genre|
-                unless topGenresArray.include? genre
-                    topGenresArray.push(genre)
+                unless topGenresHash.key? (genre)
+                    topGenresHash[genre] = 1
+                else
+                    topGenresHash[genre] = topGenresHash[genre]+1
                 end
             end
-
         end
 
         #grab top tracks
@@ -108,7 +109,7 @@ class SessionsController < ApplicationController
         user = User.find( session[:user_id] )
         user.favorite_info.top_artists = topArtistsHash.to_json.to_s
         user.favorite_info.top_songs = topTracksHash.to_json.to_s
-        user.favorite_info.top_genre = topGenresArray.to_json.to_s
+        user.favorite_info.top_genre = topGenresHash.to_json.to_s
 
         user.favorite_info.save
 
