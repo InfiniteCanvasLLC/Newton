@@ -13,7 +13,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 	    <div class="navbar-header" >
 	        <a class="navbar-brand" href="<%= home_path %>">Audicy (alpha)</a>
 	    </div>
-	
+
          <!-- Top Menu Items -->
          <ul class="nav navbar-right top-nav">
              <li class="dropdown">
@@ -39,7 +39,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                  </ul>
              </li>
          </ul>
-	
+
 	    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens "border: 1px solid red; " -->
 	    <div class="collapse navbar-collapse navbar-ex1-collapse">
 	        <ul class="nav navbar-nav side-nav" style="margin-top: 30px;">
@@ -55,7 +55,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 
 	            </li>
 		        <li class="<%= @current_nav_selection=='nav_chat' ? 'selected' : ' ' %>">
-	                <a href="<%= chat_path %>"><i class="fa fa-fw fa-slack"></i> Chat</a>
+	                <a href="<%= chat_path %>"><i class="fa fa-fw fa-comments"></i> Chat</a>
 	            </li>
 	            <li class="<%= @current_nav_selection=='nav_calendar' ? 'selected' : ' ' %>">
 	                <a href="<%= calendar_path %>"><i class="fa fa-fw fa-calendar"></i> Music Events</a>
@@ -84,5 +84,5 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 			<%= yield %>
 		</div>
 	</div>
-    
+
 </div>

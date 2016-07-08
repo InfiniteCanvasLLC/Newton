@@ -89,7 +89,6 @@ class UserActionsController < ApplicationController
 
     def set_user_action_types
       @user_actions_types_list = UserAction.get_type_name_to_id_array
-      @users_types_list = User.get_user_name_to_id_array
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
