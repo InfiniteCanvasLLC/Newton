@@ -32,9 +32,12 @@
 <%= render :partial => 'user_notification' %>
 
 <script>
+
+
 $("#submit_feedback").click(function() {
     //reset values
     var text_val = $('#feedback_text_field').val();
+
     if(text_val)
     {
       $('#issue_type').val('feature');
