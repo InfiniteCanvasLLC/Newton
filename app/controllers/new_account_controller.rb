@@ -147,13 +147,15 @@ class NewAccountController < ApplicationController
     end
 
     def edit_user
-        #@TODO: SANITIZE!!! :)
         @user.name   = params[:name]
         @user.email  = params[:email]
         @user.secondary_email = params[:secondary_email]
         @user.gender   = params[:gender]
         @user.birthday = params[:birthday]
-        @user.zip_code = params[:zip_code].to_s.to_region.nil? == false ? params[:zip_code] : 0
+        digits = (params[:zip_code].to_i == 0) ? 1 : Math.log10(params[:zip_code].to_i) + 1;
+        if(digits.to_i == 5)# zip codes are 5 digits long, we still need to make sure it is a valid zip code
+            @user.zip_code = params[:zip_code].to_region.nil? == false ? params[:zip_code] : 0
+        end
         @user.description = params[:description]
         @user.save
 

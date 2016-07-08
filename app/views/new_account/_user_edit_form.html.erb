@@ -15,13 +15,13 @@
           <div class="form-group">
             <%= label_tag(:name, "Change your name") %>
             <br />
-            <%= text_field_tag(:name, nil, :class => 'form-control') %>
+            <%= text_field_tag(:name, nil, :class => 'form-control', :required => true) %>
           </div>
 
           <div class="form-group">
             <%= label_tag(:email, "Change your primary email") %>
             <br />
-            <%= email_field_tag(:email, nil, :class => 'form-control') %>
+            <%= email_field_tag(:email, nil, :class => 'form-control', :required => true) %>
           </div>
 
           <div class="form-group">
