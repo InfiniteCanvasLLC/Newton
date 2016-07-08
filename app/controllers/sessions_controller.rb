@@ -77,12 +77,14 @@ class SessionsController < ApplicationController
             # add this artist to our artist hash (key is the artist ranking.  top arists will be 0)
             topArtistsHash[index] = artistHash
 
-            # add this artists various genres
+            # add this artist's various genres
+            # keep track of the genre weight
+            # key=genre, value=weight
             spotifyArtistData["genres"].each do |genre|
                 unless topGenresHash.key? (genre)
                     topGenresHash[genre] = 1
                 else
-                    topGenresHash[genre] = topGenresHash[genre]+1
+                    topGenresHash[genre] = topGenresHash[genre]+1 #we've already added this genre, but another artist falls into this genre category so let's record this... this user must love this genre :D
                 end
             end
         end
