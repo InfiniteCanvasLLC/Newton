@@ -153,7 +153,7 @@ class NewAccountController < ApplicationController
         @user.secondary_email = params[:secondary_email]
         @user.gender   = params[:gender]
         @user.birthday = params[:birthday]
-        @user.zip_code = params[:zip_code]
+        @user.zip_code = params[:zip_code].to_s.to_region.nil? == false ? params[:zip_code] : 0
         @user.description = params[:description]
         @user.save
 
