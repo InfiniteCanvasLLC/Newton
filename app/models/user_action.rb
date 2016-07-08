@@ -1,8 +1,10 @@
 class UserAction < ActiveRecord::Base
   belongs_to :user
   validates :user_id, presence: true
+  validates :action_id, presence: true
   validates_associated :user
   validates_presence_of :user
+  validates_with UserActionValidator
 
   def self.get_type_name_to_id_array
     pairs = Array.new
