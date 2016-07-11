@@ -47,4 +47,12 @@ class EventRegistration < ActiveRecord::Base
     end
   end
 
+  def get_user
+    return User.find(self.user_id)
+  end
+
+  def get_event
+     return Event.find(self.event_id)
+  end
+
 end

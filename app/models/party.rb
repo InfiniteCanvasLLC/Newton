@@ -37,6 +37,10 @@ class Party < ActiveRecord::Base
     return JoinPartyRequest.where(:party_id => self.id)
   end
 
+  def get_event_registrations(event_id)
+    return EventRegistration.where(:event_id => event_id, :party_id => self.id)
+  end
+
   #@remove all party related information (registrations + conversations + party invites)
   def destroy
     EventRegistration.where(:party_id => self.id).delete_all

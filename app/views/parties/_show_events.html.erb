@@ -1,0 +1,29 @@
+<ul class="nav nav-tabs">
+<% @party.events.each_with_index do |event, i| %>
+    <li class="<%= i == 0 ? 'active' : '' %>" ><a data-toggle="tab" href="<%= '#tab_event_'+i.to_s%>"> <%= event.description %> </a></li>
+<% end %>
+</ul>
+
+<div class="tab-content">
+<% @party.events.each_with_index do |event, i| %>
+    <div id="<%= 'tab_event_'+i.to_s%>" class="<%='tab-pane fade ' + (i == 0 ? 'in active' : '') %>">
+    <table border="1">
+      <tr>
+        <th>User</th>
+        <th>Commitment</th>
+      </tr>
+      <% @party.get_event_registrations(event.id).each do |reg| %>
+      <tr>
+        <td><%= reg.get_user.name  %></td>
+        <td style=" <%= reg.is_user_not_going ? 'background-color:red' : ''%>" ><%= reg.get_display_string %></td>
+      </tr>
+      <% end %>
+    </table>
+    </div>
+<% end %>
+</div>
+
+
+
+
+
