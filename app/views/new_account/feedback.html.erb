@@ -32,17 +32,17 @@
 <%= render :partial => 'user_notification' %>
 
 <script>
+
+
 $("#submit_feedback").click(function() {
     //reset values
     var text_val = $('#feedback_text_field').val();
+
     if(text_val)
     {
-      $('#issue_type').val('feature');
-
       var notification_form = $('#notification_modal')
       notification_form.find("#notification-modal-header-id").text("Thank You");
       notification_form.find("#notification-modal-content-id").text("Your feedback has been recorded");
-
       notification_form.modal('show');
     }
 });

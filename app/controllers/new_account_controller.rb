@@ -21,6 +21,11 @@ class NewAccountController < ApplicationController
         user_id = session[:user_id]
         actions = UserAction.where("user_id = " + user_id.to_s)
 
+        if params[:from_handle_spotify_auth] == "true"
+            @spotify_sync_success = true
+            params[:from_handle_spotify_auth] = false # until next time
+        end
+
         @num_actions = actions.count
 
         self.manage_actions_dynamically
@@ -147,13 +152,15 @@ class NewAccountController < ApplicationController
     end
 
     def edit_user
-        #@TODO: SANITIZE!!! :)
         @user.name   = params[:name]
         @user.email  = params[:email]
         @user.secondary_email = params[:secondary_email]
         @user.gender   = params[:gender]
         @user.birthday = params[:birthday]
-        @user.zip_code = params[:zip_code]
+        digits = (params[:zip_code].to_i == 0) ? 1 : Math.log10(params[:zip_code].to_i) + 1;
+        if(digits.to_i == 5)# zip codes are 5 digits long, we still need to make sure it is a valid zip code
+            @user.zip_code = params[:zip_code].to_region.nil? == false ? params[:zip_code] : 0
+        end
         @user.description = params[:description]
         @user.save
 

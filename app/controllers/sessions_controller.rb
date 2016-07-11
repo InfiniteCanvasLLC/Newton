@@ -113,7 +113,7 @@ class SessionsController < ApplicationController
         user.favorite_info.save
 
         # take player back to their home page
-        redirect_to controller: 'new_account', action: 'home'
+        redirect_to controller: 'new_account', action: 'home', from_handle_spotify_auth: true
     end
 
 end

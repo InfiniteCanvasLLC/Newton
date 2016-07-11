@@ -20,7 +20,7 @@
         <tr>
           <td><%= party.name %></td>
           <td><%= party.description %></td>
-          <td><%= party.owner_user_id %></td>
+          <td><%= party.get_owner.name %></td>
           <td>
             <% party.users.each do |user| %>
               <%= user.name %><br>

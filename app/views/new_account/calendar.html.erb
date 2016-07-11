@@ -1,7 +1,20 @@
 <%= render :layout => 'navigation' do %>
 
-<% @current_party_events.each_with_index do |event, i| %>
+<% if @current_party_events.empty? == true %>
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <i class="fa fa-calendar fa-fw"></i> At the moment no event is suggested to your party
+  </div>
+  <!-- /.panel-heading -->
+  <div class="panel-body">
+  We are working hard to find someting all your party members will enjoy.
+  </div>
+  <!-- /.panel-body -->
+</div>
+<% end %>
+
+<% @current_party_events.each_with_index do |event, i| %>
+<div class="panel <%= event.start > Time.now ? 'panel-green' : 'panel-red' %> ">
   <div class="panel-heading">
     <i class="fa fa-calendar fa-fw"></i> <%= event.description %> <%=  event.start.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %m-%d-%y") %>
   </div>
