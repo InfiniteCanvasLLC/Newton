@@ -7,7 +7,7 @@
 <div class="tab-content">
 <% @party.events.each_with_index do |event, i| %>
     <div id="<%= 'tab_event_'+i.to_s%>" class="<%='tab-pane fade ' + (i == 0 ? 'in active' : '') %>">
-    <table border="1">
+    <table border="1" style="border-collapse: separate;border-spacing: 2px 1px;">
       <tr>
         <th>User</th>
         <th>Commitment</th>
@@ -22,7 +22,6 @@
     </div>
 <% end %>
 </div>
-
 
 
 
