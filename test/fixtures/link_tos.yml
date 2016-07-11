@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+invite_friend:
   title: "Invite a friend!"
   description: "Invite friends to join your party. We combine your musical tastes and find shows you can all enjoy. The more the merrier :)"
   url: "/Party"
@@ -9,7 +9,7 @@ one:
   panel_style: "panel-info"
   type_id: <%= LinkTo.invite_friend_type %>
 
-two:
+pull_spotify:
   title: "Pull Spotify info"
   description: "We can pull your music information and improve our recomendations"
   url: "/auth/spotify"
@@ -17,3 +17,21 @@ two:
   icon_style: "fa-spotify"
   panel_style: "panel-green"
   type_id: <%= LinkTo.sync_spotify_type %>
+
+invitation_to_your_party:
+  title: "Join a new party!"
+  description: "Someone invited you to join their party. Go check it out! :)"
+  url: "/Party"
+  link_text: "see"
+  icon_style: "fa-users"
+  panel_style: "panel-info"
+  type_id: <%= LinkTo.party_invitation_type %>
+
+party_join_request:
+  title: "Join Party Request!"
+  description: "A friend wants to join your party. Go welcome them! :)"
+  url: "/Party"
+  link_text: "see"
+  icon_style: "fa-users"
+  panel_style: "panel-yellow"
+  type_id: <%= LinkTo.request_to_join_party_type %>

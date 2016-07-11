@@ -14,3 +14,10 @@ two:
   dst_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_wozniak) %>
   dst_user_name: "Steve Wozniak"
   dst_user_email: "woz@audicy.us"
+
+three:
+  party: chocolate_eaters_party
+  src_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_wozniak) %>
+  dst_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_jobs) %>
+  dst_user_name: "Steve Jobs"
+  dst_user_email: "support@audicy.us"

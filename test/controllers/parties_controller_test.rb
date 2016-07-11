@@ -98,10 +98,23 @@ class PartiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "view party invites non-admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    get :view_party_invites
+    assert_response(500)
+  end
+
+
   test "view join requests" do
     session[:user_id] = users(:steve_jobs).id
     get :view_join_requests
     assert_response :success
+  end
+
+  test "view join requests non-admin" do
+    session[:user_id] = users(:steve_wozniak).id
+    get :view_join_requests
+    assert_response(500)
   end
 
 end

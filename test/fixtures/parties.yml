@@ -4,5 +4,7 @@ hello_kitty_party:
   owner_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_jobs) %>
   description: We love Hello Kitty
 
-two:
-  name: MyString
+chocolate_eaters_party:
+  name: Chocolate Eaters Anonymous
+  owner_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_wozniak) %>
+  description: Only 70% or darker allowed

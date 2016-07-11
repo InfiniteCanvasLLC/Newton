@@ -25,4 +25,20 @@ class NewAccountControllerTest < ActionController::TestCase
         assert_response :success
     end
 
+    test "No party invites" do
+      # Destroy all invites...
+      PartyInvite.where(dst_user_id: users(:steve_jobs).id).destroy_all
+
+      # ...But then artifically assign a party invitation link_to to see if this gets cleaned up
+
+      action = UserAction.new
+      action.user_id = users(:steve_jobs).id
+      action.action_type = UserAction.linkto_type
+      action.action_id = LinkTo.get_party_invitation_link.id
+      action.save
+
+      get :home
+      assert_response :success
+    end
+
 end
