@@ -1,0 +1,39 @@
+<%= render :layout => 'administrator/navigation' do %>
+
+  <p id="notice"><%= notice %></p>
+
+  <h1>Listing Requests To Join Party</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th rowspan=2>Party Name</th>
+        <th style="border-bottom: 0px" colspan=2>From</th>
+      </tr>
+      <tr style="font-size: 0.75em">
+        <th style="border-top: 0px">ID</th>
+        <th style="border-top: 0px">E-mail</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @join_requests.each do |join_request| %>
+        <tr>
+          <td><%= link_to join_request.party.name, party_path(join_request.party), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
+
+          <% src_user = User.find(join_request.user_id) %>
+          <td><%= link_to join_request.user_id, user_path(src_user), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
+          <td><%= link_to src_user.email, user_path(src_user), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
+
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <div id="my_modal" class="modal fade" role="dialog">
+
+  </div>
+
+<% end %>

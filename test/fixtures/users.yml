@@ -6,6 +6,7 @@ steve_jobs:
   name: 'Steve Jobs'
   email: 'support@audicy.us'
   permissions: 1
+  current_party_index: 0
 
 steve_wozniak:
   provider: 'facebook'

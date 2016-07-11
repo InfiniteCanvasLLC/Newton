@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     delete 'destroy_metadata', on: :collection
   end
 
+  get 'parties/view_party_invites', :as => :view_party_invites
+  get 'parties/view_join_requests', :as => :view_join_requests
+
   resources :parties do
     post 'send_email', on: :member
     post 'create_metadata', on: :member

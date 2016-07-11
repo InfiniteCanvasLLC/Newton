@@ -54,8 +54,14 @@
       <% if @standalone_page %>
         <%= link_to 'Parties Page', parties_path, class: "btn btn-default" %>
       <% else %>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_close_button">Close</button>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+$("#modal_close_button").on('click', function() {
+  console.log("closed");
+});
+</script>
