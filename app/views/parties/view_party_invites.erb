@@ -2,21 +2,35 @@
 
   <p id="notice"><%= notice %></p>
 
-  <h1>Listing Parties</h1>
+  <h1>Listing Party Invites</h1>
 
   <table class="table">
     <thead>
       <tr>
-        <th>Name</th>
+        <th rowspan=2>Party Name</th>
+        <th style="border-bottom: 0px" colspan=2>From</th>
+        <th style="border-bottom: 0px">To</th>
+      </tr>
+      <tr style="font-size: 0.75em">
+        <th style="border-top: 0px">ID</th>
+        <th style="border-top: 0px">E-mail</th>
+        <th style="border-top: 0px">ID</th>
+        <th style="border-top: 0px">E-mail</th>
       </tr>
     </thead>
 
     <tbody>
-      <% @party_invites.each do |party| %>
+      <% @party_invites.each do |party_invite| %>
         <tr>
-          <td><%= party.party.name %></td>
+          <td><%= link_to party_invite.party.name, party_path(party_invite.party), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
 
-          <td><%= link_to 'Show', party_path(party), remote: true %></td>
+          <% src_user = User.find(party_invite.src_user_id) %>
+          <td><%= link_to party_invite.src_user_id, user_path(src_user), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
+          <td><%= link_to src_user.email, user_path(src_user), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
+
+          <td><%= party_invite.dst_user_id %></td>
+          <td><%= party_invite.dst_user_email %></td>
+
         </tr>
       <% end %>
     </tbody>
@@ -24,6 +38,8 @@
 
   <br>
 
-  <div id="my_modal" class="modal fade" role="dialog" />
+  <div id="my_modal" class="modal fade" role="dialog">
+
+  </div>
 
 <% end %>

@@ -34,7 +34,7 @@
           </td>
 
 
-          <td><%= link_to 'Show', party_path(party), remote: true %></td>
+          <td><%= link_to 'Show', party_path(party), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
           <td><%= link_to 'Edit', edit_party_path(party) %></td>
           <td><%= link_to 'Destroy', party, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
