@@ -149,6 +149,10 @@ class PartiesController < ApplicationController
         @party_invites = PartyInvite.all.order(:party_id)
     end
 
+    def view_join_requests
+        @join_requests = JoinPartyRequest.all.order(:party_id)
+    end
+
     private
         # Use callbacks to share common setup or constraints between actions.
         def set_party

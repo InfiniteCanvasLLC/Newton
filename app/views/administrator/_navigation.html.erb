@@ -32,7 +32,8 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
                 </li>
                 <ul id="collapseParties" class="panel-collapse collapse <%= @current_nav_selection=='nav_parties' ? 'in' : '' %>" style="list-style-type:none">
                     <li><a href="<%= parties_path %>" data-toggle="tooltip" title="View all parties">All Parties</a></li>
-                    <li><a href="<%= view_party_invites_path %>" data-toggle="tooltip" title="View all requests to join party">All Requests To Join Party</a></li>
+                    <li><a href="<%= view_party_invites_path %>" data-toggle="tooltip" title="View all invitations">Invitations</a></li>
+                    <li><a href="<%= view_join_requests_path %>" data-toggle="tooltip" title="View all requests to join party">Requests to Join</a></li>
                 </ul>
 
                 <!-- User Actions Menu -->
