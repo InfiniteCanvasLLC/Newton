@@ -4,6 +4,7 @@ class Party < ActiveRecord::Base
     has_many :party_conversations
     has_many :event_registrations
     has_many :party_metadata
+    has_many :party_invites
 
   # to fix error in <h2>Register for Event</h2>
   def event_id

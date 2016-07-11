@@ -1,15 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# Invite a user that doesn't current exist
 one:
-  party_id: 1
-  src_user_id: 1
-  dst_user_id: 1
-  dst_user_name: MyString
-  dst_user_email: MyString
+  party: hello_kitty_party
+  src_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_jobs) %>
+  dst_user_id: -1
+  dst_user_name: "Bill Gates"
+  dst_user_email: "billg@localhost.com"
 
 two:
-  party_id: 1
-  src_user_id: 1
-  dst_user_id: 1
-  dst_user_name: MyString
-  dst_user_email: MyString
+  party: hello_kitty_party
+  src_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_jobs) %>
+  dst_user_id: <%= ActiveRecord::FixtureSet.identify(:steve_wozniak) %>
+  dst_user_name: "Steve Wozniak"
+  dst_user_email: "woz@audicy.us"

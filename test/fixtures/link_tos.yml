@@ -1,17 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyString
-  url: MyText
-  link_text: MyString
-  icon_style: MyString
-  panel_style: MyString
+  title: "Invite a friend!"
+  description: "Invite friends to join your party. We combine your musical tastes and find shows you can all enjoy. The more the merrier :)"
+  url: "/Party"
+  link_text: "invite"
+  icon_style: "fa-user-plus"
+  panel_style: "panel-info"
+  type_id: <%= LinkTo.invite_friend_type %>
 
 two:
-  title: MyString
-  description: MyString
-  url: MyText
-  link_text: MyString
-  icon_style: MyString
-  panel_style: MyString
+  title: "Pull Spotify info"
+  description: "We can pull your music information and improve our recomendations"
+  url: "/auth/spotify"
+  link_text: "pull"
+  icon_style: "fa-spotify"
+  panel_style: "panel-green"
+  type_id: <%= LinkTo.sync_spotify_type %>

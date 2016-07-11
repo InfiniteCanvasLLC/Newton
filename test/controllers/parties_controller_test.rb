@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PartiesControllerTest < ActionController::TestCase
   setup do
-    @party = parties(:one)
+    @party = parties(:hello_kitty_party)
   end
 
   test "should get index" do
@@ -91,4 +91,17 @@ class PartiesControllerTest < ActionController::TestCase
 
     assert_redirected_to parties_path
   end
+
+  test "view party invites" do
+    session[:user_id] = users(:steve_jobs).id
+    get :view_party_invites
+    assert_response :success
+  end
+
+  test "view join requests" do
+    session[:user_id] = users(:steve_jobs).id
+    get :view_join_requests
+    assert_response :success
+  end
+
 end
