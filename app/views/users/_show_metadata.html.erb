@@ -13,7 +13,7 @@
         <tr>
           <td><%= metadatum.data_type_name %></td>
           <td><%= metadatum.data %></td>
-          <td><%= button_tag("Delete", class: 'btn btn-primary', data: { confirm: "Are you sure?" }, :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
+          <td><%= button_tag("Delete", class: 'btn btn-primary', :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
         </tr>
       <% end %>
     </tbody>
@@ -45,10 +45,9 @@
       {
         var table = document.getElementById("metadata_table");
         var row = table.insertRow(table.rows.length);
-        row.insertCell(0).innerHTML = data.data_type;
+        row.insertCell(0).innerHTML = data.name;
         row.insertCell(1).innerHTML = data.data;
-        row.insertCell(2);
-        row.insertCell(3);
+        row.insertCell(2).innerHTML = '<button name="button" type="submit" class="btn btn-primary" onclick="javascript:on_delete_metadata_button_clicked(this, ' + data.id + ')">Delete</button>';
       });
 
     $("#create_metadata_form").bind("ajax:error",
@@ -66,16 +65,18 @@
 
     function on_delete_metadata_button_clicked(td, metadatum_id)
     {
-      $.ajax({
-          type: "DELETE",
-          url: "users/destroy_metadata",
-          data: {
-            'metadatum_id': metadatum_id
-          },
-          success: function(data) {
-            td.closest('tr').remove();
-          }
-      });
+      if (confirm("Are you sure?")) {
+        $.ajax({
+            type: "DELETE",
+            url: "users/destroy_metadata",
+            data: {
+              'metadatum_id': metadatum_id
+            },
+            success: function(data) {
+              td.closest('tr').remove();
+            }
+        });
+      }
     }
   </script>
 </div>

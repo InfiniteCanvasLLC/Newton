@@ -1,22 +1,19 @@
 class PartiesController < ApplicationController
   layout "administrator"
 
+  before_action :set_nav
   before_action :set_party, only: [:show, :edit, :update, :destroy]
   before_filter :verify_administrator
 
   # GET /parties
   # GET /parties.json
   def index
-    @current_nav_selection = "nav_parties"
-
     @parties = Party.all
   end
 
   # GET /parties/1
   # GET /parties/1.json
   def show
-    @current_nav_selection = "nav_parties"
-
     # Metadata
     @metadata = PartyMetadatum.where("party_id = " + params[:id].to_s).to_a
     @metadata_types = PartyMetadatum.type_name_to_type_id_array
@@ -24,15 +21,11 @@ class PartiesController < ApplicationController
 
   # GET /parties/new
   def new
-    @current_nav_selection = "nav_parties"
-
     @party = Party.new
   end
 
   # GET /parties/1/edit
   def edit
-    @current_nav_selection = "nav_parties"
-
     @all_events = Event.all
     #@party_events = @party.events.to_a #Event.all.to_a
     #party = Party.find(params[:id])
@@ -131,21 +124,32 @@ class PartiesController < ApplicationController
     render nothing: true
   end
 
-    def create_metadata
-        @metadatum           = PartyMetadatum.new
-        @metadatum.party_id  = params[:id]
-        @metadatum.data_type = params[:data_type]
-        @metadatum.data      = params[:data]
-        @metadatum.save
-        render json: @metadatum
-    end
+  def create_metadata
+    @metadatum           = PartyMetadatum.new
+    @metadatum.party_id  = params[:id]
+    @metadatum.data_type = params[:data_type]
+    @metadatum.data      = params[:data]
+    @metadatum.save
 
-    def destroy_metadata
-        PartyMetadatum.find(params[:metadatum_id]).destroy
-        render nothing: true
-    end
+    hash = Hash.new
+    hash["id"]   = @metadatum.id
+    hash["name"] = @metadatum.data_type_name
+    hash["data"] = @metadatum.data
+
+    render json: hash
+  end
+
+  def destroy_metadata
+    PartyMetadatum.find(params[:metadatum_id]).destroy
+    render nothing: true
+  end
 
   private
+    # Use setting the correct nav value for the expanded side nav.
+    def set_nav
+      @current_nav_selection = "nav_parties"
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_party
       @party = Party.find(params[:id])
