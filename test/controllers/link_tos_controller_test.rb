@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LinkTosControllerTest < ActionController::TestCase
   setup do
-    @link_to = link_tos(:one)
+    @link_to = link_tos(:invite_friend)
   end
 
   test "should get index" do

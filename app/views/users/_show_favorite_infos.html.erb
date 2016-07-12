@@ -18,9 +18,11 @@
 
 <script>
     $('document').ready(function() {
-        $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists %>"));
-        $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs %>"));
-        $("#top_genre").text(pretty_print("<%= @user.favorite_info.top_genre %>"));
+        <% if !@user.favorite_info.nil? %>
+            $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists %>"));
+            $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs %>"));
+            $("#top_genre").text(pretty_print("<%= @user.favorite_info.top_genre %>"));
+        <% end %>
     });
     function pretty_print(str) {
         return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);

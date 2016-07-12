@@ -22,11 +22,14 @@
         <% top_songs = "" %>
         <% top_genre = "" %>
         <% @party.users.each do |user| %>
-            <% pre = "{\"" + user.name + "\":" %>
-            <% post = "}" %>
-            <% top_artists += pre + user.favorite_info.top_artists + post %>
-            <% top_songs   += pre + user.favorite_info.top_songs + post %>
-            <% top_genre   += pre + user.favorite_info.top_genre + post %>
+
+            <% if !user.favorite_info.nil? %>
+                <% pre = "{\"" + user.name + "\":" %>
+                <% post = "}" %>
+                <% top_artists += pre + user.favorite_info.top_artists + post %>
+                <% top_songs   += pre + user.favorite_info.top_songs + post %>
+                <% top_genre   += pre + user.favorite_info.top_genre + post %>
+            <% end %>
         <% end %>
         $("#top_artists").text(pretty_print("<%= top_artists %>"));
         $("#top_songs").text(pretty_print("<%= top_songs %>"));

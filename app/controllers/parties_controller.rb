@@ -144,6 +144,15 @@ class PartiesController < ApplicationController
     render nothing: true
   end
 
+  def view_join_requests
+    @join_requests = JoinPartyRequest.all.order(:party_id)
+  end
+
+  def view_party_invites
+    @party_invites = PartyInvite.all.order(:party_id)
+  end
+
+
   private
     # Use setting the correct nav value for the expanded side nav.
     def set_nav
