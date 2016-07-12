@@ -136,7 +136,6 @@ class PartiesController < ApplicationController
   end
 
   def view_party_invites
-    @party_invites = PartyInvite.all.group(:party_id)
     @party_invites = PartyInvite.all.order(:party_id)
   end
 
