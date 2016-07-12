@@ -1,5 +1,7 @@
 class JoinPartyRequest < ActiveRecord::Base
 
+  belongs_to :party
+
   def get_user
     return User.find( self.user_id )
   end

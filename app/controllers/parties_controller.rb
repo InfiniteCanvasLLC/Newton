@@ -131,19 +131,27 @@ class PartiesController < ApplicationController
     render nothing: true
   end
 
-    def create_metadata
-        @metadatum           = PartyMetadatum.new
-        @metadatum.party_id  = params[:id]
-        @metadatum.data_type = params[:data_type]
-        @metadatum.data      = params[:data]
-        @metadatum.save
-        render json: @metadatum
-    end
+  def view_join_requests
+    @join_requests = JoinPartyRequest.all.order(:party_id)
+  end
 
-    def destroy_metadata
-        PartyMetadatum.find(params[:metadatum_id]).destroy
-        render nothing: true
-    end
+  def view_party_invites
+    @party_invites = PartyInvite.all.order(:party_id)
+  end
+
+  def create_metadata
+      @metadatum           = PartyMetadatum.new
+      @metadatum.party_id  = params[:id]
+      @metadatum.data_type = params[:data_type]
+      @metadatum.data      = params[:data]
+      @metadatum.save
+      render json: @metadatum
+  end
+
+  def destroy_metadata
+      PartyMetadatum.find(params[:metadatum_id]).destroy
+      render nothing: true
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
