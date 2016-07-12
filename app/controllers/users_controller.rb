@@ -5,19 +5,17 @@ end
 
 class UsersController < ApplicationController
     layout "administrator"
+
+    before_action :set_nav
     before_action :set_user, only: [:show, :edit, :update]
 
     before_filter :verify_administrator
 
     def index
-        @current_nav_selection = "nav_users"
-
         @users = User.all
     end
 
     def edit
-        @current_nav_selection = "nav_users"
-
         @all_parties = Party.all
         @user_parties = @user.parties;
     end
@@ -100,7 +98,13 @@ class UsersController < ApplicationController
         @metadatum.data_type = params[:data_type]
         @metadatum.data      = params[:data]
         @metadatum.save
-        render json: @metadatum
+
+        hash = Hash.new
+        hash["id"]   = @metadatum.id
+        hash["name"] = @metadatum.data_type_name
+        hash["data"] = @metadatum.data
+
+        render json: hash
     end
 
     def destroy_metadata
@@ -108,8 +112,14 @@ class UsersController < ApplicationController
         render nothing: true
     end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-        @user = User.find(params[:id])
-    end
+    private
+        # Use setting the correct nav value for the expanded side nav.
+        def set_nav
+            @current_nav_selection = "nav_users"
+        end
+
+        # Use callbacks to share common setup or constraints between actions.
+        def set_user
+            @user = User.find(params[:id])
+        end
 end
