@@ -28,8 +28,20 @@
           <td><%= link_to party_invite.src_user_id, user_path(src_user), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
           <td><%= link_to src_user.email, user_path(src_user), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %></td>
 
-          <td><%= party_invite.dst_user_id %></td>
-          <td><%= party_invite.dst_user_email %></td>
+          <td>
+            <% if party_invite.dst_user_id != -1 %>
+              <%= link_to party_invite.dst_user_id, user_path(party_invite.dst_user_id), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %>
+            <% else %>
+            <%= party_invite.dst_user_id %>
+            <% end %>
+          </td>
+          <td>
+            <% if party_invite.dst_user_id != -1 %>
+              <%= link_to party_invite.dst_user_email, user_path(party_invite.dst_user_id), remote: true, "data-toggle" => "modal", "data-target" => "#my_modal" %>
+            <% else %>
+              <%= party_invite.dst_user_email %>
+            <% end %>
+          </td>
 
         </tr>
       <% end %>
