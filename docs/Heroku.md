@@ -39,3 +39,52 @@ heroku logs --tail
 This will display realtime logs of what's happening on the server.  This will help debug any issues in production.
 
 While you cannot do realtime debugging via byebug in production, you can freely print variables to the log.  This would require a new deployment which is fine before we release.
+
+## Using Staging
+
+Typically, you will push new versions of the title to staging.  This is a private instance of the application that's running on Heroku.  So we can test the application running in the Ruby production environment, and using PostgreSQL on Heroku - without having to change what external users are seeing.
+
+Once you have followed the steps above, there are some additional steps you'll need to take to take to get setup.
+
+### Creating a new Git remote
+To push to production, you use something like ```git push heroku master```, where in this command, ```heroku``` refers to the git remote you are pushing the code to.
+
+For staging, you will be pushing to a new remote, so you need to add this.  You do that with the following command:
+
+```
+git remote add staging https://git.heroku.com/audicystaging.git
+```
+
+### Pushing to staging
+You can push any branch you want to staging.  It could be master, the staging branch, or your personal development branch.  To push master, you would use the following command:
+
+```
+git push staging master
+```
+
+If you want to push your own branch to staging, you would use the following command:
+
+```
+git push staging <branchname>:master
+```
+
+Where ```<branchname>``` is the branch you want to push.
+
+### Heroku commands on staging
+Above, we discussed how to add the new git remote.  But to run Heroku commands such as ```heroku logs``` or ```heroku run rake db:migrate```, you need to be able to specify which environment (production or staging) you are running the command on.
+
+You will need to specify the environment when running any heroku commands now.  Eg:
+
+```
+heroku logs --app audicystaging --tail
+```
+
+You would not have had to specify ```--app``` previously
+
+If you wish, you can specify a default environment (production or staging) using something like:
+
+```
+git config heroku.remote staging
+```
+
+This would set staging as the default environment to use.
