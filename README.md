@@ -42,7 +42,7 @@ You need to create the appropriate database tables in your local copy of the New
 If you want to develop locally (recommended), you should use the built in web server provided with Rails.  In the root directory of the app, simply run ```rails server``` and then connect to it from your web browser by navigating to ```localhost:3000```
 
 ### Production environment
-Please the [Heroku](Heroku.md) article for information on how the Producton (and Staging) environments work
+Please the [Heroku](docs/Heroku.md) article for information on how the Producton (and Staging) environments work
 
 ### Other Setup
 You will need to make yourself an administrator if you want to use the administrator page, and perform actions like create new questions, view user feedback, etc.  To that, see the [docs/Administrator](docs/Administrator.md) article
