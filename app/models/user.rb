@@ -30,6 +30,16 @@ class User < ActiveRecord::Base
         # error item
   end
 
+  #IDs for genders
+  def self.gender_female
+    return 0
+  end
+
+  def self.gender_male
+    return 1
+  end
+
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth['provider']

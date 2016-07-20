@@ -25,7 +25,7 @@
                     <% end %>
                     <% if @user.gender.blank? == false %>
                     <p class="list-group-item">
-                        <i class="fa fa-fw"></i> <%= @user.gender == 0 ? "Female" : "Male" %>
+                        <i class="fa fa-fw"></i> <%= @user.gender == User.gender_female ? "Female" : "Male" %>
                     </p>
                     <% end %>
                     <% if @user.birthday.blank? == false %>

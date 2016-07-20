@@ -55,9 +55,9 @@ class SessionsController < ApplicationController
         gender_req   = facebook.get_object("me?fields=gender")
         if gender_req['gender'].blank? == false
             if gender_req['gender'] == 'female'
-                gender = 0
+                gender = User.gender_female
             elsif gender_req['gender'] == 'male'
-                gender = 1
+                gender = User.gender_male
             end
         end
 
