@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
         #location
         zip = nil
         location_req = facebook.get_object("me?fields=location{location}")
-        if (location_req.blank? == false)
+        if (location_req['location'].blank? == false)
             location = location_req['location']['location']
             full_location = location['city'] + ',' + location['state'] + ',' + location['country']
             zip = full_location.to_zip[0] # a city haz many zips, just take first one
