@@ -9,7 +9,8 @@ class UsersController < ApplicationController
     before_action :set_nav
     before_action :set_user, only: [:show, :edit, :update]
 
-    before_filter :verify_administrator
+    before_filter :verify_administrator, except: [:show]
+    before_filter :verify_user, only: [:show]
 
     def index
         @users = User.all

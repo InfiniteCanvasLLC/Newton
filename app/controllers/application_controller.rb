@@ -31,4 +31,16 @@ class ApplicationController < ActionController::Base
 
     end
 
+    def verify_user
+
+    	if (params[:id].to_i != session[:user_id])
+    		if (!get_administrator)
+    			render(:file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false)
+    		end
+    	end
+
+    	return true
+
+    end
+
 end

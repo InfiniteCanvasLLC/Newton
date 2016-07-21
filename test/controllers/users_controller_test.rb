@@ -37,24 +37,44 @@ class UsersControllerTest < ActionController::TestCase
         assert_response(500)
     end
 
-    test "get specific user" do
+    test "get specific user admin" do
         session[:user_id] = users(:steve_jobs).id
 
-        test_user = User.all.first
+        test_user = users(:steve_wozniak)
 
         get :show, {'id' => test_user.id}
 
         assert_response :success
     end
 
-    test "get specific user non_admin" do
+    test "get specific user non admin" do
         session[:user_id] = users(:steve_wozniak).id
 
-        test_user = User.all.first
+        test_user = users(:steve_jobs)
 
         get :show, {'id' => test_user.id}
 
         assert_response(500)
+    end
+
+    test "get self user admin" do
+        session[:user_id] = users(:steve_jobs).id
+
+        test_user = users(:steve_jobs)
+
+        get :show, {'id' => test_user.id}
+
+        assert_response :success
+    end
+
+    test "get self user non admin" do
+        session[:user_id] = users(:steve_wozniak).id
+
+        test_user = users(:steve_wozniak)
+
+        get :show, {'id' => test_user.id}
+
+        assert_response :success
     end
 
     test "edit specific user" do
