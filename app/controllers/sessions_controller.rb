@@ -33,6 +33,41 @@ class SessionsController < ApplicationController
         session[:user_id] = user.id
         session[:fb_info] = auth.info
 
+        #query some of the user info form FB
+        token = auth['credentials']['token']
+        facebook = Koala::Facebook::API.new(token)
+
+        #location
+        zip = nil
+        location_req = facebook.get_object("me?fields=location{location}")
+        if (location_req.blank? == false)
+            location = location_req['location']['location']
+            full_location = location['city'] + ',' + location['state'] + ',' + location['country']
+            zip = full_location.to_zip[0] # a city haz many zips, just take first one
+        end
+
+        #birthday
+        birthday_req = facebook.get_object("me?fields=birthday")
+        birthday = birthday_req['birthday'].blank? ? nil : birthday_req['birthday']
+
+        #gender
+        gender = -1
+        gender_req   = facebook.get_object("me?fields=gender")
+        if gender_req['gender'].blank? == false
+            if gender_req['gender'] == 'female'
+                gender = User.gender_female
+            elsif gender_req['gender'] == 'male'
+                gender = User.gender_male
+            end
+        end
+
+        user.gender = (gender != -1) ? gender : user.gender
+        user.birthday = (birthday_req['birthday'].blank? == true) ? user.birthday : Date.strptime( birthday_req['birthday'], "%m/%d/%Y" )
+        if user.zip_code == 0  && zip != nil# for this, we allow user to give us an exact zip code, only override is user hasn't
+            user.zip_code = zip
+        end
+        user.save
+
         redirect_to controller: 'new_account', action: 'home'
     end
 
