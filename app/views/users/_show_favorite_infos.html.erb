@@ -18,9 +18,21 @@
 
 <script>
     $('document').ready(function() {
-        <% if !@user.favorite_info.nil? %>
+        <% if @user.favorite_info.top_artists.nil? %>
+            $("#top_artists").text("NO DATA");
+        <% else %>
             $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists %>"));
+        <% end %>
+
+        <% if @user.favorite_info.top_songs.nil? %>
+            $("#top_songs").text("NO DATA");
+        <% else %>
             $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs %>"));
+        <% end %>
+
+        <% if @user.favorite_info.top_genre.nil? %>
+            $("#top_genre").text("NO DATA");
+        <% else %>
             $("#top_genre").text(pretty_print("<%= @user.favorite_info.top_genre %>"));
         <% end %>
     });
