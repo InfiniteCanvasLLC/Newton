@@ -25,19 +25,19 @@
             <% pre = "\"" + user.name + "\":" %>
             <% post = "," %>
 
-            <% if user.favorite_info.top_artists.nil? %>
+            <% if user.favorite_info.top_artists.nil? || user.favorite_info.top_artists.empty? %>
                 <% top_artists += pre + "\"NO DATA\"" + post %>
             <% else %>
                 <% top_artists += pre + user.favorite_info.top_artists + post %>
             <% end %>
 
-            <% if user.favorite_info.top_songs.nil? %>
+            <% if user.favorite_info.top_songs.nil? || user.favorite_info.top_songs.empty? %>
                 <% top_songs   += pre + "\"NO DATA\"" + post %>
             <% else %>
                 <% top_songs   += pre + user.favorite_info.top_songs + post %>
             <% end %>
 
-            <% if user.favorite_info.top_genre.nil? %>
+            <% if user.favorite_info.top_genre.nil? || user.favorite_info.top_genre.empty? %>
                 <% top_genre   += pre + "\"NO DATA\"" + post %>
             <% else %>
                 <% top_genre   += pre + user.favorite_info.top_genre + post %>
