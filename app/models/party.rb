@@ -59,6 +59,22 @@ class Party < ActiveRecord::Base
     return artists.uniq
   end
 
+  def favorite_genres
+    genres = Array.new
+    users.each do |user|
+      user_genres = user.get_favorite_genres
+      if user_genres.nil? == false
+        genres += user_genres
+      end
+    end
+    return genres
+  end
+
+  def overlapping_favorite_genres
+    genres = self.favorite_genres
+    return genres.uniq
+  end
+
   #@remove all party related information (registrations + conversations + party invites)
   def destroy
     EventRegistration.where(:party_id => self.id).delete_all

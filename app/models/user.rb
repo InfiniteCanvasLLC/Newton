@@ -121,8 +121,16 @@ class User < ActiveRecord::Base
         artists.push( parsed[i.to_s]["name"] )
         i += 1;
       end
-      return artists
     end
+    return artists
+  end
+
+  def get_favorite_genres
+    genres = nil
+    if favorite_info.nil? == false && favorite_info.top_genre.nil? == false
+      genres = JSON.parse(favorite_info.top_genre)
+    end
+    return genres
   end
 
   def party_at_index(party_index)
