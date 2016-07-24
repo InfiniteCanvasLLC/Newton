@@ -111,6 +111,20 @@ class User < ActiveRecord::Base
     return is_assigned
   end
 
+  def get_favorite_artists
+    artists = nil
+    if favorite_info.nil? == false && favorite_info.top_artists.nil? == false
+      artists = Array.new
+      parsed = JSON.parse(favorite_info.top_artists)
+      i = 0
+      until i == parsed.count  do
+        artists.push( parsed[i.to_s]["name"] )
+        i += 1;
+      end
+      return artists
+    end
+  end
+
   def party_at_index(party_index)
     if party_index >= parties.count
       return nil;

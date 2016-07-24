@@ -2,6 +2,7 @@
     <li class="active"><a data-toggle="tab" href="#tab_top_artists">Top Artists</a></li>
     <li><a data-toggle="tab" href="#tab_top_songs">Top Songs</a></li>
     <li><a data-toggle="tab" href="#tab_top_genre">Top Genres</a></li>
+    <li><a data-toggle="tab" href="#overlapping_top_artists">Overlapping Top Artists</a></li>
 </ul>
 
 <div class="tab-content">
@@ -14,6 +15,9 @@
     <div id="tab_top_genre" class="tab-pane fade">
         <pre id="top_genre" />
     </div>
+    <div id="overlapping_top_artists" class="tab-pane fade">
+        <pre id="overlapping_top_artists" />
+    </div>
 </div>
 
 <script>
@@ -21,6 +25,12 @@
         <% top_artists = "{" %>
         <% top_songs = "{" %>
         <% top_genre = "{" %>
+        <% overlapping_top_artists = "" %>
+        <% overlap = @party.overlapping_favorite_artists %>
+        <% overlap.each do |artist| %>
+            <% overlapping_top_artists += (artist + "," ) %>
+        <% end %>
+
         <% @party.users.each do |user| %>
             <% pre = "\"" + user.name + "\":" %>
             <% post = "," %>
@@ -49,9 +59,11 @@
         <% top_artists += "}" %>
         <% top_songs += "}" %>
         <% top_genre += "}" %>
+        <% overlapping_top_artists %>
         $("#top_artists").text(pretty_print("<%= top_artists %>"));
         $("#top_songs").text(pretty_print("<%= top_songs %>"));
         $("#top_genre").text(pretty_print("<%= top_genre %>"));
+        $("#overlapping_top_artists").text("<%= overlapping_top_artists %>");
     });
     function pretty_print(str) {
         return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
