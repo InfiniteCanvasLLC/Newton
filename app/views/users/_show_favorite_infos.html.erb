@@ -18,19 +18,20 @@
 
 <script>
     $('document').ready(function() {
-        <% if @user.favorite_info.top_artists.nil? || @user.favorite_info.top_artists.empty? %>
+
+        <% if @user.favorite_info.nil? || @user.favorite_info.top_artists.nil? || @user.favorite_info.top_artists.empty? %>
             $("#top_artists").text("NO DATA");
         <% else %>
             $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists %>"));
         <% end %>
 
-        <% if @user.favorite_info.top_songs.nil? || @user.favorite_info.top_songs.empty? %>
+        <% if @user.favorite_info.nil? || @user.favorite_info.top_songs.nil? || @user.favorite_info.top_songs.empty? %>
             $("#top_songs").text("NO DATA");
         <% else %>
             $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs %>"));
         <% end %>
 
-        <% if @user.favorite_info.top_genre.nil? || @user.favorite_info.top_genre.empty? %>
+        <% if @user.favorite_info.nil? || @user.favorite_info.top_genre.nil? || @user.favorite_info.top_genre.empty? %>
             $("#top_genre").text("NO DATA");
         <% else %>
             $("#top_genre").text(pretty_print("<%= @user.favorite_info.top_genre %>"));
