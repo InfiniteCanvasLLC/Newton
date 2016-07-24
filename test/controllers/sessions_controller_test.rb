@@ -14,7 +14,7 @@ class SessionsControllerTest < ActionController::TestCase
               email:      ENV['FB_TESTUSER_USERNAME']
             },
             credentials: {
-              token: "123456",
+              token: ENV['FACEBOOK_AUTHORIZATION_TOKEN'],
               expires_at: Time.now + 1.week
             }
         })
