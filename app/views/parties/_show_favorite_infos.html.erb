@@ -60,10 +60,13 @@
         $("#top_artists").text(pretty_print("<%= top_artists %>"));
         $("#top_songs").text(pretty_print("<%= top_songs %>"));
         $("#top_genre").text(pretty_print("<%= top_genre %>"));
-        //$("#overlapping_top_artists").text(pretty_print("<%= @party.overlapping_artists_with_count.to_json %>"));
-        //$("#overlapping_top_genres").text(pretty_print("<%= @party.overlapping_genres_with_count.to_json %>"));
+        $("#overlapping_top_artists").text(pretty_print("<%= @party.overlapping_artists_with_count.to_json %>"));
+        $("#overlapping_top_genres").text(pretty_print("<%= @party.overlapping_genres_with_count.to_json %>"));
     });
     function pretty_print(str) {
-        return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
+        if(str)
+        {
+            return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
+        }
     }
 </script>
