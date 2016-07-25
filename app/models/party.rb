@@ -54,15 +54,11 @@ class Party < ActiveRecord::Base
     return artists
   end
 
-  def coumpounded_favorite_artists
-    artists = self.favorite_artists
-    return artists.uniq
-  end
-
-  def overlapping_favorite_artists
-    artists = self.coumpounded_favorite_artists
-    counts = Hash.new(0)
-    return artists.each{ |e| counts[e] += 1 }
+  def overlapping_artists_with_count
+   result = Hash.new
+   artists = self.favorite_artists
+   artists.uniq.map{ |e| [e, artists.count(e)] }.select{ |_,c| c > 1 }.each{ |e,c| result[e] = c }
+   return result
   end
 
   def favorite_genres
@@ -76,15 +72,11 @@ class Party < ActiveRecord::Base
     return genres
   end
 
-  def compounded_favorite_genres
-    genres = self.favorite_genres
-    return genres.uniq
-  end
-
-  def overlapping_favorite_genres
-    genres = self.compounded_favorite_genres
-    counts = Hash.new(0)
-    return genres.each{ |e| counts[e] += 1 }
+  def overlapping_genres_with_count
+   result = Hash.new
+   genre = self.favorite_genres
+   genre.uniq.map{ |e| [e, genre.count(e)] }.select{ |_,c| c > 1 }.each{ |e,c| result[e] = c }
+   return result
   end
 
   #@remove all party related information (registrations + conversations + party invites)
