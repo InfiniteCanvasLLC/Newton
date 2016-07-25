@@ -1,5 +1,3 @@
-require 'Koala'
-
 module Spotify
     class Client
         def me_top_artists
