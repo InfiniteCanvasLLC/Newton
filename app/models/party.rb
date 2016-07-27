@@ -79,6 +79,11 @@ class Party < ActiveRecord::Base
    return result
   end
 
+  #30 mile radius
+  def self.party_inclusion_radius
+    return 30
+  end
+
   #@remove all party related information (registrations + conversations + party invites)
   def destroy
     EventRegistration.where(:party_id => self.id).delete_all
