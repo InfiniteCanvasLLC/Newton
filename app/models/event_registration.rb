@@ -1,5 +1,9 @@
 class EventRegistration < ActiveRecord::Base
   belongs_to :party
+  belongs_to :user
+  
+  validates :party, presence: true
+  validates :user, presence: true
 
   def self.user_not_going
     return 2
