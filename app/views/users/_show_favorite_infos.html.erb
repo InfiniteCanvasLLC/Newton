@@ -21,13 +21,13 @@
         <% if @user.favorite_info.top_artists.nil? || @user.favorite_info.top_artists.empty? %>
             $("#top_artists").text("NO DATA");
         <% else %>
-            $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists %>"));
+            $("#top_artists").text(pretty_print("<%= @user.favorite_info.top_artists_to_genres.to_json %>"));
         <% end %>
 
         <% if @user.favorite_info.top_songs.nil? || @user.favorite_info.top_songs.empty? %>
             $("#top_songs").text("NO DATA");
         <% else %>
-            $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs %>"));
+            $("#top_songs").text(pretty_print("<%= @user.favorite_info.top_songs_to_artists.to_json %>"));
         <% end %>
 
         <% if @user.favorite_info.top_genre.nil? || @user.favorite_info.top_genre.empty? %>
@@ -37,6 +37,6 @@
         <% end %>
     });
     function pretty_print(str) {
-        return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
+        return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 4);
     }
 </script>
