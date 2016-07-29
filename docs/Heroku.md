@@ -88,3 +88,36 @@ git config heroku.remote staging
 ```
 
 This would set staging as the default environment to use.
+
+## Using the proper branch for deployment
+
+Typically you would work your working branch to the staging environment.  So if there was a branch called ```rishi-coolfeature```.  My development process would be:
+
+1. Develop in this branch.
+2. Verify that tests pass.
+3. Push to staging using ```git push staging rishi-coolfeature:master```
+4. If everything works, send out pull request
+5. If pull request is approved, merge into master
+
+So this is no different than the usual development process.  But you need to push to the production environment for users to see the changes.
+
+### Step 6 - Decide on a deployment branch, or create a new one
+Decide which branch corresponds to the current release of the product.  This would be something like ```FriendsFamily-1.0```, etc.  The current branch will be the latest version number of the current milestone.
+
+If appropriate, create a new branch, eg: ```git checkout -b FriendsFamily-1.1```.  Typically this would be either either branched from master, or the previous version of the current milestone's branch (eg: ```FriendsFamily-1.0```)
+
+You can ```merge``` your changes into this branch, ```rebase```, or ```cherry-pick```, it depends what's appropriate for your situation.
+
+
+### Step 7 - Test the deployment branch offline
+Once the branch is ready, you are now ready to test it.
+
+First verify that the automated tests work, ie: ```rake test```
+
+### Step 8 - Test the deployment branch on staging in the Heroku environment
+Then upgrade to staging, using ```git push staging FriendsFamily-1.0:master``` and verify that whatever new features have been added, work correctly.
+
+### Step 9 - Deploy to production
+Finally, you can deploy to production.  There's no special thing that needs to be done, just deploy using the special command.
+
+```git push heroku FriendsFamily-1.0:master```

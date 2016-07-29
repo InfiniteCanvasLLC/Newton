@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   end
 
   def is_female
-    return self.gender == 0
+    return self.gender == User.gender_female
   end
 
   def question_answers
@@ -109,6 +109,28 @@ class User < ActiveRecord::Base
     end
 
     return is_assigned
+  end
+
+  def get_favorite_artists
+    artists = nil
+    if favorite_info.nil? == false && favorite_info.top_artists.nil? == false
+      artists = Array.new
+      parsed = JSON.parse(favorite_info.top_artists)
+      i = 0
+      until i == parsed.count  do
+        artists.push( parsed[i.to_s]["name"] )
+        i += 1;
+      end
+    end
+    return artists
+  end
+
+  def get_favorite_genres
+    genres = nil
+    if favorite_info.nil? == false && favorite_info.top_genre.nil? == false
+      genres = JSON.parse(favorite_info.top_genre)
+    end
+    return genres
   end
 
   def party_at_index(party_index)

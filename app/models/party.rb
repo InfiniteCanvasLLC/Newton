@@ -43,6 +43,47 @@ class Party < ActiveRecord::Base
     return EventRegistration.where(:event_id => event_id, :party_id => self.id)
   end
 
+  def favorite_artists
+    artists = Array.new
+    users.each do |user|
+      user_artists = user.get_favorite_artists
+      if user_artists.nil? == false
+        artists += user_artists
+      end
+    end
+    return artists
+  end
+
+  def overlapping_artists_with_count
+   result = Hash.new
+   artists = self.favorite_artists
+   artists.uniq.map{ |e| [e, artists.count(e)] }.select{ |_,c| c > 1 }.each{ |e,c| result[e] = c }
+   return result
+  end
+
+  def favorite_genres
+    genres = Array.new
+    users.each do |user|
+      user_genres = user.get_favorite_genres
+      if user_genres.nil? == false
+        genres += user_genres
+      end
+    end
+    return genres
+  end
+
+  def overlapping_genres_with_count
+   result = Hash.new
+   genre = self.favorite_genres
+   genre.uniq.map{ |e| [e, genre.count(e)] }.select{ |_,c| c > 1 }.each{ |e,c| result[e] = c }
+   return result
+  end
+
+  #30 mile radius
+  def self.party_inclusion_radius
+    return 30
+  end
+
   #@remove all party related information (registrations + conversations + party invites)
   def destroy
     EventRegistration.where(:party_id => self.id).delete_all
