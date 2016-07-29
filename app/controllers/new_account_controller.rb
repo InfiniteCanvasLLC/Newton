@@ -234,7 +234,7 @@ class NewAccountController < ApplicationController
         #send an email
         party_owner = party.get_owner
         #send an email
-        Outreach.party_invite( party, @user, party_owner.name, party_owner.email, "http://www.audicy.us/").deliver_now
+        Outreach.party_join_request( party, @user, party_owner.name, party_owner.email, "http://www.audicy.us/").deliver_now
       end
 
       redirect_to action: 'party'
