@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   before_create :build_default_favorites_info
   has_many :user_metadata
 
+  mailkick_user
+
   PERMISSION_USER          = 0
   PERMISSION_ADMINISTRATOR = 1 << 0
   
