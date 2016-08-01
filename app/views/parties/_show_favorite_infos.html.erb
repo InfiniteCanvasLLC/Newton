@@ -36,13 +36,13 @@
             <% if user.favorite_info.top_artists.nil? || user.favorite_info.top_artists.empty? %>
                 <% top_artists += pre + "\"NO DATA\"" + post %>
             <% else %>
-                <% top_artists += pre + user.favorite_info.top_artists + post %>
+                <% top_artists += pre + user.favorite_info.top_artists_to_genres.to_json + post %>
             <% end %>
 
             <% if user.favorite_info.top_songs.nil? || user.favorite_info.top_songs.empty? %>
                 <% top_songs   += pre + "\"NO DATA\"" + post %>
             <% else %>
-                <% top_songs   += pre + user.favorite_info.top_songs + post %>
+                <% top_songs   += pre + user.favorite_info.top_songs_to_artists.to_json + post %>
             <% end %>
 
             <% if user.favorite_info.top_genre.nil? || user.favorite_info.top_genre.empty? %>
@@ -66,7 +66,7 @@
     function pretty_print(str) {
         if(str)
         {
-            return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 2);
+            return JSON.stringify(JSON.parse($("<div/>").html(str).text()), null, 4);
         }
     }
 </script>
