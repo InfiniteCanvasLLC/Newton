@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
 
   def get_favorite_artists
     artists = nil
-    if favorite_info.nil? == false && favorite_info.top_artists.nil? == false
+    if favorite_info.nil? == false && favorite_info.top_artists.blank? == false
       artists = Array.new
       parsed = JSON.parse(favorite_info.top_artists)
       i = 0
@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
 
   def get_favorite_genres
     genres = nil
-    if favorite_info.nil? == false && favorite_info.top_genre.nil? == false
+    if favorite_info.nil? == false && favorite_info.top_genre.blank? == false
       genres = JSON.parse(favorite_info.top_genre)
     end
     return genres
