@@ -9,9 +9,9 @@ class Outreach < ApplicationMailer
     mail_to_user(user, "Welcome!", "Thank you for joining the Audicy family! We look forward to introducing you and your party to talented local artists!")
   end
 
-  def party_invite(party, src, dest_name, dest_email, link)
+  def party_invite(party, src_user, dest_name, dest_email, link)
     @header_message = "Hi " + dest_name
-    @message = "Your friend " + src.name + " would like to invite you to their party " + party.name + "!\n\n"
+    @message = "Your friend " + src_user.name + " would like to invite you to their party " + party.name + "!\n\n"
     @link = link
     @footer_message = "Your friends at Audicy :) "
     mail to: dest_email

@@ -306,7 +306,11 @@ class NewAccountController < ApplicationController
           invite.save
 
           #send an email
-          Outreach.party_invite( @current_party, @user, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+
+          if (!friend || !friend.opted_out?)
+            Outreach.party_invite( @current_party, @user, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+          end
+
         end
 
         redirect_to action: 'party'

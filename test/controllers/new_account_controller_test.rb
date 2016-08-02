@@ -17,6 +17,8 @@ class NewAccountControllerTest < ActionController::TestCase
               expires_at: Time.now + 1.week
             }
         })
+
+        ActionMailer::Base.deliveries = []
     end
 
 
@@ -56,6 +58,30 @@ class NewAccountControllerTest < ActionController::TestCase
 
       get :home
       assert_response :success
+    end
+
+    test "Invite party member" do
+
+      user = users(:steve_wozniak)
+      user.opt_in
+
+      names = user.name.split(" ")
+
+      post :submit_party_invite_request, { first_name: names[0], last_name: names[1], email: user.email }
+      assert_not ActionMailer::Base.deliveries.empty?
+
+    end
+
+    test "Invite party member no e_mail" do
+
+      user = users(:steve_wozniak)
+      user.opt_out
+
+      names = user.name.split(" ")
+
+      post :submit_party_invite_request, { first_name: names[0], last_name: names[1], email: user.email }
+      assert ActionMailer::Base.deliveries.empty?
+
     end
 
 end
