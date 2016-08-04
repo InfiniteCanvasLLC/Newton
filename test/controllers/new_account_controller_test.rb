@@ -62,25 +62,51 @@ class NewAccountControllerTest < ActionController::TestCase
 
     test "Invite party member" do
 
-      user = users(:steve_wozniak)
-      user.opt_in
+      assert_difference('PartyInvite.count', 1) do
+        user = users(:steve_wozniak)
+        user.opt_in
 
-      names = user.name.split(" ")
+        names = user.name.split(" ")
 
-      post :submit_party_invite_request, { first_name: names[0], last_name: names[1], email: user.email }
-      assert_not ActionMailer::Base.deliveries.empty?
+        post :submit_party_invite_request, { first_name: names[0], last_name: names[1], email: user.email }
+        assert_not ActionMailer::Base.deliveries.empty?
+      end
 
     end
 
     test "Invite party member no e_mail" do
 
-      user = users(:steve_wozniak)
-      user.opt_out
+      assert_difference('PartyInvite.count', 1) do
+        user = users(:steve_wozniak)
+        user.opt_out
 
-      names = user.name.split(" ")
+        names = user.name.split(" ")
 
-      post :submit_party_invite_request, { first_name: names[0], last_name: names[1], email: user.email }
-      assert ActionMailer::Base.deliveries.empty?
+        post :submit_party_invite_request, { first_name: names[0], last_name: names[1], email: user.email }
+        assert ActionMailer::Base.deliveries.empty?
+      end
+
+    end
+
+    test "Request to join party" do
+
+      assert_difference('JoinPartyRequest.count', 1) do
+        User.find(parties(:chocolate_eaters_party).owner_user_id).opt_in
+
+        post :request_to_join_party, { party_id: parties(:chocolate_eaters_party).id, description: "Having me in your party *is* that big of a deal"  }
+        assert_not ActionMailer::Base.deliveries.empty?
+      end
+
+    end
+
+    test "Request to join party no-mail" do
+
+      assert_difference('JoinPartyRequest.count', 1) do
+        User.find(parties(:chocolate_eaters_party).owner_user_id).opt_out
+
+        post :request_to_join_party, { party_id: parties(:chocolate_eaters_party).id, description: "Having me in your party *is* that big of a deal"  }
+        assert ActionMailer::Base.deliveries.empty?
+      end
 
     end
 
