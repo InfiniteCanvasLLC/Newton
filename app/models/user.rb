@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_one :favorite_info
   before_create :build_default_favorites_info
   has_many :user_metadata
+  has_many :last_seen_party_conversations
 
   PERMISSION_USER          = 0
   PERMISSION_ADMINISTRATOR = 1 << 0
@@ -109,6 +110,19 @@ class User < ActiveRecord::Base
     end
 
     return is_assigned
+  end
+
+  def get_missed_messages_count
+    #for a given party and a given user, there should only be one last seen message
+    last_seen = last_seen_party_conversations.where(:party_id => parties[current_party_index].id).first
+    last_party_conversation = parties[current_party_index].party_conversations.last
+
+    count = 0
+    if last_seen.nil? == false && last_party_conversation.nil? == false
+      count = (last_party_conversation.id - last_seen.party_conversation_id)
+    end
+
+    return count
   end
 
   def get_favorite_artists

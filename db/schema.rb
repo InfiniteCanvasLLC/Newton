@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622080907) do
+ActiveRecord::Schema.define(version: 20160804205855) do
 
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
@@ -55,6 +55,14 @@ ActiveRecord::Schema.define(version: 20160622080907) do
     t.text     "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "last_seen_party_conversations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "party_id"
+    t.integer  "party_conversation_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "link_tos", force: :cascade do |t|
@@ -176,7 +184,7 @@ ActiveRecord::Schema.define(version: 20160622080907) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-13'
+    t.date     "birthday",            default: '2016-06-07'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
     t.datetime "last_seen"

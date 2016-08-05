@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   post 'new_account/pull_user_statuses'
   post 'new_account/handle_event_commitment'
   post 'new_account/submit_user_feedback'
+  post 'new_account/query_missed_messages'
   post 'parties/unregister_event'
   post 'parties/unregister_for_event'
 
