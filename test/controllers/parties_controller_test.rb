@@ -117,4 +117,18 @@ class PartiesControllerTest < ActionController::TestCase
     assert_response(500)
   end
 
+  test "email party" do
+    session[:user_id] = users(:steve_jobs).id
+
+    @party.users << users(:steve_wozniak)
+    @party.users << users(:steve_jobs)
+
+    # TODO: E-mail the party now, verify that both users get e-mailed
+
+    # TODO: Unsubcribe one user, verify that they are not e-mailed
+
+    # TODO: Unsubscribe both users, verify that none are e-mailed
+
+  end
+
 end

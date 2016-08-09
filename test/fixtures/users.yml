@@ -13,3 +13,9 @@ steve_wozniak:
   uid: '23499'
   name: 'Steve Wozniak'
   email: 'support+woz@audicy.us'
+
+gil_amelio:
+  provider: 'facebook'
+  uid: '12334'
+  name: 'Gil Amelio'
+  email: 'support+gil@audicy.us'
