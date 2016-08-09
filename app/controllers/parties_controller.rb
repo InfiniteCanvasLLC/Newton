@@ -120,7 +120,7 @@ class PartiesController < ApplicationController
   end
 
   def send_email
-    Outreach.mail_to_party_id(params[:id], params[:email_subject], params[:email_body]).deliver_now
+    self.mail_to_party_id(params[:id], params[:email_subject], params[:email_body])
     render nothing: true
   end
 

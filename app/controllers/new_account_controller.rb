@@ -344,6 +344,22 @@ class NewAccountController < ApplicationController
     def chat
         #only display the last 20 entries in the chat (maybe a more dynamic scheme in the future)
         @conversations = @current_user_party.party_conversations.last(20)
+
+        #store the last message seen by the user in order to display the number of missed messages
+        last_conversation = @current_user_party.party_conversations.last
+        if last_conversation.nil? == false
+            #if there isn't already a last message seen for this user and this party, create one
+            last_message_seen = @user.last_seen_party_conversations.where(:party_id => @current_user_party.id).first
+            if last_message_seen.nil?
+                last_message_seen = LastSeenPartyConversation.new
+                last_message_seen.user_id  = @user.id
+                last_message_seen.party_id = @current_user_party.id
+            end
+
+            #update the id of the message last seen by the user in this party
+            last_message_seen.party_conversation_id = last_conversation.id
+            last_message_seen.save
+        end
         @current_nav_selection = "nav_chat"
     end
 
@@ -369,6 +385,11 @@ class NewAccountController < ApplicationController
            #redirect_to action: 'chat'
            render json: {"reload_page": false}
        end
+    end
+
+    def query_missed_messages
+        count = @user.get_missed_messages_count
+        render json: {"missed_messages_count": count}
     end
 
     def party

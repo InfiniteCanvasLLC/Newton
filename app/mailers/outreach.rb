@@ -41,21 +41,12 @@ class Outreach < ApplicationMailer
   end
 
   def mail_to_user(user, email_subject, email_body)
-    mail_to(user.email, email_subject, "Hi " + user.name, email_body)
-  end
 
-  def mail_to_party_id(party_id, email_subject, email_body)
-    party = Party.find(party_id)
-    mail_to_party(party, email_subject, email_body)
-  end
-
-  def mail_to_party(party, email_subject, email_body)
-    emails = Array.new
-    party.users.each do |user|
-      emails << user.email
+    if (user.opted_out?)
+      return
     end
-
-    mail_to(emails, email_subject, "Hi " + party.name, email_body)
+    
+    mail_to(user.email, email_subject, "Hi " + user.name, email_body)
   end
 
   def mail_to(email_address, email_subject, email_header, email_body)
