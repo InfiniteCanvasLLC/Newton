@@ -3,6 +3,7 @@ require 'test_helper'
 class PartiesControllerTest < ActionController::TestCase
   setup do
     @party = parties(:hello_kitty_party)
+    ActionMailer::Base.deliveries = []
   end
 
   test "should get index" do
@@ -123,11 +124,25 @@ class PartiesControllerTest < ActionController::TestCase
     @party.users << users(:steve_wozniak)
     @party.users << users(:steve_jobs)
 
-    # TODO: E-mail the party now, verify that both users get e-mailed
+    post :send_email, { id: @party.id, email_subject: "Test subject", email_body: "Test body" }
 
-    # TODO: Unsubcribe one user, verify that they are not e-mailed
+    assert(ActionMailer::Base.deliveries.count == 2)
 
-    # TODO: Unsubscribe both users, verify that none are e-mailed
+
+    ActionMailer::Base.deliveries = []
+    users(:steve_jobs).opt_out
+
+    post :send_email, { id: @party.id, email_subject: "Test subject", email_body: "Test body" }
+
+    assert(ActionMailer::Base.deliveries.count == 1)
+
+    
+    ActionMailer::Base.deliveries = []
+    users(:steve_wozniak).opt_out
+
+    post :send_email, { id: @party.id, email_subject: "Test subject", email_body: "Test body" }
+
+    assert(ActionMailer::Base.deliveries.count == 0)
 
   end
 
