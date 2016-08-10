@@ -88,7 +88,12 @@ Rails.application.configure do
     user_name: ENV["GMAIL_USERNAME"],
     password: ENV["GMAIL_PASSWORD"],
   }
-  config.action_mailer.default_url_options = { host: "audicy.us"}
+
+  if (ENV["AUDICY_ENVIRONMENT"] == staging)
+    config.action_mailer.default_url_options = { host: "audicystaging.herokuapp.com" }
+  else
+    config.action_mailer.default_url_options = { host: "audicy.us"}
+  end
 
   # Force SSL in production
   config.force_ssl = true
