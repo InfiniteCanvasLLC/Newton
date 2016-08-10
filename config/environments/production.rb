@@ -89,7 +89,7 @@ Rails.application.configure do
     password: ENV["GMAIL_PASSWORD"],
   }
 
-  if (ENV["AUDICY_ENVIRONMENT"] == staging)
+  if (ENV["AUDICY_ENVIRONMENT"] == "staging")
     config.action_mailer.default_url_options = { host: "audicystaging.herokuapp.com" }
   else
     config.action_mailer.default_url_options = { host: "audicy.us"}
