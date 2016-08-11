@@ -69,9 +69,47 @@ See the [Events](docs/Events.md) article
 
 ### Testing
 
+#### Automated Tests
 Before you send a pull request and/or merge to master.  Please run the automated test suite to verify that all tests pass.
 
 See the [Testing](docs/Testing.md) article for more details.
+
+#### Test Mail
+There could be some cases, where you need to test mailing a party for example.  But when testing locally, you will only have your own personal Facebook account, along with the test accounts.  Usually Facebook test accounts have crazy addresses like "fb_324263253245@fbtest.com" or something that don't correspond to an e-mail address you'll have access to.
+
+So if you wanted to try e-mailing a test user, you have no way of knowing if the e-mail was sent or what the situation is, unless you manually add one of your own e-mail addresses to the Facebook test account.  That can be pretty annoying.
+
+You can use https://mailcatcher.me/ instead.  This sets up a temporary mail server on your own machine, and monitors outgoing e-mails - so you can see what would be delivered in production.
+
+To set up mailcatcher, first trying following the steps listed on the website above.  If they don't work, and you get an error saying 'method_missing'... then you're running into a mailcatcher bug and can work around it via the following.
+
+```gem pristine --all``` try this first to see if it corrects your error.  This will cleanup your installed gems.
+
+If that doesn't work, do these steps:
+
+```
+gem uninstall mailcatcher
+
+rvm default@mailcatcher --create do gem install mailcatcher
+rvm wrapper default@mailcatcher --no-prefix mailcatcher catchmail
+
+mailcatcher
+```
+
+More info on this thread: https://github.com/sj26/mailcatcher/issues/267
+
+After you have installed and started mailcatcher, you will need to modify the SMTP server in your development.rb file to not use Gmail, but to use your local server.  So change your outgoing SMTP address to 127.0.0.1 and port to 1025.  Eg:
+
+```rb
+config.action_mailer.smtp_settings = {
+  address: "127.0.0.1",
+  port: 1025,
+  domain: "audicy.us",
+  authentification: "plain",
+  enable_starttls_auto: true,
+}
+```
+
 
 ### Updating your database
 

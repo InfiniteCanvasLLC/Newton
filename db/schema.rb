@@ -77,6 +77,20 @@ ActiveRecord::Schema.define(version: 20160804205855) do
     t.integer  "type_id",     default: 0
   end
 
+  create_table "mailkick_opt_outs", force: :cascade do |t|
+    t.string   "email"
+    t.integer  "user_id"
+    t.string   "user_type"
+    t.boolean  "active",     default: true, null: false
+    t.string   "reason"
+    t.string   "list"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "mailkick_opt_outs", ["email"], name: "index_mailkick_opt_outs_on_email"
+  add_index "mailkick_opt_outs", ["user_id", "user_type"], name: "index_mailkick_opt_outs_on_user_id_and_user_type"
+
   create_table "parties", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",    null: false
@@ -184,7 +198,7 @@ ActiveRecord::Schema.define(version: 20160804205855) do
     t.integer  "current_party_index"
     t.string   "secondary_email",     default: ""
     t.integer  "gender",              default: 0
-    t.date     "birthday",            default: '2016-06-07'
+    t.date     "birthday",            default: '2016-06-13'
     t.integer  "zip_code",            default: 0
     t.text     "description",         default: ""
     t.datetime "last_seen"
