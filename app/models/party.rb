@@ -6,6 +6,7 @@ class Party < ActiveRecord::Base
     has_many :party_metadata
     has_many :party_invites
     has_many :join_party_requests
+    belongs_to :administrator, class_name: "User"
 
   # to fix error in <h2>Register for Event</h2>
   def event_id

@@ -1,52 +1,75 @@
 <%= render :layout => 'administrator/navigation' do %>
 
-    <h1>Editing Party</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Editing Party</h1>
+            </div>
+        </div>
 
-    <%= render 'form' %>
+        <div class="row">
+            <div class="col-md-6">
+                <%= render 'form' %>
+            </div>
+            <div class="col-md-6">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="administrator-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Administrator
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="administrator-dropdown">
+                    <% @administrators.each do |cur_administrator| %>
+                        <li><a href="#" class="admin_selection" admin="<%= cur_administrator.id %>"><%= cur_administrator.name %></a></li>
+                    <% end %>
+                  </ul>
+                </div>
+            </div>
+        </div>
 
-    <h2>Events for the Party</h2>
-    <table class="table member_parties_table">
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @party.events.each do |event| %>
+        <h2>Events for the Party</h2>
+        <table class="table member_parties_table">
+            <thead>
                 <tr>
-                <td><%= event.description %></td>
-                <td><%= link_to 'Unregister for this event', {:party => @party.id, :event => event.id, :action => 'unregister_for_event'}, method: :post %></td>
-                </td>
+                    <th>Name</th>
                 </tr>
-            <% end %>
-        </tbody>
-    </table>
-
-    <h2>Register for Event</h2>
-    <%= form_for(@party) do |f| %>
-        <%= f.label :event_id, "Enter an event to register for" %><br>
-        <%= f.text_field :event_id, class: 'event_field' %><br>
-        <%= f.submit %>
-    <% end %>
-
-    <table class="table parties_table" style="display: none">
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <% @all_events.each do |event| %>
-                <tr class="clickable-row" data-event-id="<%= event.id %>">
+            </thead>
+            <tbody>
+                <% @party.events.each do |event| %>
+                    <tr>
                     <td><%= event.description %></td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
+                    <td><%= link_to 'Unregister for this event', {:party => @party.id, :event => event.id, :action => 'unregister_for_event'}, method: :post %></td>
+                    </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
 
-    <%= link_to 'Show', @party %> |
-    <%= link_to 'Back', parties_path %>
+        <h2>Register for Event</h2>
+        <%= form_for(@party) do |f| %>
+            <%= f.label :event_id, "Enter an event to register for" %><br>
+            <%= f.text_field :event_id, class: 'event_field' %><br>
+            <%= f.submit %>
+        <% end %>
+
+        <table class="table parties_table" style="display: none">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% @all_events.each do |event| %>
+                    <tr class="clickable-row" data-event-id="<%= event.id %>">
+                        <td><%= event.description %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+
+        <%= link_to 'Show', @party %> |
+        <%= link_to 'Back', parties_path %>
+    </div>
 
 <% end %>
 
@@ -72,6 +95,20 @@
 
         $(".event_field").focus(function () {
             $(".parties_table").css('display', 'table');
+        });
+
+        $(".admin_selection").click(function(obj) {
+            $.ajax({
+                dataType: 'json',
+                type: "POST",
+                url: "set_administrator",
+                success: function(data) {
+                    console.log(data);
+                },
+                data: { 
+                'admin_id': $(this).attr("admin")
+                }
+    });
         });
 
     });

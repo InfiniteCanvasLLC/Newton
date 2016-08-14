@@ -30,6 +30,8 @@ class PartiesController < ApplicationController
     #@party_events = @party.events.to_a #Event.all.to_a
     #party = Party.find(params[:id])
     #@party.events << Event.find(1)
+
+    @administrators = User.where(permissions: User::PERMISSION_ADMINISTRATOR)
   end
 
   def unregister_for_event
@@ -152,6 +154,13 @@ class PartiesController < ApplicationController
     @party_invites = PartyInvite.all.order(:party_id)
   end
 
+  def set_administrator
+    party = Party.find(params["party_id"])
+    party.administrator = User.find(params["admin_id"])
+    party.save
+
+    render json: { :admin_id => params["admin_id"] }
+  end
 
   private
     # Use setting the correct nav value for the expanded side nav.
