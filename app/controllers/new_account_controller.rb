@@ -136,7 +136,6 @@ class NewAccountController < ApplicationController
     end
 
     def enter_answer
-        byebug
         action = UserAction.find(params[:action_id])
         dismiss = false
         if params[:dismiss_button]
