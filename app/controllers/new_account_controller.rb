@@ -188,7 +188,7 @@ class NewAccountController < ApplicationController
         end
 
         #if the user clicked the dismiss button, we don't want to redirect to the URL
-        if dismiss == true
+        if dismiss == "true"
             redirect_to action: 'home'
         else
             redirect_to params[:url]

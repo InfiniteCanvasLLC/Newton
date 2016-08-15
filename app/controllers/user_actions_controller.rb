@@ -46,6 +46,14 @@ class UserActionsController < ApplicationController
   def create
     @user_action = UserAction.new(user_action_params)
 
+    if @user_action.is_question() == true
+      Outreach.mail_to_user_id(@user_action.user_id, "Quick question",
+      "We have assigned you a small question. You can find it on your home page. Please take the time to answer it as it will improve our recommendation.\nCheck it out on Audicy.us").deliver_now
+    elsif @user_action.is_linkto() == true
+      Outreach.mail_to_user_id(@user_action.user_id, "Check it out",
+      "We have found something you might be interested in. You can find it on your home page.\nCheck it out on Audicy.us").deliver_now
+    end
+
     respond_to do |format|
       if @user_action.save
         format.html { redirect_to @user_action, notice: 'User action was successfully created.' }

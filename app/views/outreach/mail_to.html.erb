@@ -1,3 +1,9 @@
+
+<style>
+unsubscribe {
+}
+</style>
+
 <h1>
   <%= @header_message %>
 </h1>
@@ -6,7 +12,10 @@
   <%= @message %>
 </p>
 
+<a href="http://www.audicy.us">Come visit us!</a> <br><br>
+
 <footer>
-  <%= @footer_message %> <br>
-  <%= link_to "Unsubscribe", mailkick_unsubscribe_url %>
+  <%= @footer_message %> <br><br><br><br>
+
+  <small><%= link_to "Unsubscribe", mailkick_unsubscribe_url, { :class=>"unsubscribe" } %></small>
 </footer>

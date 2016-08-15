@@ -162,6 +162,12 @@ $(document).ready(function(){
     notification_form.modal('show');
 	<% end %>
 
+	<% if @show_eula == true %>
+    var notification_form = $('#notification_modal')
+    notification_form.find("#notification-modal-header-id").text("EULA");
+    notification_form.find("#notification-modal-content-id").text("Please accept our terms and condition");
+    notification_form.modal({backdrop: 'static',keyboard: false});
+	<% end %>
 });
 
 </script>

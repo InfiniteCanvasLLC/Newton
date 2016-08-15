@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
         user = User.where(  :provider => auth['provider'], :uid => auth['uid']).first
         if( user.nil?)
             user = User.create_with_omniauth(auth)
-            # new user, send a welcome message (btw I am pretty sure the email field should be valid #VERIFY)
+            # new user, send a welcome message
             Outreach.welcome(user).deliver_now
         end
 
