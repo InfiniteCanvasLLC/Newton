@@ -155,11 +155,18 @@ class PartiesController < ApplicationController
   end
 
   def set_administrator
+    admin_id = params["admin_id"].to_i
     party = Party.find(params["party_id"])
-    party.administrator = User.find(params["admin_id"])
+
+    if (admin_id == 0)
+      party.administrator = nil
+    else
+      party.administrator = User.find(admin_id)
+    end
+
     party.save
 
-    render json: { :admin_id => params["admin_id"] }
+    render json: { :admin_id => admin_id, :admin_name => (admin_id == 0 ? nil : User.find(admin_id).name) }
   end
 
   private

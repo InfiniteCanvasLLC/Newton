@@ -11,17 +11,27 @@
             <div class="col-md-6">
                 <%= render 'form' %>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" style="display: flex">
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle" type="button" id="administrator-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     Administrator
                     <span class="caret"></span>
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="administrator-dropdown">
+                    <li><a href="#" class="admin_selection" admin="0">None</a></li>
+                    <li role="separator" class="divider"></li>
                     <% @administrators.each do |cur_administrator| %>
                         <li><a href="#" class="admin_selection" admin="<%= cur_administrator.id %>"><%= cur_administrator.name %></a></li>
                     <% end %>
                   </ul>
+                </div>
+
+                <div style="margin-top: 6px" id="administrator-name">
+                    <% if @party.administrator.nil? %>
+                        None
+                    <% else %>
+                        <%= @party.administrator.name %>
+                    <% end %>
                 </div>
             </div>
         </div>
@@ -103,7 +113,14 @@
                 type: "POST",
                 url: "set_administrator",
                 success: function(data) {
-                    console.log(data);
+                    if (data["admin_id"] == 0)
+                    {
+                        $("#administrator-name").text("None");
+                    }
+                    else
+                    {
+                        $("#administrator-name").text(data["admin_name"]);
+                    }
                 },
                 data: { 
                 'admin_id': $(this).attr("admin")
