@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :user_metadata
   has_many :last_seen_party_conversations
 
+  mailkick_user
+
   PERMISSION_USER          = 0
   PERMISSION_ADMINISTRATOR = 1 << 0
   

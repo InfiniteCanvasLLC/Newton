@@ -3,6 +3,7 @@ require 'test_helper'
 class PartiesControllerTest < ActionController::TestCase
   setup do
     @party = parties(:hello_kitty_party)
+    ActionMailer::Base.deliveries = []
   end
 
   test "should get index" do
@@ -115,6 +116,34 @@ class PartiesControllerTest < ActionController::TestCase
     session[:user_id] = users(:steve_wozniak).id
     get :view_join_requests
     assert_response(500)
+  end
+
+  test "email party" do
+    session[:user_id] = users(:steve_jobs).id
+
+    @party.users << users(:steve_wozniak)
+    @party.users << users(:steve_jobs)
+
+    post :send_email, { id: @party.id, email_subject: "Test subject", email_body: "Test body" }
+
+    assert(ActionMailer::Base.deliveries.count == 2)
+
+
+    ActionMailer::Base.deliveries = []
+    users(:steve_jobs).opt_out
+
+    post :send_email, { id: @party.id, email_subject: "Test subject", email_body: "Test body" }
+
+    assert(ActionMailer::Base.deliveries.count == 1)
+
+    
+    ActionMailer::Base.deliveries = []
+    users(:steve_wozniak).opt_out
+
+    post :send_email, { id: @party.id, email_subject: "Test subject", email_body: "Test body" }
+
+    assert(ActionMailer::Base.deliveries.count == 0)
+
   end
 
 end

@@ -249,7 +249,7 @@ class NewAccountController < ApplicationController
         #send an email
         party_owner = party.get_owner
         #send an email
-        Outreach.party_join_request( party, @user, party_owner.name, party_owner.email, "http://www.audicy.us/").deliver_now
+        Outreach.party_join_request( party, @user, party_owner, "http://www.audicy.us/").deliver_now
       end
 
       redirect_to action: 'party'
@@ -262,7 +262,10 @@ class NewAccountController < ApplicationController
         return
       end
 
-      @current_party.users << friend
+      if (params[:commit] == "Accept!")
+        @current_party.users << friend
+      end
+    
       @current_party.remove_party_join_requests(params[:user_id])
 
       redirect_to action: 'party'
@@ -272,8 +275,11 @@ class NewAccountController < ApplicationController
         party = Party.find(params[:party_id])
 
         #make sure user not already in the party
-        if party.users.exists?(@user.id) == false
-            party.users << @user #store user
+
+        if (params[:commit] == "Join!")
+          if party.users.exists?(@user.id) == false
+              party.users << @user #store user
+          end
         end
 
         @user.remove_party_invites(params[:party_id])
@@ -321,7 +327,8 @@ class NewAccountController < ApplicationController
           invite.save
 
           #send an email
-          Outreach.party_invite( @current_party, @user, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+          Outreach.party_invite( @current_party, @user, friend, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+
         end
 
         redirect_to action: 'party'
