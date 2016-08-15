@@ -69,19 +69,13 @@
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-						<%= submit_tag "Submit", :class => 'btn btn-primary' %>
+							<%= submit_tag "Submit",  :class => 'btn btn-primary' %>
+							<%= submit_tag "Dismiss", :class => 'btn btn-primary', name: 'dismiss_button'  %>
 
 						<% end %>
 					</div>
 				</div>
 
-				<a href="#">
-					<div class="panel-footer">
-						<span class="pull-left">View Details</span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div>
-					</div>
-				</a>
 			</div>
 		</div>
 		<% end %>
@@ -111,14 +105,24 @@
 					<% end %>
 				</div>
 
-				<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
-					<div class="panel-footer">
-						<span class="pull-left"><%= cur_link_to.link_to.link_text %></span>
-						<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-						<div class="clearfix"></div>
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-xs-6">
+						<% if cur_link_to.link_to.is_standard_linkto %>
+							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+								<span class="pull-left"> Dismiss </span>
+								<div class="clearfix"></div>
+							<% end %>
+						<% end %>
+						</div>
+						<div class="col-xs-6">
+						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i> <%= cur_link_to.link_to.link_text %></span>
+							<div class="clearfix"></div>
+						<% end %>
+						</div>
 					</div>
-				<% end %>
-
+				</div>
 			</div>
 		</div>
 		<% end %>
