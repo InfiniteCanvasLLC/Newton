@@ -46,6 +46,10 @@ class PartiesController < ApplicationController
 
   def register_for_event(event_id)
     event = Event.find(event_id)
+
+    self.mail_to_party_id(@party.id, "Event registration",
+      "We have found an event your party" + @party.name + " might be interested in. You can find it on your calendar.\nCheck it out on Audicy.us")
+
     #prevents double insert
     if @party.events.exists?( event.id ) == false
       @party.events << event
