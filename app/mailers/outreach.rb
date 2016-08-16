@@ -9,6 +9,21 @@ class Outreach < ApplicationMailer
     mail_to_user(user, "Welcome!", "Thank you for joining the Audicy family! We look forward to introducing you and your party to talented local artists!")
   end
 
+  def event_registration(party)
+      self.mail_to_party_id(party.id, "Event registration",
+      "We have found an event your party " + party.name + " might be interested in. You can find it on your calendar.\nCheck it out on Audicy.us")
+  end
+
+  def action_assigned(user_action)
+    if user_action.is_question() == true
+      self.mail_to_user_id(user_action.user_id, "Quick question",
+      "We have assigned you a small question. You can find it on your home page. Please take the time to answer it as it will improve our recommendation.\nCheck it out on Audicy.us")
+    elsif user_action.is_linkto() == true
+      self.mail_to_user_id(user_action.user_id, "Check it out",
+      "We have found something you might be interested in. You can find it on your home page.\nCheck it out on Audicy.us")
+    end
+  end
+
   def party_invite(party, src_user, dest_user, dest_name, dest_email, link)
 
     if (!dest_user.nil? && dest_user.opted_out?)
