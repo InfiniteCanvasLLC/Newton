@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   PERMISSION_USER          = 0
   PERMISSION_ADMINISTRATOR = 1 << 0
-  
+
   # http://stackoverflow.com/questions/3808782/rails-best-practice-how-to-create-dependent-has-one-relations
   # required by the has_one relationship otherwise runtime errors occur trying to access user.favorite_info
   private def build_default_favorites_info
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
         # Assumes that the default_profile can **always** be created.
         # or
         # Check the validation of the profile. If it is not valid, then
-        # return false from the callback. Best to use a before_validation 
+        # return false from the callback. Best to use a before_validation
         # if doing this. View code should check the errors of the child.
         # Or add the child's errors to the User model's error array of the :base
         # error item
@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     create! do |user|
       user.provider = auth['provider']
       user.uid = auth['uid']
-      
+
       if auth['info']
         user.name = auth['info']['name'] || ""
         user.email = auth['info']['email'] || ""
@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
 
   def get_favorite_artists
     artists = nil
-    if favorite_info.nil? == false && favorite_info.top_artists.nil? == false
+    if !favorite_info.nil? && !favorite_info.top_artists.nil? && !favorite_info.top_artists.empty?
       artists = Array.new
       parsed = JSON.parse(favorite_info.top_artists)
       i = 0
@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
 
   def get_favorite_genres
     genres = nil
-    if favorite_info.nil? == false && favorite_info.top_genre.nil? == false
+    if !favorite_info.nil? && !favorite_info.top_genre.nil? && !favorite_info.top_genre.empty?
       genres = JSON.parse(favorite_info.top_genre)
     end
     return genres

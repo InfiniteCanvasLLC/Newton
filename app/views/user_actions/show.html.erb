@@ -9,12 +9,13 @@
 
   <p>
     <strong>Action type:</strong>
-    <%= @user_action.action_type %>
-  </p>
-
-  <p>
-    <strong>Action:</strong>
-    <%= @user_action.action_id %>
+    <% if @user_action.is_question %>
+      <%= link_to @user_action.action_type_string, question_path(@user_action.action_id) %>
+    <% elsif @user_action.is_linkto %>
+      <%= link_to @user_action.action_type_string, link_to_path(@user_action.action_id) %>
+    <% else %>
+      <%= @user_action.action_type_string %>
+    <% end %>
   </p>
 
   <%= link_to 'Edit', edit_user_action_path(@user_action) %> |

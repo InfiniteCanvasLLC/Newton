@@ -15,7 +15,7 @@
     <div class="col-md-6">
       <div class="field">
         <%= f.label :user_id %><br>
-        <%= f.number_field :user_id %>
+        <%= f.text_field :user_id %>
       </div>
       <div class="field">
         <%= f.label :action_type %><br>
@@ -48,6 +48,38 @@
             </td>
             <td>
               <%= cur_user.name %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+
+      </table>
+
+      <table class="table party_table" style="display: none" >
+
+        <thead>
+          <tr>
+            <th>IDs</th>
+            <th>Name</th>
+            <th>Members</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% Party.all.each do |cur_party| %>
+          <tr class="clickable-row">
+            <td class="user_ids">
+              <% cur_party.users.each do |cur_user| %>
+                <%= cur_user.id %>,
+              <% end %>
+            </td>
+            <td>
+              <%= cur_party.name %>
+            </td>
+            <td>
+              <% cur_party.users.each do |cur_user| %>
+                <%= cur_user.name %>,
+              <% end %>
             </td>
           </tr>
           <% end %>
@@ -130,6 +162,23 @@ $(document).ready(function() {
     }
   });
 
+  $('.party_table').on('click', '.clickable-row', function(event) {
+    if($(this).hasClass('active'))
+    {
+      $(this).removeClass('active');
+
+      $("#user_action_user_id").val("");
+    }
+    else
+    {
+      $(this).addClass('active').siblings().removeClass('active');
+
+      var user_ids = $(this).find(".user_ids").first().html().trim();
+
+      $("#user_action_user_id").val(user_ids);
+    }
+  });
+
   $('.questions_table').on('click', '.clickable-row', function(event) {
     if($(this).hasClass('active'))
     {
@@ -166,18 +215,21 @@ $(document).ready(function() {
 
   $("#user_action_user_id").focus(function () {
     $(".user_table").css('display', 'table');
+    $(".party_table").css('display', 'table');
     $(".questions_table").css('display', 'none');
     $(".linkto_table").css('display', 'none');
   });
 
   $("#user_action_action_type").change(function () {
     $(".user_table").css('display', 'none');
+    $(".party_table").css('display', 'none');
     $(".questions_table").css('display', $("#user_action_action_type").val() == <%= UserAction.question_type %> ? 'table' : 'none');
     $(".linkto_table").css('display', $("#user_action_action_type").val() == <%= UserAction.linkto_type %> ? 'table' : 'none');
   });
 
   $("#user_action_action_id").focus(function () {
     $(".user_table").css('display', 'none');
+    $(".party_table").css('display', 'none');
     $(".questions_table").css('display', $("#user_action_action_type").val() == <%= UserAction.question_type %> ? 'table' : 'none');
     $(".linkto_table").css('display', $("#user_action_action_type").val() == <%= UserAction.linkto_type %> ? 'table' : 'none');
   });
