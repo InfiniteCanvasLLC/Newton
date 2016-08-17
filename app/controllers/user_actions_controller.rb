@@ -49,7 +49,7 @@ class UserActionsController < ApplicationController
     temp_params = user_action_params
     user_ids = temp_params[:user_id].split(',')
     user_ids.each do |user_id|
-      temp_params[:user_id] = user_id.to_i
+      temp_params[:user_id] = user_id.strip.to_i
       user_action = UserAction.new(temp_params)
       if user_action.save
         user_actions << user_action
