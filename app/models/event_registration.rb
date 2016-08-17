@@ -1,5 +1,11 @@
 class EventRegistration < ActiveRecord::Base
   belongs_to :party
+  belongs_to :user
+  belongs_to :event
+
+  validates :party, presence: true
+  validates :user, presence: true
+  validates :event, presence: true
 
   def self.user_not_going
     return 2
@@ -12,6 +18,9 @@ class EventRegistration < ActiveRecord::Base
   def self.user_going
     return 0
   end
+
+  validates_inclusion_of :commitment, :in => [EventRegistration.user_going, EventRegistration.user_unsure, EventRegistration.user_not_going]
+
   
   def is_user_not_going
     return self.commitment == EventRegistration.user_not_going

@@ -55,7 +55,11 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 
 	            </li>
 		        <li class="<%= @current_nav_selection=='nav_chat' ? 'selected' : ' ' %>">
-	                <a href="<%= chat_path %>"><i class="fa fa-fw fa-comments"></i> Chat</a>
+	                <a href="<%= chat_path %>"><i class="fa fa-fw fa-comments"></i> Chat
+					    <% if (@user.get_missed_messages_count) > 0 %>
+                            <span class="badge_notification"><%= @user.get_missed_messages_count %></span>
+                        <% end %>
+					</a>
 	            </li>
 	            <li class="<%= @current_nav_selection=='nav_calendar' ? 'selected' : ' ' %>">
 	                <a href="<%= calendar_path %>"><i class="fa fa-fw fa-calendar"></i> Music Events</a>
@@ -86,3 +90,38 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 	</div>
 
 </div>
+
+
+<script>
+//When on the chat page, this pulls the server every 3 seconds for a new message. 
+//If such is found, reload the page.
+function worker() {
+    $.ajax({
+        dataType: 'json',
+        type: "POST",
+        url: "new_account/query_missed_messages",
+        success: function(data) {
+            var count = data["missed_messages_count"];
+            if(count != localStorage.getItem("current_missed_msg_cont"))
+			{
+				localStorage.setItem("current_missed_msg_cont", count);//so we don't keep reloading
+                location.reload();
+			}
+        },
+    });
+  //re issue a call in the next 3 seconds
+  setTimeout(worker, 3000);
+}
+
+$(document).ready(function() {
+  //when on the chat page, we already pull every 3 seconds for new messages
+  //this is only necessary when we are on any other page.
+  var chat_page = document.getElementById('chat-div-messages');
+  if(chat_page == null)//not on the chat page, trigger the query of missed messages
+  {
+  	// run the first time; all subsequent calls will take care of themselves
+  	setTimeout(worker, 3000);
+  }
+});
+
+</script>

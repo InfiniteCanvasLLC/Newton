@@ -100,6 +100,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    mailkick (0.1.4)
     mime-types (3.0)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0221)
@@ -192,6 +193,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    timeliness (0.3.8)
     turbolinks (2.5.3)
       coffee-rails
     turf (0.0.5)
@@ -201,6 +203,8 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
+    validates_timeliness (4.0.2)
+      timeliness (~> 0.3.7)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -223,6 +227,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   koala
+  mailkick
   momentjs-rails
   omniauth-facebook
   omniauth-spotify!
@@ -238,6 +243,7 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)
+  validates_timeliness (~> 4.0)
   web-console (~> 2.0)
 
 BUNDLED WITH

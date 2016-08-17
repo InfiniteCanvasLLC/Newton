@@ -234,7 +234,7 @@ class NewAccountController < ApplicationController
         #send an email
         party_owner = party.get_owner
         #send an email
-        Outreach.party_invite( party, @user, party_owner.name, party_owner.email, "http://www.audicy.us/").deliver_now
+        Outreach.party_join_request( party, @user, party_owner, "http://www.audicy.us/").deliver_now
       end
 
       redirect_to action: 'party'
@@ -247,7 +247,10 @@ class NewAccountController < ApplicationController
         return
       end
 
-      @current_party.users << friend
+      if (params[:commit] == "Accept!")
+        @current_party.users << friend
+      end
+    
       @current_party.remove_party_join_requests(params[:user_id])
 
       redirect_to action: 'party'
@@ -257,8 +260,11 @@ class NewAccountController < ApplicationController
         party = Party.find(params[:party_id])
 
         #make sure user not already in the party
-        if party.users.exists?(@user.id) == false
-            party.users << @user #store user
+
+        if (params[:commit] == "Join!")
+          if party.users.exists?(@user.id) == false
+              party.users << @user #store user
+          end
         end
 
         @user.remove_party_invites(params[:party_id])
@@ -306,7 +312,8 @@ class NewAccountController < ApplicationController
           invite.save
 
           #send an email
-          Outreach.party_invite( @current_party, @user, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+          Outreach.party_invite( @current_party, @user, friend, friend_full_name, friend_email, "http://www.audicy.us/").deliver_now
+
         end
 
         redirect_to action: 'party'
@@ -337,6 +344,22 @@ class NewAccountController < ApplicationController
     def chat
         #only display the last 20 entries in the chat (maybe a more dynamic scheme in the future)
         @conversations = @current_user_party.party_conversations.last(20)
+
+        #store the last message seen by the user in order to display the number of missed messages
+        last_conversation = @current_user_party.party_conversations.last
+        if last_conversation.nil? == false
+            #if there isn't already a last message seen for this user and this party, create one
+            last_message_seen = @user.last_seen_party_conversations.where(:party_id => @current_user_party.id).first
+            if last_message_seen.nil?
+                last_message_seen = LastSeenPartyConversation.new
+                last_message_seen.user_id  = @user.id
+                last_message_seen.party_id = @current_user_party.id
+            end
+
+            #update the id of the message last seen by the user in this party
+            last_message_seen.party_conversation_id = last_conversation.id
+            last_message_seen.save
+        end
         @current_nav_selection = "nav_chat"
     end
 
@@ -362,6 +385,11 @@ class NewAccountController < ApplicationController
            #redirect_to action: 'chat'
            render json: {"reload_page": false}
        end
+    end
+
+    def query_missed_messages
+        count = @user.get_missed_messages_count
+        render json: {"missed_messages_count": count}
     end
 
     def party
