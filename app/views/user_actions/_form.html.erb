@@ -69,9 +69,7 @@
           <% Party.all.each do |cur_party| %>
           <tr class="clickable-row">
             <td class="user_ids">
-              <% cur_party.users.each do |cur_user| %>
-                <%= cur_user.id %>,
-              <% end %>
+              <% cur_party.users.each do |cur_user| %><%=cur_user.id%>,<% end %>
             </td>
             <td>
               <%= cur_party.name %>

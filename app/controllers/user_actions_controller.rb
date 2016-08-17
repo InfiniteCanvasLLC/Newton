@@ -67,12 +67,8 @@ class UserActionsController < ApplicationController
 
     respond_to do |format|
       if error_user_action.nil?
-        if user_actions.length == 1
-          format.html { redirect_to user_actions[0], notice: 'User action was successfully created.' }
-          format.json { render :show, status: :created, location: user_actions[0] }
-        else
-          format.html { redirect_to :show, notice: 'User actions were successfully created.' }
-        end
+        format.html { redirect_to user_actions[0], notice: 'User action was successfully created.' }
+        format.json { render :show, status: :created, location: user_actions[0] }
       else
         format.html { render(:file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false) }
         format.json { render json: error_user_action.errors, status: :unprocessable_entity }
