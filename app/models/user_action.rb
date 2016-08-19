@@ -26,6 +26,10 @@ class UserAction < ActiveRecord::Base
     end
   end
 
+  def action_type_string
+    return UserAction.type_id_to_string(self.action_type)
+  end
+
   def is_question
     return self.action_type == UserAction.question_type
   end

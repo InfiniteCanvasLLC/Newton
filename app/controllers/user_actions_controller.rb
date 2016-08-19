@@ -44,17 +44,36 @@ class UserActionsController < ApplicationController
   # POST /user_actions
   # POST /user_actions.json
   def create
-    @user_action = UserAction.new(user_action_params)
+    error_user_action = nil
+    user_actions = Array.new
+    temp_params = user_action_params
+    user_ids = temp_params[:user_id].split(',')
+    user_ids.each do |user_id|
+      temp_params[:user_id] = user_id.strip.to_i
+      user_action = UserAction.new(temp_params)
+      if user_action.save
+        user_actions << user_action
+      else
+        error_user_action = user_action
+        break
+      end
+    end
+
+    if !error_user_action.nil?
+      user_actions.each do |user_action|
+        user_action.destroy
+      end
+    end
 
     Outreach.action_assigned(@user_action).deliver_now
 
     respond_to do |format|
-      if @user_action.save
-        format.html { redirect_to @user_action, notice: 'User action was successfully created.' }
-        format.json { render :show, status: :created, location: @user_action }
+      if error_user_action.nil?
+        format.html { redirect_to user_actions[0], notice: 'User action was successfully created.' }
+        format.json { render :show, status: :created, location: user_actions[0] }
       else
         format.html { render(:file => File.join(Rails.root, 'public/500.html'), :status => 500, :layout => false) }
-        format.json { render json: @user_action.errors, status: :unprocessable_entity }
+        format.json { render json: error_user_action.errors, status: :unprocessable_entity }
       end
     end
   end
