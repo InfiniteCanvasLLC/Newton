@@ -46,6 +46,10 @@ class PartiesController < ApplicationController
 
   def register_for_event(event_id)
     event = Event.find(event_id)
+
+    Outreach.event_registration(@party).deliver_now
+
+
     #prevents double insert
     if @party.events.exists?( event.id ) == false
       @party.events << event

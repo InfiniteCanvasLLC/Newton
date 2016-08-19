@@ -46,6 +46,8 @@ class UserActionsController < ApplicationController
   def create
     @user_action = UserAction.new(user_action_params)
 
+    Outreach.action_assigned(@user_action).deliver_now
+
     respond_to do |format|
       if @user_action.save
         format.html { redirect_to @user_action, notice: 'User action was successfully created.' }

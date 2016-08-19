@@ -136,15 +136,22 @@ class NewAccountController < ApplicationController
     end
 
     def enter_answer
-        questionAnswer = QuestionAnswer.new
         action = UserAction.find(params[:action_id])
+        dismiss = false
+        if params[:dismiss_button]
+            dismiss = true
+        end
 
-        questionAnswer.question_id = action.action_id
-        questionAnswer.user_id = session[:user_id]
-        questionAnswer.answer_integer = params[:answer_integer]
-        questionAnswer.answer_text = params[:answer_text]
+        if dismiss == false
+            questionAnswer = QuestionAnswer.new
 
-        questionAnswer.save
+            questionAnswer.question_id = action.action_id
+            questionAnswer.user_id = session[:user_id]
+            questionAnswer.answer_integer = params[:answer_integer]
+            questionAnswer.answer_text = params[:answer_text]
+
+            questionAnswer.save
+        end
 
         action.destroy
 
@@ -169,6 +176,7 @@ class NewAccountController < ApplicationController
 
     def handle_link_to
         action = UserAction.find( params[:action_id] )
+        dismiss = params[:dismiss]
 
         #I know, it's weird, but an action can store the ID of a question, or a linkto (or more)
         # and that ID is called action_id. params[:action_id] is the ID of the action the user interacted with.
@@ -178,7 +186,13 @@ class NewAccountController < ApplicationController
            #(they have been consumed)
           action.destroy
         end
-        redirect_to params[:url]
+
+        #if the user clicked the dismiss button, we don't want to redirect to the URL
+        if dismiss == "true"
+            redirect_to action: 'home'
+        else
+            redirect_to params[:url]
+        end
     end
 
     def switch_party
