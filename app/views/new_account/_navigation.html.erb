@@ -95,7 +95,7 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 <script>
 //When on the chat page, this pulls the server every 3 seconds for a new message. 
 //If such is found, reload the page.
-function worker() {
+function pull_missed_msg() {
     $.ajax({
         dataType: 'json',
         type: "POST",
@@ -110,7 +110,7 @@ function worker() {
         },
     });
   //re issue a call in the next 3 seconds
-  setTimeout(worker, 3000);
+  setTimeout(pull_missed_msg, 3000);
 }
 
 $(document).ready(function() {
@@ -120,7 +120,7 @@ $(document).ready(function() {
   if(chat_page == null)//not on the chat page, trigger the query of missed messages
   {
   	// run the first time; all subsequent calls will take care of themselves
-  	setTimeout(worker, 3000);
+	setTimeout(pull_missed_msg, 3000);
   }
 });
 
