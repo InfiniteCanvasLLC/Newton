@@ -1,0 +1,6 @@
+You have some parties that are going stale.  You should send them questions, a YouTube link, or events
+
+These are the parties that are stale:
+<% @parties.each do |cur_party| %>
+- <%= cur_party.name %>
+<% end %> 

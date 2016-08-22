@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   before_create :build_default_favorites_info
   has_many :user_metadata
   has_many :last_seen_party_conversations
+  has_many :user_actions
 
   mailkick_user
 
