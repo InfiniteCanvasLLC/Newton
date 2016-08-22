@@ -53,6 +53,7 @@ class UserActionsController < ApplicationController
       user_action = UserAction.new(temp_params)
       if user_action.save
         user_actions << user_action
+        Outreach.action_assigned(user_action).deliver_now
       else
         error_user_action = user_action
         break
@@ -64,8 +65,6 @@ class UserActionsController < ApplicationController
         user_action.destroy
       end
     end
-
-    Outreach.action_assigned(@user_action).deliver_now
 
     respond_to do |format|
       if error_user_action.nil?
