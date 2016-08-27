@@ -14,6 +14,42 @@ class PartiesController < ApplicationController
   # GET /parties/1
   # GET /parties/1.json
   def show
+    # Unanswered Questions
+    @questions_users = Hash.new
+
+    @party.users.each do |user|
+      actions = UserAction.where("user_id = " + user.id.to_s)
+      actions.to_a.each do |action|
+        if (action.action_type == UserAction.question_type)
+          question = Question.find(action.action_id)
+          if (@questions_users[question].nil?)
+            @questions_users[question] = Array.new
+          end
+          @questions_users[question] << user
+        end
+      end
+    end
+
+    # Answered Question
+    @questions_answers_users = Hash.new
+
+    @party.users.each do |user|
+      answers = QuestionAnswer.where("user_id = " + user.id.to_s)
+      answers.to_a.each do |answer|
+        question = Question.find(answer.question_id)
+
+        if (@questions_answers_users[question].nil?)
+          @questions_answers_users[question] = Hash.new
+        end
+
+        if (@questions_answers_users[question][answer].nil?)
+          @questions_answers_users[question][answer] = Array.new
+        end
+
+        @questions_answers_users[question][answer] << user
+      end
+    end
+
     # Metadata
     @metadata = PartyMetadatum.where("party_id = " + params[:id].to_s).to_a
     @metadata_types = PartyMetadatum.type_name_to_type_id_array

@@ -27,9 +27,9 @@ class UsersController < ApplicationController
 
         actions = UserAction.where("user_id = " + params[:id].to_s)
         actions.to_a.each do |action|
-            if (action.action_type == 0) #0 = Question
+            if (action.action_type == UserAction.question_type)
                 @questions << Question.find(action.action_id)
-            elsif (action.action_type == 1) #1 = Link To
+            elsif (action.action_type == UserAction.linkto_type)
                 #TODO
             end
         end
