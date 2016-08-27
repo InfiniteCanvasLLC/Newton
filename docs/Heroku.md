@@ -96,8 +96,9 @@ Typically you would work your working branch to the staging environment.  So if 
 1. Develop in this branch.
 2. Verify that tests pass.
 3. Push to staging using ```git push staging rishi-coolfeature:master```
-4. If everything works, send out pull request
-5. If pull request is approved, merge into master
+4. Check your changes at https://audicystaging.herokuapp.com/
+5. If everything works, send out pull request
+6. If pull request is approved, merge into master
 
 So this is no different than the usual development process.  But you need to push to the production environment for users to see the changes.
 
