@@ -44,8 +44,7 @@ task :notify_party_administrators => :environment do
 
             delta = Time.now - party_recent_action_time.time
 
-            if (true)
- #           if (delta > (5 * 24 * 60 * 60))
+            if (delta > (5 * 24 * 60 * 60))
                 stale_parties << { party: cur_party, updated_at: party_recent_action_time.time }
             end
         end
