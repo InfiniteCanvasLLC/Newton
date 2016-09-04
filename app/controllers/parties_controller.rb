@@ -164,7 +164,7 @@ class PartiesController < ApplicationController
       party.administrator = User.find(admin_id)
     end
 
-    party.save
+    party.save!
 
     render json: { :admin_id => admin_id, :admin_name => (admin_id == 0 ? nil : User.find(admin_id).name) }
   end
