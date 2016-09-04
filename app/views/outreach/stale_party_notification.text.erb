@@ -2,5 +2,5 @@ You have some parties that are going stale.  You should send them questions, a Y
 
 These are the parties that are stale:
 <% @parties.each do |cur_party| %>
-- <%= cur_party.name %>
+- <%= cur_party[:party].name %>
 <% end %> 

@@ -8,8 +8,8 @@ task :notify_party_administrators => :environment do
 
             party_recent_action_time = 0
             actions = nil
-            byebug
-            # Collection all actions for the party
+
+            # Collect all actions for the party
             cur_party.users.each do |cur_user|
                 if (actions.nil?)
                     actions = cur_user.user_actions
@@ -19,7 +19,7 @@ task :notify_party_administrators => :environment do
             end
             
             # Sort in descending order by creation time
-            actions.sort! {|left, right| right.created_at <=> left.created_at}
+            actions.sort! {|left, right| right.updated_at <=> left.updated_at}
 
             recent_action_time = 0
 
@@ -46,7 +46,7 @@ task :notify_party_administrators => :environment do
 
             if (true)
  #           if (delta > (5 * 24 * 60 * 60))
-                stale_parties << cur_party
+                stale_parties << { party: cur_party, updated_at: party_recent_action_time.time }
             end
         end
 

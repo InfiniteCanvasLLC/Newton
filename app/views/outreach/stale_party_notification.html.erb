@@ -4,6 +4,6 @@ These are the parties that are stale:
 
 <ul>
     <% @parties.each do |cur_party| %>
-    <li><%= link_to(cur_party.name, party_url(cur_party)) %></li>
+    <li><span style="font-size: 1.5em"><%= link_to(cur_party[:party].name, party_url(cur_party[:party])) %></span> - Last Updated: <%= cur_party[:updated_at].in_time_zone("Pacific Time (US & Canada)") %></li>
     <% end %> 
 </ul>

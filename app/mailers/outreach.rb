@@ -59,7 +59,7 @@ class Outreach < ApplicationMailer
   def notify_stale_parties(admin, stale_parties)
     @admin = admin
     @parties = stale_parties
-
+    
     mail to: admin.email, subject: "Stale Parties", template_name: "stale_party_notification"
   end
 
