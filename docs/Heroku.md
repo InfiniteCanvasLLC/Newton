@@ -70,6 +70,15 @@ git push staging <branchname>:master
 
 Where ```<branchname>``` is the branch you want to push.
 
+### Clone production database on staging
+You might want to pull the current production database into staging.  This is useful for testing backwards compatibility of the production data with any database schema changes, or for debugging.
+
+This is simple to do, just use the following command
+
+```heroku pg:copy canvasnewton::DATABASE_URL DATABASE_URL -a audicystaging```
+
+Just copy and paste the command directly, ```DATABASE_URL``` will be evaluated on Heroku's server and you don't need to change it.
+
 ### Heroku commands on staging
 Above, we discussed how to add the new git remote.  But to run Heroku commands such as ```heroku logs``` or ```heroku run rake db:migrate```, you need to be able to specify which environment (production or staging) you are running the command on.
 

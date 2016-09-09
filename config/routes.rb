@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   get 'parties/view_party_invites', :as => :view_party_invites
   get 'parties/view_join_requests', :as => :view_join_requests
+  post 'parties/:party_id/set_administrator', to: 'parties#set_administrator'
 
   resources :parties do
     post 'send_email', on: :member
