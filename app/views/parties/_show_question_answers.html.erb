@@ -1,0 +1,44 @@
+<style>
+#space_me {
+    padding: 5px;
+}
+</style>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Question Text</th>
+            <th>Question Type</th>
+            <th>Question Link</th>
+            <th>
+                <table>
+                    <th id="space_me">Answer</th>
+                    <th id="space_me">User(s)</th>
+                </table>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @questions_answers_users.each do |question, answers_users| %>
+            <tr>
+                <td><%= question.text %></td>
+                <td><%= question.get_subtype_name() %></td>
+                <td><%= link_to 'Show', question_path(question) %></td>
+                <td>
+                    <table>
+                        <tr>
+                            <% answers_users.each do |answer, users| %>
+                                <td id="space_me"><%= answer.get_answer() %> :</td>
+                                <td id="space_me">
+                                    <% users.each do |user| %>
+                                        <%= user.name %><br>
+                                    <% end %>
+                                </td>
+                            <% end %>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

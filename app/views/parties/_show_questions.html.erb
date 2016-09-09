@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Question Text</th>
+            <th>Question Type</th>
+            <th>Question Link</th>
+            <th>User(s)</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @questions_users.sort_by{ |question, users| users.length }.reverse.to_h.each do |question, users| %>
+            <tr>
+                <td><%= question.text %></td>
+                <td><%= question.get_subtype_name() %></td>
+                <td><%= link_to 'Show', question %></td>
+                <td>
+                    <% users.each do |user| %>
+                        <%= user.name %><br>
+                    <% end %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

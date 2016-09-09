@@ -9,6 +9,8 @@
       <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#tab_party_info">Party Info</a></li>
         <li><a data-toggle="tab" href="#tab_events">Events</a></li>
+        <li><a data-toggle="tab" href="#tab_questions">Unanswered Questions</a></li>
+        <li><a data-toggle="tab" href="#tab_question_answers">Answered Questions</a></li>
         <li><a data-toggle="tab" href="#tab_favorite_infos">Spotify</a></li>
         <li><a data-toggle="tab" href="#tab_metadata">Metadata</a></li>
         <li><a data-toggle="tab" href="#tab_send_email">Send Email</a></li>
@@ -38,6 +40,12 @@
               </li>
             <% end %>
           </ul>
+        </div>
+        <div id="tab_questions" class="tab-pane fade">
+          <p><%= render 'show_questions' %></p>
+        </div>
+        <div id="tab_question_answers" class="tab-pane fade">
+          <p><%= render 'show_question_answers' %></p>
         </div>
         <div id="tab_favorite_infos" class="tab-pane fade">
           <p><%= render 'show_favorite_infos' %></p>
