@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814033115) do
+ActiveRecord::Schema.define(version: 20160910150514) do
 
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160814033115) do
     t.string   "metadata"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "link"
   end
 
   create_table "events_parties", id: false, force: :cascade do |t|
