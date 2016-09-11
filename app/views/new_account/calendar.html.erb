@@ -17,7 +17,7 @@
 <div class="panel <%= event.start > Time.now ? 'panel-green' : 'panel-red' %> ">
   <div class="panel-heading">
     <i class="fa fa-calendar fa-fw"></i>
-		<%= event.description %>
+		<%= event.description %><%= ' (' + event.metadata + ')'%>
 		<div class="pull-right">
 		<%=  event.start.in_time_zone("Pacific Time (US & Canada)").strftime("%H:%M %m-%d-%y") %>
 		</div>
@@ -41,7 +41,7 @@
 	<% if (event.metadata.blank? == false) && (event.link.blank? == false) %>
 		<div class="panel-footer">
 			<form action=<%= event.link %> target="_blank">
-				<input type="submit" value=<%= event.metadata %>  />
+				<input type="submit" value="Tickets" />
 			</form>
 		</div>
 	<% end %>
