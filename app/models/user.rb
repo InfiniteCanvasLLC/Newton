@@ -178,6 +178,22 @@ class User < ActiveRecord::Base
     return (Time.now - self.last_seen).to_i < @@active_timeout #5 minutes ago
   end
 
+  def time_since_last_login
+    last_seen = self.last_seen
+
+    how_long_ago = "Unknown"
+    if (last_seen.blank? == false)
+      delta = (Time.now - last_seen).to_i
+      days  = delta / (60*60*24);
+      delta = delta % (60*60*24);
+      hours = delta / (60*60);
+
+      how_long_ago = "#{days} day(s),  #{hours} hour(s) ago"
+    end
+
+    return how_long_ago
+  end
+
   def get_distance_from_user(other_user)
     if other_user.zip_code==0 || self.zip_code == 0
       return 0

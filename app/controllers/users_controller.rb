@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     before_filter :verify_user, only: [:show]
 
     def index
-        @users = User.all
+        @users = User.all.sort_by {|u| u.last_seen}.reverse
     end
 
     def edit
