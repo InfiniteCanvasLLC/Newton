@@ -86,7 +86,7 @@ class Outreach < ApplicationMailer
   def self.get_quick_tip_list
     return [
     ["Invite a friend", @@quick_tip_invite_friend],
-    ["Asnwer question", @@quick_tip_answer_question],
+    ["Answer question", @@quick_tip_answer_question],
     ["Checkout song",   @@quick_tip_checkout_song],
     ]
   end
