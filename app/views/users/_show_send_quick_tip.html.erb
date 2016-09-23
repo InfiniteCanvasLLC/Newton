@@ -1,0 +1,30 @@
+<div>
+  <%= form_tag({action: "send_quick_tip", method: "post"}, {role: "form", id: "send_quick_tip_form", remote: true}) do %>
+    <div class="field">
+        <%= select_tag(:quick_tip_type, options_for_select(@tip_types)) %><br><br><br>
+    </div>
+    <%= button_tag("Send", class: 'btn btn-success', id:'send_email_button') %>
+  <% end %>
+
+  <script>
+    $("#send_quick_tip_form").bind("ajax:send",
+      function(event,xhr)
+      {
+        $("#send_email_button").html("<i class='fa fa-circle-o-notch fa-spin'></i> Sending...");
+        $("#send_email_button").prop("disabled", true);
+      });
+
+    $("#send_quick_tip_form").bind("ajax:error",
+      function(event,xhr,status,error)
+      {
+        window.alert("Error Sending Email\n" + error);
+      });
+
+    $("#send_quick_tip_form").bind("ajax:complete",
+      function(event,xhr,status)
+      {
+        $("#send_email_button").html("Send");
+        $("#send_email_button").prop("disabled", false);
+      });
+  </script>
+</div>

@@ -1,0 +1,42 @@
+<h1>
+  Quick Tip!
+</h1>
+
+<p>
+  <%= @message1 %>
+</p>
+<p>
+  <%= image_tag(@image_url1) %>
+</p>
+
+<% if (defined? @message2) %>
+<p>
+  <%= @message2 %>
+</p>
+<% end %>
+
+<% if (defined? @image_url2) %>
+<p>
+  <%= image_tag(@image_url2) %>
+</p>
+<% end %>
+
+<% if (defined? @message3) %>
+<p>
+  <%= @message3 %>
+</p>
+<% end %>
+
+<% if (defined? @image_url3) %>
+<p>
+  <%= image_tag(@image_url3) %>
+</p>
+<% end %>
+
+<a href="http://www.audicy.us">Come visit us!</a> <br><br>
+
+<footer>
+  Your friends at Audicy :) <br><br><br><br>
+
+  <small><%= link_to "Unsubscribe", mailkick_unsubscribe_url, { :class=>"unsubscribe" } %></small>
+</footer>
