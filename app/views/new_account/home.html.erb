@@ -116,7 +116,7 @@
 						<% end %>
 						</div>
 						<div class="col-xs-6">
-						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class => (cur_link_to.link_to.type_id == LinkTo.sync_spotify_type ? "spotify-link" : nil) do %>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i> <%= cur_link_to.link_to.link_text %></span>
 							<div class="clearfix"></div>
 						<% end %>
@@ -160,6 +160,8 @@ $(document).ready(function(){
     notification_form.find("#notification-modal-header-id").text("Thank You");
     notification_form.find("#notification-modal-content-id").text("Your Spotify info has been synced");
     notification_form.modal('show');
+
+    mixpanel.track('Spotify: Finish Sync')
 	<% end %>
 
 	<% if @show_eula == true %>
@@ -168,6 +170,8 @@ $(document).ready(function(){
     notification_form.find("#notification-modal-content-id").text("Please accept our terms and condition");
     notification_form.modal({backdrop: 'static',keyboard: false});
 	<% end %>
+
+	mixpanel.track_links('.spotify-link', 'Spotify: Start Sync');
 });
 
 </script>
