@@ -181,7 +181,7 @@ class NewAccountController < ApplicationController
         #I know, it's weird, but an action can store the ID of a question, or a linkto (or more)
         # and that ID is called action_id. params[:action_id] is the ID of the action the user interacted with.
         linkto = LinkTo.find(action.action_id)
-        if linkto.is_standard_linkto
+        if linkto.is_standard_linkto && dismiss == "true"
            # these sorts of linktos are disposable, the act of clicking on them warrants their removal
            #(they have been consumed)
           action.destroy
