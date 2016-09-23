@@ -1,7 +1,7 @@
 <%= render :layout => 'administrator/navigation' do %>
 <h1>New Link To</h1>
 
-<%= render 'form' %>
+<%= render 'form', :locals => { :youtube_auto_fillout => true } %>
 
 <%= link_to 'Back', link_tos_path %>
 <% end %>
