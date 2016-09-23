@@ -121,12 +121,12 @@ class Outreach < ApplicationMailer
   end
   def quick_tip_answer_question(email_address)
     @message1 = "We will periodically ask you a few questions about your musical tastes. Remember to answer them, it helps us improve our recommendations!"
-    @image_url1 = ActionController::Base.helpers.asset_path('party_banner.jpg')
+    @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/AnswerAQuestion/question.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   def quick_tip_checkout_song(email_address)
-    @message1 = "We will periodically assign to you artists and songs to check out! Don't forget to take a listen!"
-    @image_url1 = ActionController::Base.helpers.asset_path('party_banner.jpg')
+    @message1 = "We will periodically assign to you artists and songs to check out! Don't forget to take a listen. Just press play!"
+    @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/CheckoutSong/checkout_song.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   ############################################
