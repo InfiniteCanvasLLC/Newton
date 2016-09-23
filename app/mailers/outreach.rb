@@ -78,4 +78,57 @@ class Outreach < ApplicationMailer
     mail to: admin.email, subject: "Stale Parties", template_name: "stale_party_notification"
   end
 
+
+  ###########Quick Tip Emails#################
+  @@quick_tip_invite_friend   = 0
+  @@quick_tip_answer_question = 1
+  @@quick_tip_checkout_song   = 2
+  def self.get_quick_tip_list
+    return [
+    ["Invite a friend", @@quick_tip_invite_friend],
+    ["Asnwer question", @@quick_tip_answer_question],
+    ["Checkout song",   @@quick_tip_checkout_song],
+    ]
+  end
+
+  #These are characterized by a good use of images to convey information
+  def self.send_quick_tip(quick_tip_type, user_id)
+    user = User.find(user_id)
+    if user.nil? == false
+      case quick_tip_type.to_i
+        when @@quick_tip_invite_friend
+          return quick_tip_invite_friend(user.email)
+        when @@quick_tip_answer_question
+          return quick_tip_answer_question(user.email)
+        when @@quick_tip_checkout_song
+          return quick_tip_checkout_song(user.email)
+      end
+    end
+    return nil
+  end
+
+  def quick_tip_invite_friend(email_address)
+    @message1 = "Remember to grow your party by inviting friends!"
+    @image_url1 = ActionController::Base.helpers.image_url('QuickTips/InviteAFriend/Invite_a_friend_1.png')
+
+    @message2 = "At the top of your Party page you will find the Invite button."
+    @image_url2 = ActionController::Base.helpers.image_url('QuickTips/InviteAFriend/Invite_a_friend_2.png')
+
+    @message3 = "Fill out the quick form, and your friend will get notified."
+    @image_url3 = ActionController::Base.helpers.image_url('QuickTips/InviteAFriend/Invite_a_friend_3.png')
+
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+  def quick_tip_answer_question(email_address)
+    @message1 = "We will periodically ask you a few questions about your musical tastes. Remember to answer them, it helps us improve our recommendations!"
+    @image_url1 = ActionController::Base.helpers.asset_path('party_banner.jpg')
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+  def quick_tip_checkout_song(email_address)
+    @message1 = "We will periodically assign to you artists and songs to check out! Don't forget to take a listen!"
+    @image_url1 = ActionController::Base.helpers.asset_path('party_banner.jpg')
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+  ############################################
+
 end
