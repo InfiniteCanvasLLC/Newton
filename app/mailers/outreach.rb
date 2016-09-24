@@ -161,7 +161,7 @@ class Outreach < ApplicationMailer
   end
 
   def quick_tip_events(email_address)
-    @message1 = "When we find an event we think your whole party will enjoy we will assign it to you. Check out the Music Event page to see events currently assigned to your party."
+    @message1 = "When we find an event we think your whole party will enjoy we will assign it to you. Check out the Music Events page to see events currently assigned to your party."
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_page.png')
     @message2 = "The artist, venue and date are already displayed on the event, but for more information, or to purchase tickets click on the 'Tickets' button."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_tickets.png')
