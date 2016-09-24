@@ -83,11 +83,15 @@ class Outreach < ApplicationMailer
   @@quick_tip_invite_friend   = 0
   @@quick_tip_answer_question = 1
   @@quick_tip_checkout_song   = 2
+  @@quick_tip_sync_spotify    = 3
+  @@quick_tip_profile         = 4
   def self.get_quick_tip_list
     return [
     ["Invite a friend", @@quick_tip_invite_friend],
     ["Answer question", @@quick_tip_answer_question],
     ["Checkout song",   @@quick_tip_checkout_song],
+    ["Sync Spotify",    @@quick_tip_sync_spotify],
+    ["Profile",         @@quick_tip_profile],
     ]
   end
 
@@ -102,6 +106,10 @@ class Outreach < ApplicationMailer
           return quick_tip_answer_question(user.email)
         when @@quick_tip_checkout_song
           return quick_tip_checkout_song(user.email)
+        when @@quick_tip_sync_spotify
+          return quick_tip_sync_spotify(user.email)
+        when @@quick_tip_profile
+          return quick_tip_profile(user.email)
       end
     end
     return nil
@@ -127,6 +135,24 @@ class Outreach < ApplicationMailer
   def quick_tip_checkout_song(email_address)
     @message1 = "We will periodically assign to you artists and songs to check out! Don't forget to take a listen. Just press play!"
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/CheckoutSong/checkout_song.png')
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+  def quick_tip_sync_spotify(email_address)
+    @message1 = "We use Spotify to learn more about your musical tastes, what genre you like, what are your top artists."
+    @image_url1 = ActionController::Base.helpers.asset_path('spotify.jpg')
+    @message2 = "If you grant us access to this information we can dramatically improve our recommendations!"
+    @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/SynSpotify/pull_spotify_info.png')
+
+    @message3 = "Remember to periodically click 'pull' to make sure we have your latest Spotify information!"
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+
+  def quick_tip_profile(email_address)
+    @message1 = "We need to know a little bit about you in order to give you relevant concert recommendations. You can edit that information from the profile menu"
+    @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_1.png')
+    @message2 = "Any information your which to share is very useful to us. For instance by knowing the region where you live, we can lookup the specific concerts in your area."
+    @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_2.png')
+    @message3 = "We can also use information like your secondary email address to make sure your friends can easily find you, and send you requests."
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   ############################################
