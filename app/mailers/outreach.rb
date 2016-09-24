@@ -150,7 +150,7 @@ class Outreach < ApplicationMailer
   def quick_tip_profile(email_address)
     @message1 = "We need to know a little bit about you in order to give you relevant concert recommendations. You can edit that information from the profile menu"
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_1.png')
-    @message2 = "Any information your which to share is very useful to us. For instance by knowing the region where you live, we can lookup the specific concerts in your area."
+    @message2 = "Any information you which to share is very useful to us. For instance by knowing the region where you live, we can lookup the specific concerts in your area."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_2.png')
     @message3 = "We can also use information like your secondary email address to make sure your friends can easily find you, and send you requests."
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
