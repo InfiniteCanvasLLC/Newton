@@ -37,9 +37,13 @@ class LinkTosController < ApplicationController
       @link_to = LinkTo.new
       if link_to_params[:title].blank?
         @link_to.title = "Checkout this song!"
+      else
+        @link_to.title = link_to_params[:title]
       end
       if link_to_params[:description].blank?
         @link_to.description = "We thought you might like it."
+      else
+        @link_to.description = link_to_params[:description]
       end
       @link_to.link_text    = "Watch"
       @link_to.icon_style   = "fa-youtube"
