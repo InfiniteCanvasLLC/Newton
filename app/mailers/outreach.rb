@@ -85,6 +85,7 @@ class Outreach < ApplicationMailer
   @@quick_tip_checkout_song   = 2
   @@quick_tip_sync_spotify    = 3
   @@quick_tip_profile         = 4
+  @@quick_tip_events          = 5
   def self.get_quick_tip_list
     return [
     ["Invite a friend", @@quick_tip_invite_friend],
@@ -92,6 +93,7 @@ class Outreach < ApplicationMailer
     ["Checkout song",   @@quick_tip_checkout_song],
     ["Sync Spotify",    @@quick_tip_sync_spotify],
     ["Profile",         @@quick_tip_profile],
+    ["Events",          @@quick_tip_events],
     ]
   end
 
@@ -110,6 +112,8 @@ class Outreach < ApplicationMailer
           return quick_tip_sync_spotify(user.email)
         when @@quick_tip_profile
           return quick_tip_profile(user.email)
+        when @@quick_tip_events
+          return quick_tip_events(user.email)
       end
     end
     return nil
@@ -153,6 +157,16 @@ class Outreach < ApplicationMailer
     @message2 = "Any information you which to share is very useful to us. For instance by knowing the region where you live, we can lookup the specific concerts in your area."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_2.png')
     @message3 = "We can also use information like your secondary email address to make sure your friends can easily find you, and send you requests."
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+
+  def quick_tip_events(email_address)
+    @message1 = "When we find an event we think your whole party will enjoy we will assign it to you. Check out the Music Event page to see events currently assigned to your party."
+    @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_page.png')
+    @message2 = "The artist, venue and date are already displayed on the event, but for more information, or to purchase tickets click on the 'Tickets' button."
+    @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_tickets.png')
+    @message3 = "At all time you can check out your friends' level of interest to the even. You can also update yours to let your party know how you feeel about this particular event. Just click on the icon on the right to cycle through the tree levels of interest: 'Going', 'Unsure' or 'Not Going'."
+    @image_url3 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_interest.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   ############################################
