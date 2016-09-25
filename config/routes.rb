@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :users do
     post 'send_email', on: :member
+    post 'send_quick_tip', on: :member
     post 'create_metadata', on: :member
     delete 'destroy_metadata', on: :collection
   end

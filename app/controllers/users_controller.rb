@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     before_filter :verify_user, only: [:show]
 
     def index
-        @users = User.all
+        @users = User.all.sort_by {|u| u.last_seen}.reverse
     end
 
     def edit
@@ -53,6 +53,9 @@ class UsersController < ApplicationController
         # Metadata
         @metadata = UserMetadatum.where("user_id = " + params[:id].to_s).to_a
         @metadata_types = UserMetadatum.type_name_to_type_id_array
+
+        #quick tips
+        @tip_types = Outreach.get_quick_tip_list
     end
 
     def update
@@ -90,6 +93,14 @@ class UsersController < ApplicationController
 
     def send_email
         Outreach.mail_to_user_id(params[:id], params[:email_subject], params[:email_body]).deliver_now
+        render nothing: true
+    end
+
+    def send_quick_tip
+        tip = Outreach.send_quick_tip(params[:quick_tip_type], params[:id])
+        if(tip.nil? == false)
+            tip.deliver_now
+        end
         render nothing: true
     end
 

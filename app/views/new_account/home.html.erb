@@ -44,10 +44,14 @@
 								<%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
 								<%= radio_button_tag :answer_integer, '1' %>
 								<%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
-								<%= radio_button_tag :answer_integer, '2' %>
-								<%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
-								<%= radio_button_tag :answer_integer, '3' %>
-								<%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
+								<% if cur_question.question.metadata_three.blank? == false %>
+									<%= radio_button_tag :answer_integer, '2' %>
+									<%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
+								<% end %>
+								<% if cur_question.question.metadata_four.blank? == false %>
+									<%= radio_button_tag :answer_integer, '3' %>
+									<%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
+								<% end %>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 

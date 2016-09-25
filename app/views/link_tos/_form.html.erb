@@ -51,11 +51,26 @@
     <div class="col-md-12">
       <%= f.label :type_id %><br>
       <%= f.select :type_id, @link_to_types_list %>
+      <br><br>
     </div>
   </div>
   <div class="actions row">
     <div class="col-md-12">
       <%= f.submit :class => 'btn btn-primary' %>
+      <% if locals[:youtube_auto_fillout] == true %>
+        <%= f.submit "Auto Fillout YouTube", :class => 'btn btn-primary' %>
+      <% end %>
+      <br><br>
     </div>
   </div>
 <% end %>
+
+<p>
+<br>
+<%= image_tag("embeded_link_url.png") %>
+<br>
+<div>
+Note: when creating a YouTube linkto, in order for it to render correctly, in the link section of the linkto, please us the above link (highlighted in blue).
+On YouTube, you can find it under share/embedded use the contents of *src* (without the quote marks)
+</div>
+</p>

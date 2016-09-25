@@ -32,7 +32,26 @@ class LinkTosController < ApplicationController
   # POST /link_tos
   # POST /link_tos.json
   def create
-    @link_to = LinkTo.new(link_to_params)
+    #the Admin wants to create a YouTube linkto so auto fillout the data
+    if params[:commit] == "Auto Fillout YouTube"
+      @link_to = LinkTo.new
+      if link_to_params[:title].blank?
+        @link_to.title = "Checkout this song!"
+      else
+        @link_to.title = link_to_params[:title]
+      end
+      if link_to_params[:description].blank?
+        @link_to.description = "We thought you might like it."
+      else
+        @link_to.description = link_to_params[:description]
+      end
+      @link_to.link_text    = "Watch"
+      @link_to.icon_style   = "fa-youtube"
+      @link_to.panel_style  = "panel-red"
+      @link_to.url  = link_to_params[:url]
+    else
+      @link_to = LinkTo.new(link_to_params)
+    end
 
     respond_to do |format|
       if @link_to.save
