@@ -9,7 +9,7 @@ class UsersControllerTest < ActionController::TestCase
         assert_response :success
         assert_select '#user_table', 1
 
-        users = User.all
+        users = User.all.sort_by {|u| u.last_seen}.reverse
         index = 0
 
         assert_select '#user_table > tbody > tr' do |rows|
@@ -21,8 +21,9 @@ class UsersControllerTest < ActionController::TestCase
                 cur_user = users[index]
 
                 cur_cells = cur_row > 'td'
-                assert cur_cells[0].children[0].content == cur_user.name
-                assert cur_cells[1].children[0].content == cur_user.email
+
+                assert cur_cells[0].content == cur_user.name
+                assert cur_cells[1].content == cur_user.email
 
                 index += 1
             end
