@@ -73,8 +73,8 @@
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<%= submit_tag "Submit",  :class => 'btn btn-primary' %>
-							<%= submit_tag "Dismiss", :class => 'btn btn-primary', name: 'dismiss_button'  %>
+							<%= submit_tag "Submit",  :class => 'btn btn-primary question_submit' %>
+							<%= submit_tag "Dismiss", :class => 'btn btn-primary question_dismiss', name: 'dismiss_button'  %>
 
 						<% end %>
 					</div>
@@ -140,6 +140,14 @@
 <script>
 $(document).ready(function() {
 
+	$(".question_submit").click(function() {
+		mixpanel.track("Question: Submit");
+	});
+
+	$(".question_dismiss").click(function() {
+		mixpanel.track("Question: Dismiss");
+	});
+
 	$('.question_form').on('ajax:success', function(e, data, status, xhr) {
 		action_id = $(this).attr("action_id");
 		$('#question_' + action_id).remove();
@@ -159,6 +167,22 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
+
+	var gender = (<%= @user.gender %> == 0) ? "female" : "male";
+
+    mixpanel.register({
+      "email" : "<%= @user.email %>",
+      "gender" : gender,
+      "zip" : "<%= @user.zip_code %>",
+      "birthday" : "<%= @user.birthday %>"
+    });
+
+    mixpanel.people.set({
+      "$email" : "<%= @user.email %>",
+      "$name" : "<%= @user.name %>",
+      "gender" : gender
+    })
+
 	<% if defined?(@spotify_sync_success) %>
     var notification_form = $('#notification_modal')
     notification_form.find("#notification-modal-header-id").text("Thank You");
@@ -176,6 +200,7 @@ $(document).ready(function(){
 	<% end %>
 
 	mixpanel.track_links('.spotify-link', 'Spotify: Start Sync');
+
 });
 
 </script>
