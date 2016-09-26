@@ -178,7 +178,7 @@ class Outreach < ApplicationMailer
   end
 
   def quick_tip_switch_party(email_address)
-    @message1 = "At any time you can swich between the various parties you are part of."
+    @message1 = "At any time you can switch between the various parties you are part of."
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/switch_party.png')
     @message2 = "Remember that your Event page and Chat page are linked to the party you have currently selected. Any time you switch party, the information on these pages change as well."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/event.png')
