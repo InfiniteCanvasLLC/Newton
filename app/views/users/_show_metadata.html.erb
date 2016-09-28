@@ -12,7 +12,32 @@
       <% @metadata.each do |metadatum| %>
         <tr>
           <td><%= metadatum.data_type_name %></td>
-          <td><%= metadatum.data %></td>
+          <% if metadatum.is_like %>
+            <td>
+              <% data = metadatum.data.split(",") %>
+              <% if data[1].to_i == UserAction.question_type %>
+                <%= link_to question_path(data[0].to_i) do %>
+                  <% if data[2] == "true" %>
+                    Question <i class="fa fa-thumbs-up fa-lg"></i>
+                  <% else %>
+                    Question <i class="fa fa-thumbs-down fa-lg"></i>
+                  <% end %>
+                <% end %>
+              <% elsif data[1].to_i == UserAction.linkto_type %>
+                <%= link_to link_to_path(data[0].to_i) do %>
+                  <% if data[2] == "true" %>
+                    Link To <i class="fa fa-thumbs-up fa-lg"></i>
+                  <% else %>
+                    Link To <i class="fa fa-thumbs-down fa-lg"></i>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <%= metadatum.data %>
+              <% end %>
+            </td>
+          <% else %>
+            <td><%= metadatum.data %></td>
+          <% end %>
           <td><%= button_tag("Delete", class: 'btn btn-primary', :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
         </tr>
       <% end %>
