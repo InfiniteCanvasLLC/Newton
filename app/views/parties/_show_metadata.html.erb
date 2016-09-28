@@ -12,7 +12,7 @@
       <% @metadata.each do |metadatum| %>
         <tr>
           <td><%= metadatum.data_type_name %></td>
-          <td><%= metadatum.data %></td>
+          <td><%= simple_format(metadatum.data) %></td>
           <td><%= button_tag("Delete", class: 'btn btn-primary', :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
         </tr>
       <% end %>
@@ -45,6 +45,7 @@
       {
         var table = document.getElementById("metadata_table");
         var row = table.insertRow(table.rows.length);
+        data.data = data.data.replace(/(?:\r\n|\r|\n)/g, '<br />');
         row.insertCell(0).innerHTML = data.name;
         row.insertCell(1).innerHTML = data.data;
         row.insertCell(2).innerHTML = '<button name="button" type="submit" class="btn btn-primary" onclick="javascript:on_delete_metadata_button_clicked(this, ' + data.id + ')">Delete</button>';
