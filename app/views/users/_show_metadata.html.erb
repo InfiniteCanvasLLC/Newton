@@ -36,7 +36,7 @@
               <% end %>
             </td>
           <% else %>
-            <td><%= metadatum.data %></td>
+            <td><%= simple_format(metadatum.data) %></td>
           <% end %>
           <td><%= button_tag("Delete", class: 'btn btn-primary', :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
         </tr>
