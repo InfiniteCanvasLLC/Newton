@@ -104,7 +104,7 @@
 				<div class="panel-body">
 					<div><%= cur_link_to.link_to.description %></div>
 					<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
-						<div id ="video-player-<%= cur_link_to.link_to.url %>">
+						<div id ="video-player-<%= cur_link_to.link_to.youtube_video_id %>" style="width: 100%; height: 100%;">
 						</div>
 					<% end %>
 					<% if cur_link_to.link_to.is_tweet_linkto %>
@@ -216,13 +216,14 @@ function onYouTubeIframeAPIReady() {
 	<% @link_tos.each_with_index do |cur_link_to, i| %>
 		<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
 
-			<% components = cur_link_to.link_to.url.split("/") %>
-			<% videoId = components[components.length - 1] %>
+			videoId = "<%= cur_link_to.link_to.youtube_video_id %>";
+			videoDivId = "video-player-" + videoId;
+			videoDivSelector = "#" + videoDivId;
 
-	        player = new YT.Player('video-player-<%= cur_link_to.link_to.url %>', {
-	            height: '360',
-	            width: '640',
-	            videoId: '<%= videoId %>',
+	        player = new YT.Player(videoDivId, {
+	            height: $(videoDivSelector).height(),
+	            width: $(videoDivSelector).width(),
+	            videoId: videoId,
 	            events: {
 	                'onStateChange': onPlayerStateChange
 	            }
