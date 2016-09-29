@@ -112,12 +112,17 @@
 					<% end %>
 				</div>
 
+				<% class_name = (cur_link_to.link_to.type_id == LinkTo.sync_spotify_type ? "spotify-link" : "linkto") %>
+				<% if (cur_link_to.link_to.is_youtube_embedded_video_linkto) %>
+					<% class_name = "youtube-link" %>
+				<% end %>
+
 				<div class="panel-footer">
 					<div class="row">
 						<!-- Dismiss link for a link_to -->
 						<div class="col-xs-6">
 						<% if cur_link_to.link_to.is_standard_linkto %>
-							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class=> "#{class_name}-dismiss" do %>
 								<span class="pull-left"> Dismiss </span>
 								<div class="clearfix"></div>
 							<% end %>
@@ -125,7 +130,7 @@
 						</div>
 						<!-- Link text for a link_to.  Eg: "Watch" for a YouTube video, etc -->
 						<div class="col-xs-6">
-						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class => (cur_link_to.link_to.type_id == LinkTo.sync_spotify_type ? "spotify-link" : "linkto-click") do %>
+						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class => "#{class_name}-click" do %>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i> <%= cur_link_to.link_to.link_text %></span>
 							<div class="clearfix"></div>
 						<% end %>
@@ -204,9 +209,9 @@ $(document).ready(function(){
     notification_form.modal({backdrop: 'static',keyboard: false});
 	<% end %>
 
-	mixpanel.track_links('.spotify-link', 'Spotify: Start Sync');
+	mixpanel.track_links('.spotify-link-click', 'Spotify: Start Sync');
 	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
-
+	mixpanel.track_links('.youtube-link-click', 'YouTube Video: Play')
 });
 
 
@@ -225,17 +230,19 @@ function onYouTubeIframeAPIReady() {
 	            width: $(videoDivSelector).width(),
 	            videoId: videoId,
 	            events: {
-	                'onStateChange': onPlayerStateChange
+	                'onStateChange': onPlayerStateChange(videoId)
 	            }
 	        });
         <% end %>
     <% end %>
 }
 
-function onPlayerStateChange(event) {
-    if(!playing){
-        alert('hi');
-        playing = true;
+function onPlayerStateChange(inVideoId) {
+    return function(inEvent) {
+    	if (inEvent.data == YT.PlayerState.PLAYING)
+    	{
+    		mixpanel.track('YouTube Video: Play');
+	    }
     }
 }
 
