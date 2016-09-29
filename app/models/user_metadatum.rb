@@ -1,6 +1,12 @@
 class UserMetadatum < ActiveRecord::Base
   belongs_to :user
 
+  module Like
+    ID_INDEX = 0
+    TYPE_INDEX = 1
+    VALUE_INDEX = 2
+  end
+
   # TYPE IDs
   def data_type_name
     return UserMetadatum.type_id_to_type_name(self.data_type)

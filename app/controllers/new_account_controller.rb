@@ -185,6 +185,7 @@ class NewAccountController < ApplicationController
             @metadatum           = UserMetadatum.new
             @metadatum.user_id   = user_id
             @metadatum.data_type = UserMetadatum.type_id_like
+            # This values needs to be ordered according to the UserMetadatum::Like module
             @metadatum.data      = action.action_id.to_s + "," + action.action_type.to_s + "," + liked
             @metadatum.save
         end

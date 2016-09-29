@@ -15,17 +15,17 @@
           <% if metadatum.is_like %>
             <td>
               <% data = metadatum.data.split(",") %>
-              <% if data[1].to_i == UserAction.question_type %>
-                <%= link_to question_path(data[0].to_i) do %>
-                  <% if data[2] == "true" %>
+              <% if data[UserMetadatum::Like::TYPE_INDEX].to_i == UserAction.question_type %>
+                <%= link_to question_path(data[UserMetadatum::Like::ID_INDEX].to_i) do %>
+                  <% if data[UserMetadatum::Like::VALUE_INDEX] == "true" %>
                     Question <i class="fa fa-thumbs-up fa-lg"></i>
                   <% else %>
                     Question <i class="fa fa-thumbs-down fa-lg"></i>
                   <% end %>
                 <% end %>
-              <% elsif data[1].to_i == UserAction.linkto_type %>
-                <%= link_to link_to_path(data[0].to_i) do %>
-                  <% if data[2] == "true" %>
+              <% elsif data[UserMetadatum::Like::TYPE_INDEX].to_i == UserAction.linkto_type %>
+                <%= link_to link_to_path(data[UserMetadatum::Like::ID_INDEX].to_i) do %>
+                  <% if data[UserMetadatum::Like::VALUE_INDEX] == "true" %>
                     Link To <i class="fa fa-thumbs-up fa-lg"></i>
                   <% else %>
                     Link To <i class="fa fa-thumbs-down fa-lg"></i>
