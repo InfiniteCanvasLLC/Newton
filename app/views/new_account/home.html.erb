@@ -1,3 +1,5 @@
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <%= render :layout => 'navigation' do %>
 	<div class="row"> <!-- This needs to be re-worked, this looks absolutely terrible -->
 		<div class="col-lg-12">
@@ -102,7 +104,8 @@
 				<div class="panel-body">
 					<div><%= cur_link_to.link_to.description %></div>
 					<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
-					<iframe width="100%" height="100%" src="<%= cur_link_to.link_to.url %>" frameborder="0" allowfullscreen></iframe>
+						<div id ="video-player-<%= cur_link_to.link_to.url %>">
+						</div>
 					<% end %>
 					<% if cur_link_to.link_to.is_tweet_linkto %>
 					<iframe width="100%" height="100%" src="<%='http://twitframe.com/show?url=' + cur_link_to.link_to.url.to_s %>" frameborder="0"></iframe>
@@ -111,6 +114,7 @@
 
 				<div class="panel-footer">
 					<div class="row">
+						<!-- Dismiss link for a link_to -->
 						<div class="col-xs-6">
 						<% if cur_link_to.link_to.is_standard_linkto %>
 							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
@@ -119,8 +123,9 @@
 							<% end %>
 						<% end %>
 						</div>
+						<!-- Link text for a link_to.  Eg: "Watch" for a YouTube video, etc -->
 						<div class="col-xs-6">
-						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class => (cur_link_to.link_to.type_id == LinkTo.sync_spotify_type ? "spotify-link" : nil) do %>
+						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class => (cur_link_to.link_to.type_id == LinkTo.sync_spotify_type ? "spotify-link" : "linkto-click") do %>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i> <%= cur_link_to.link_to.link_text %></span>
 							<div class="clearfix"></div>
 						<% end %>
@@ -200,7 +205,37 @@ $(document).ready(function(){
 	<% end %>
 
 	mixpanel.track_links('.spotify-link', 'Spotify: Start Sync');
+	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
 
 });
+
+
+var player, playing = false;
+function onYouTubeIframeAPIReady() {
+
+	<% @link_tos.each_with_index do |cur_link_to, i| %>
+		<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
+
+			<% components = cur_link_to.link_to.url.split("/") %>
+			<% videoId = components[components.length - 1] %>
+
+	        player = new YT.Player('video-player-<%= cur_link_to.link_to.url %>', {
+	            height: '360',
+	            width: '640',
+	            videoId: '<%= videoId %>',
+	            events: {
+	                'onStateChange': onPlayerStateChange
+	            }
+	        });
+        <% end %>
+    <% end %>
+}
+
+function onPlayerStateChange(event) {
+    if(!playing){
+        alert('hi');
+        playing = true;
+    }
+}
 
 </script>
