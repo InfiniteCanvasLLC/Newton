@@ -349,6 +349,8 @@ class NewAccountController < ApplicationController
         @current_party = get_user_current_party(@user)
         @current_party_events = @current_party.events.sort_by &:start
 
+        UserPartyInfo.update_last_seen_event(@user, @current_party)
+
         @current_nav_selection = "nav_calendar"
     end
 
