@@ -12,7 +12,32 @@
       <% @metadata.each do |metadatum| %>
         <tr>
           <td><%= metadatum.data_type_name %></td>
-          <td><%= metadatum.data %></td>
+          <% if metadatum.is_like %>
+            <td>
+              <% data = metadatum.data.split(",") %>
+              <% if data[UserMetadatum::Like::TYPE_INDEX].to_i == UserAction.question_type %>
+                <%= link_to question_path(data[UserMetadatum::Like::ID_INDEX].to_i) do %>
+                  <% if data[UserMetadatum::Like::VALUE_INDEX] == "true" %>
+                    Question <i class="fa fa-thumbs-up fa-lg"></i>
+                  <% else %>
+                    Question <i class="fa fa-thumbs-down fa-lg"></i>
+                  <% end %>
+                <% end %>
+              <% elsif data[UserMetadatum::Like::TYPE_INDEX].to_i == UserAction.linkto_type %>
+                <%= link_to link_to_path(data[UserMetadatum::Like::ID_INDEX].to_i) do %>
+                  <% if data[UserMetadatum::Like::VALUE_INDEX] == "true" %>
+                    Link To <i class="fa fa-thumbs-up fa-lg"></i>
+                  <% else %>
+                    Link To <i class="fa fa-thumbs-down fa-lg"></i>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <td><%= simple_format(metadatum.data) %></td>
+              <% end %>
+            </td>
+          <% else %>
+            <td><%= simple_format(metadatum.data) %></td>
+          <% end %>
           <td><%= button_tag("Delete", class: 'btn btn-primary', :onclick => "javascript:on_delete_metadata_button_clicked(this, #{metadatum.id})") %></td>
         </tr>
       <% end %>
@@ -45,6 +70,7 @@
       {
         var table = document.getElementById("metadata_table");
         var row = table.insertRow(table.rows.length);
+        data.data = data.data.replace(/(?:\r\n|\r|\n)/g, '<br />');
         row.insertCell(0).innerHTML = data.name;
         row.insertCell(1).innerHTML = data.data;
         row.insertCell(2).innerHTML = '<button name="button" type="submit" class="btn btn-primary" onclick="javascript:on_delete_metadata_button_clicked(this, ' + data.id + ')">Delete</button>';

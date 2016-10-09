@@ -86,6 +86,8 @@ class Outreach < ApplicationMailer
   @@quick_tip_sync_spotify    = 3
   @@quick_tip_profile         = 4
   @@quick_tip_events          = 5
+  @@quick_tip_switch_party    = 6
+
   def self.get_quick_tip_list
     return [
     ["Invite a friend", @@quick_tip_invite_friend],
@@ -94,6 +96,7 @@ class Outreach < ApplicationMailer
     ["Sync Spotify",    @@quick_tip_sync_spotify],
     ["Profile",         @@quick_tip_profile],
     ["Events",          @@quick_tip_events],
+    ["Switch Party",    @@quick_tip_switch_party],
     ]
   end
 
@@ -114,6 +117,10 @@ class Outreach < ApplicationMailer
           return quick_tip_profile(user.email)
         when @@quick_tip_events
           return quick_tip_events(user.email)
+        when @@quick_tip_events
+          return quick_tip_events(user.email)
+        when @@quick_tip_switch_party
+          return quick_tip_switch_party(user.email)
       end
     end
     return nil
@@ -167,6 +174,15 @@ class Outreach < ApplicationMailer
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_tickets.png')
     @message3 = "At all time you can check out your friends' level of interest to the even. You can also update yours to let your party know how you feeel about this particular event. Just click on the icon on the right to cycle through the tree levels of interest: 'Going', 'Unsure' or 'Not Going'."
     @image_url3 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_interest.png')
+    mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
+  end
+
+  def quick_tip_switch_party(email_address)
+    @message1 = "At any time you can switch between the various parties you are part of."
+    @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/switch_party.png')
+    @message2 = "Remember that your Event page and Chat page are linked to the party you have currently selected. Any time you switch party, the information on these pages change as well."
+    @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/event.png')
+    @image_url3 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/chat.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   ############################################

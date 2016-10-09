@@ -12,7 +12,7 @@ end
 class NewAccountController < ApplicationController
 
     before_action :update_user_last_seen
-    
+
     def initialize
         super
     end
@@ -178,6 +178,18 @@ class NewAccountController < ApplicationController
         action = UserAction.find( params[:action_id] )
         dismiss = params[:dismiss]
 
+        # Take note of likes/dislikes
+        liked = params[:liked]
+        if !liked.nil?
+            user_id = session[:user_id]
+            @metadatum           = UserMetadatum.new
+            @metadatum.user_id   = user_id
+            @metadatum.data_type = UserMetadatum.type_id_like
+            # This values needs to be ordered according to the UserMetadatum::Like module
+            @metadatum.data      = action.action_id.to_s + "," + action.action_type.to_s + "," + liked
+            @metadatum.save
+        end
+
         #I know, it's weird, but an action can store the ID of a question, or a linkto (or more)
         # and that ID is called action_id. params[:action_id] is the ID of the action the user interacted with.
         linkto = LinkTo.find(action.action_id)
@@ -264,7 +276,7 @@ class NewAccountController < ApplicationController
       if (params[:commit] == "Accept!")
         @current_party.users << friend
       end
-    
+
       @current_party.remove_party_join_requests(params[:user_id])
 
       redirect_to action: 'party'
@@ -288,7 +300,7 @@ class NewAccountController < ApplicationController
 
     def pull_user_statuses
       @current_party = get_user_current_party(@user)
-      # Because the controller's method is called pull_user_statuses and there is a file pull_user_statuses.json.erb, 
+      # Because the controller's method is called pull_user_statuses and there is a file pull_user_statuses.json.erb,
       # the file gets executed. The contents of the file are then returned to the ajax 'success' method
       #This is equalivalent to: render :file => "new_account/pull_user_statuses.json.erb", :content_type => 'application/json'
     end
@@ -339,7 +351,7 @@ class NewAccountController < ApplicationController
 
         @current_nav_selection = "nav_calendar"
     end
-    
+
     def handle_event_commitment
        event = Event.find(params[:event_id])
        @current_party = get_user_current_party(@user)
@@ -347,7 +359,7 @@ class NewAccountController < ApplicationController
        reg = @current_party.get_registration(event.id, @user.id)
        reg.commitment = params[:new_commitment]
        reg.save
-       
+
        redirect_to action: 'calendar'
     end
 
@@ -480,7 +492,7 @@ class NewAccountController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     # this is called before any action in the controller is called.
-    # here we get the user, and time stamp them. @user is valid in all 
+    # here we get the user, and time stamp them. @user is valid in all
     # controller method.
     def update_user_last_seen
       user_id = session[:user_id]

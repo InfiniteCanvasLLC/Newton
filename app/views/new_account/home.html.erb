@@ -122,10 +122,13 @@
 						<!-- Dismiss link for a link_to -->
 						<div class="col-xs-6">
 						<% if cur_link_to.link_to.is_standard_linkto %>
-							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class=> "#{class_name}-dismiss" do %>
-								<span class="pull-left"> Dismiss </span>
-								<div class="clearfix"></div>
+							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true, :liked => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class=> "#{class_name}-dismiss", :liked => "true" do %>
+								<span class="pull-left"> <i class="fa fa-thumbs-up fa-lg"></i>&nbsp;&nbsp;&nbsp;</span>
 							<% end %>
+							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true, :liked => false), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class=> "#{class_name}-dismiss", :liked => "false" do %>
+								<span class="pull-left"> <i class="fa fa-thumbs-down fa-lg"></i> </span>
+							<% end %>
+							<div class="clearfix"></div>
 						<% end %>
 						</div>
 						<!-- Link text for a link_to.  Eg: "Watch" for a YouTube video, etc -->
@@ -156,6 +159,10 @@ $(document).ready(function() {
 
 	$(".question_dismiss").click(function() {
 		mixpanel.track("Question: Dismiss");
+	});
+
+	$(".youtube-link-dismiss").click(function() {
+		mixpanel.track("YouTube Video Feedback", {liked: $(this).attr("liked")});
 	});
 
 	$('.question_form').on('ajax:success', function(e, data, status, xhr) {
