@@ -221,6 +221,11 @@ $(document).ready(function(){
 	mixpanel.track_links('.youtube-link-click', 'YouTube Video: Play')
 });
 
+$(document).bind('page:load', function() {
+	onYouTubeIframeAPIReady && onYouTubeIframeAPIReady();
+});
+
+
 
 var player, playing = false;
 function onYouTubeIframeAPIReady() {
