@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Audicy (Alpha)</a>
+                <a class="navbar-brand page-scroll" href="#page-top">Audicy</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -44,12 +44,12 @@
                 <div class="">
                     <br />
                     <div class="text-center row-btn">
-                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block">How Does It Work?</a>
+                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block" id="how-does-it-work">How Does It Work?</a>
                     </div>
                     <br />
                     <div class="text-center row-btn">
                         <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
-                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
                     </div>
                 </div>
             </div>
@@ -109,3 +109,13 @@
     <%= render 'signup_dialog' %>
     <%= render 'feedback_dialog' %>
 </body>
+
+<script>
+
+$("#how-does-it-work").click(function() {
+    mixpanel.track("How Does It Work");
+});
+
+mixpanel.track_links("#sign-in", "Sign In");
+
+</script>

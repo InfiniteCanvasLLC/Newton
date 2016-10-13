@@ -59,6 +59,13 @@ class LinkTo < ActiveRecord::Base
      return (self.type_id == LinkTo.standard_type) && ((self.url.include? "youtube.com") && (self.url.include? "embed"))
   end
 
+  def youtube_video_id
+    components = self.url.split("/")
+    videoId = components[components.length - 1]
+
+    return videoId
+  end
+
   def is_tweet_linkto
      return (self.type_id == LinkTo.standard_type) && (self.url.include? "twitter.com")
   end
