@@ -1,3 +1,5 @@
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <%= render :layout => 'navigation' do %>
 	<div class="row"> <!-- This needs to be re-worked, this looks absolutely terrible -->
 		<div class="col-lg-12">
@@ -73,8 +75,8 @@
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<%= submit_tag "Submit",  :class => 'btn btn-primary' %>
-							<%= submit_tag "Dismiss", :class => 'btn btn-primary', name: 'dismiss_button'  %>
+							<%= submit_tag "Submit",  :class => 'btn btn-primary question_submit' %>
+							<%= submit_tag "Dismiss", :class => 'btn btn-primary question_dismiss', name: 'dismiss_button'  %>
 
 						<% end %>
 					</div>
@@ -102,28 +104,36 @@
 				<div class="panel-body">
 					<div><%= cur_link_to.link_to.description %></div>
 					<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
-					<iframe width="100%" height="100%" src="<%= cur_link_to.link_to.url %>" frameborder="0" allowfullscreen></iframe>
+						<div id ="video-player-<%= cur_link_to.link_to.youtube_video_id %>" style="width: 100%; height: 100%;">
+						</div>
 					<% end %>
 					<% if cur_link_to.link_to.is_tweet_linkto %>
 					<iframe width="100%" height="100%" src="<%='http://twitframe.com/show?url=' + cur_link_to.link_to.url.to_s %>" frameborder="0"></iframe>
 					<% end %>
 				</div>
 
+				<% class_name = (cur_link_to.link_to.type_id == LinkTo.sync_spotify_type ? "spotify-link" : "linkto") %>
+				<% if (cur_link_to.link_to.is_youtube_embedded_video_linkto) %>
+					<% class_name = "youtube-link" %>
+				<% end %>
+
 				<div class="panel-footer">
 					<div class="row">
+						<!-- Dismiss link for a link_to -->
 						<div class="col-xs-6">
 						<% if cur_link_to.link_to.is_standard_linkto %>
-							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true, :liked => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true, :liked => true), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class=> "#{class_name}-dismiss", :liked => "true" do %>
 								<span class="pull-left"> <i class="fa fa-thumbs-up fa-lg"></i>&nbsp;&nbsp;&nbsp;</span>
 							<% end %>
-							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true, :liked => false), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+							<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => true, :liked => false), :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class=> "#{class_name}-dismiss", :liked => "false" do %>
 								<span class="pull-left"> <i class="fa fa-thumbs-down fa-lg"></i> </span>
 							<% end %>
 							<div class="clearfix"></div>
 						<% end %>
 						</div>
+						<!-- Link text for a link_to.  Eg: "Watch" for a YouTube video, etc -->
 						<div class="col-xs-6">
-						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '' do %>
+						<%= link_to handle_link_to_path(:url => cur_link_to.link_to.url, :action_id => cur_link_to.action_id, :dismiss => false), :target => cur_link_to.link_to.is_standard_linkto ? "_blank" : "" , :id => cur_link_to.link_to.is_standard_linkto ? 'linkto' +  cur_link_to.link_to.id.to_s : '', :class => "#{class_name}-click" do %>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i> <%= cur_link_to.link_to.link_text %></span>
 							<div class="clearfix"></div>
 						<% end %>
@@ -142,6 +152,18 @@
 
 <script>
 $(document).ready(function() {
+
+	$(".question_submit").click(function() {
+		mixpanel.track("Question: Submit");
+	});
+
+	$(".question_dismiss").click(function() {
+		mixpanel.track("Question: Dismiss");
+	});
+
+	$(".youtube-link-dismiss").click(function() {
+		mixpanel.track("YouTube Video Feedback", {liked: $(this).attr("liked")});
+	});
 
 	$('.question_form').on('ajax:success', function(e, data, status, xhr) {
 		action_id = $(this).attr("action_id");
@@ -162,11 +184,29 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
+
+	var gender = (<%= @user.gender %> == 0) ? "female" : "male";
+
+    mixpanel.register({
+      "email" : "<%= @user.email %>",
+      "gender" : gender,
+      "zip" : "<%= @user.zip_code %>",
+      "birthday" : "<%= @user.birthday %>"
+    });
+
+    mixpanel.people.set({
+      "$email" : "<%= @user.email %>",
+      "$name" : "<%= @user.name %>",
+      "gender" : gender
+    })
+
 	<% if defined?(@spotify_sync_success) %>
     var notification_form = $('#notification_modal')
     notification_form.find("#notification-modal-header-id").text("Thank You");
     notification_form.find("#notification-modal-content-id").text("Your Spotify info has been synced");
     notification_form.modal('show');
+
+    mixpanel.track('Spotify: Finish Sync')
 	<% end %>
 
 	<% if @show_eula == true %>
@@ -175,6 +215,47 @@ $(document).ready(function(){
     notification_form.find("#notification-modal-content-id").text("Please accept our terms and condition");
     notification_form.modal({backdrop: 'static',keyboard: false});
 	<% end %>
+
+	mixpanel.track_links('.spotify-link-click', 'Spotify: Start Sync');
+	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
+	mixpanel.track_links('.youtube-link-click', 'YouTube Video: Play')
 });
+
+$(document).bind('page:load', function() {
+	onYouTubeIframeAPIReady && onYouTubeIframeAPIReady();
+});
+
+
+
+var player, playing = false;
+function onYouTubeIframeAPIReady() {
+
+	<% @link_tos.each_with_index do |cur_link_to, i| %>
+		<% if cur_link_to.link_to.is_youtube_embedded_video_linkto %>
+
+			videoId = "<%= cur_link_to.link_to.youtube_video_id %>";
+			videoDivId = "video-player-" + videoId;
+			videoDivSelector = "#" + videoDivId;
+
+	        player = new YT.Player(videoDivId, {
+	            height: $(videoDivSelector).height(),
+	            width: $(videoDivSelector).width(),
+	            videoId: videoId,
+	            events: {
+	                'onStateChange': onPlayerStateChange(videoId)
+	            }
+	        });
+        <% end %>
+    <% end %>
+}
+
+function onPlayerStateChange(inVideoId) {
+    return function(inEvent) {
+    	if (inEvent.data == YT.PlayerState.PLAYING)
+    	{
+    		mixpanel.track('YouTube Video: Play');
+	    }
+    }
+}
 
 </script>
