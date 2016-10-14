@@ -97,7 +97,7 @@ class PartiesController < ApplicationController
         reg.party_id   = @party.id
         reg.user_id    = user.id
         reg.event_id   = event.id
-        reg.commitment = EventRegistration.user_going #by default
+        reg.commitment = EventRegistration.user_unsure #by default
         reg.save
       end
     end
