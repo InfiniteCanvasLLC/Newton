@@ -1,7 +1,16 @@
 <%= render :layout => 'administrator/navigation' do %>
 <p id="notice"><%= notice %></p>
 
+<style>
+mark {
+  background-color: yellow;
+  font-weight: normal;
+  font-style: normal;
+}
+</style>
+
 <h1>Listing Link Tos</h1>
+note: Highlighted linktos are currently unassigned
 
 <table class="table">
   <thead>
@@ -20,7 +29,15 @@
   <tbody>
     <% @link_tos.each do |link_to| %>
       <tr>
-        <td><%= link_to.title %></td>
+        <td>
+        <% if link_to.is_currently_assigned == false %>
+        <mark>
+        <% end %>
+          <%= link_to.title %>
+        <% if link_to.is_currently_assigned == false %>
+        </mark>
+        <% end %>
+        </td>
         <td><%= link_to.description %></td>
         <td><%= link_to.url %></td>
         <td><%= link_to.link_text %></td>

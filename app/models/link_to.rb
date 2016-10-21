@@ -30,6 +30,11 @@ class LinkTo < ActiveRecord::Base
     end
   end
 
+  #tells you if the linkto is currently in a user action
+  def is_currently_assigned
+    return (UserAction.where( :action_id => self.id ).empty? == false)
+  end
+
   #IDs for specific types of LinkTos
   def self.standard_type
     return 0
