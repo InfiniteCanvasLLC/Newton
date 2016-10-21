@@ -48,8 +48,13 @@ http://stackoverflow.com/questions/2951105/rails-render-partial-with-block
 	            </li>
 				<li class="<%= @current_nav_selection=='nav_party' ? 'selected' : ' ' %>">
 	                <a href="<%= party_user_page_path %>"><i class="fa fa-fw fa-group"></i> Party
-                        <% if (@user.get_all_party_invites.count + @current_user_party.get_all_join_party_requests.count) > 0 %>
-                            <span class="badge_notification"><%= @user.get_all_party_invites.count + @current_user_party.get_all_join_party_requests.count %></span>
+						<% bubble_count = @user.get_all_party_invites.count %>
+						<!-- Only the party owner will see the join party requests -->
+						<% if (@user.id == @current_user_party.owner_user_id) %>
+							<% bubble_count += @current_user_party.get_all_join_party_requests.count %>
+						<% end %>
+						<% if bubble_count > 0 %>
+                            <span class="badge_notification"><%= bubble_count %></span>
                         <% end %>
                     </a>
 
