@@ -54,6 +54,10 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def is_currently_unassigned
+    return (UserAction.where( :action_id => self.id ).empty? == true)
+  end
+
   #IDs for specific types of question types
   def self.multiple_choice
     return 0

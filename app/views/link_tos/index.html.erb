@@ -1,6 +1,3 @@
-<%= render :layout => 'administrator/navigation' do %>
-<p id="notice"><%= notice %></p>
-
 <style>
 mark {
   background-color: yellow;
@@ -8,6 +5,9 @@ mark {
   font-style: normal;
 }
 </style>
+
+<%= render :layout => 'administrator/navigation' do %>
+<p id="notice"><%= notice %></p>
 
 <h1>Listing Link Tos</h1>
 note: Highlighted linktos are currently unassigned
@@ -30,11 +30,11 @@ note: Highlighted linktos are currently unassigned
     <% @link_tos.each do |link_to| %>
       <tr>
         <td>
-        <% if link_to.is_currently_assigned == false %>
+        <% if link_to.is_currently_unassigned == true %>
         <mark>
         <% end %>
           <%= link_to.title %>
-        <% if link_to.is_currently_assigned == false %>
+        <% if link_to.is_currently_unassigned == true %>
         </mark>
         <% end %>
         </td>

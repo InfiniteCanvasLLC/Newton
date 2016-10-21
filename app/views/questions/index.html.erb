@@ -1,3 +1,11 @@
+<style>
+mark {
+  background-color: yellow;
+  font-weight: normal;
+  font-style: normal;
+}
+</style>
+
 <%= render :layout => 'administrator/navigation' do %>
 
   <p id="notice"><%= notice %></p>
@@ -20,7 +28,15 @@
     <tbody>
       <% @questions.each do |question| %>
         <tr>
-          <td><%= question.text %></td>
+          <td>
+          <% if question.is_currently_unassigned == true %>
+            <mark>
+          <% end %>
+          <%= question.text %>
+          <% if question.is_currently_unassigned == true %>
+            </mark>
+          <% end %>
+          </td>
           <td><%= question.get_subtype_name() %></td>
           <td><%= question.metadata_one_formatted() %></td>
           <td><%= question.metadata_two_formatted() %></td>
