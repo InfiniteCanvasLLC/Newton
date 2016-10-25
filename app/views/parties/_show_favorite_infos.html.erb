@@ -4,6 +4,8 @@
     <li><a data-toggle="tab" href="#tab_top_genre">Top Genres</a></li>
     <li><a data-toggle="tab" href="#tab_overlapping_top_artists">Overlapping Top Artists</a></li>
     <li><a data-toggle="tab" href="#tab_overlapping_top_genres">Overlapping Top Genres</a></li>
+    <li><a data-toggle="tab" href="#tab_overlapping_related_artists">Overlapping Related Artists</a></li>
+    <li><a data-toggle="tab" href="#tab_avg_top_tracks_info">Average Top Track Info</a></li>
 </ul>
 
 <div class="tab-content">
@@ -21,6 +23,12 @@
     </div>
     <div id="tab_overlapping_top_genres" class="tab-pane fade">
         <pre id="overlapping_top_genres" />
+    </div>
+    <div id="tab_overlapping_related_artists" class="tab-pane fade">
+        <pre id="overlapping_related_artists" />
+    </div>
+    <div id="tab_avg_top_tracks_info" class="tab-pane fade">
+        <pre id="avg_top_tracks_info" />
     </div>
 </div>
 
@@ -62,6 +70,8 @@
         $("#top_genre").text(pretty_print("<%= top_genre %>"));
         $("#overlapping_top_artists").text(pretty_print("<%= @party.overlapping_artists_with_count.to_json %>"));
         $("#overlapping_top_genres").text(pretty_print("<%= @party.overlapping_genres_with_count.to_json %>"));
+        $("#overlapping_related_artists").text(pretty_print("<%= @party.overlapping_related_artists_with_count.to_json %>"));
+        $("#avg_top_tracks_info").text(pretty_print("<%= @party.avg_top_tracks_info.to_json %>"));
     });
     function pretty_print(str) {
         if(str)

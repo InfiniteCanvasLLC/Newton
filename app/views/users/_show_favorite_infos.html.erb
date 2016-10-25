@@ -2,6 +2,8 @@
     <li class="active"><a data-toggle="tab" href="#tab_top_artists">Top Artists</a></li>
     <li><a data-toggle="tab" href="#tab_top_songs">Top Songs</a></li>
     <li><a data-toggle="tab" href="#tab_top_genre">Top Genres</a></li>
+    <li><a data-toggle="tab" href="#tab_top_tracks_avg_info">Top Tracks Average Info</a></li>
+    <li><a data-toggle="tab" href="#tab_related_top_artists">Related Top Artists</a></li>
 </ul>
 
 <div class="tab-content">
@@ -13,6 +15,12 @@
     </div>
     <div id="tab_top_genre" class="tab-pane fade">
         <pre id="top_genre" />
+    </div>
+    <div id="tab_top_tracks_avg_info" class="tab-pane fade">
+        <pre id="top_tracks_avg_info" />
+    </div>
+    <div id="tab_related_top_artists" class="tab-pane fade">
+        <pre id="related_top_artists" />
     </div>
 </div>
 
@@ -35,6 +43,18 @@
             $("#top_genre").text("NO DATA");
         <% else %>
             $("#top_genre").text(pretty_print("<%= @user.favorite_info.top_genre %>"));
+        <% end %>
+
+        <% if @user.favorite_info.nil? || @user.favorite_info.average_track_info.nil? || @user.favorite_info.average_track_info.empty? %>
+            $("#top_tracks_avg_info").text("NO DATA");
+        <% else %>
+            $("#top_tracks_avg_info").text(pretty_print("<%= @user.favorite_info.average_track_info %>")  + "\n\n" + "For more info, https://developer.spotify.com/web-api/object-model/#audio-features-object");
+        <% end %>
+
+        <% if @user.favorite_info.nil? || @user.favorite_info.related_top_artists.nil? || @user.favorite_info.related_top_artists.empty? %>
+            $("#related_top_artists").text("NO DATA");
+        <% else %>
+            $("#related_top_artists").text(pretty_print("<%= @user.favorite_info.related_top_artists %>"));
         <% end %>
     });
     function pretty_print(str) {
