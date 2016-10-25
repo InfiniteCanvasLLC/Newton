@@ -218,6 +218,10 @@ class SessionsController < ApplicationController
 
         user.favorite_info.save
 
+        #save time since sync
+        user.last_spotify_sync = Time.now
+        user.save
+
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home', from_handle_spotify_auth: true
     end
