@@ -217,7 +217,6 @@ class SessionsController < ApplicationController
         user.favorite_info.related_top_artists = relatedTopArtistsArray.to_json.to_s
 
         user.favorite_info.save
-        byebug
 
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home', from_handle_spotify_auth: true
