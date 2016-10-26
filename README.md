@@ -159,6 +159,16 @@ This task will delete user actions that are not assigned to a valid user (typica
 rake db_fix:clean_user_actions
 ```
 
+### Telemetry
+We use two telemetry solutions.  Google Analytics and MixPanel.  They serve different purposes, with Google Analytics being able to provide some easily visualized information around user location, search keywords, etc.  MixPanel lets us dig deeper into some of the data to learn about user behavior.
+
+See the [Google Analytics](GoogleAnalytics.md) and [MixPanel](MixPanel.md) for more information on configuring your local machine, how to view analytics using these services, etc.
+
+#### Google Analytics
+To view Google Analytics info, ask someone to give you access if you don't already have access.  You can also login as support@audicy.us (password for that account is in our spreadsheet).
+
+There will be products there for both staging and production.  Staging
+
 ### Accounts
 The following are the accounts create for support of the Newton service:
 - Facebook app (credentials and basic user info) --> Rishi
