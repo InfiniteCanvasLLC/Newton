@@ -44,6 +44,66 @@ class Party < ActiveRecord::Base
     return EventRegistration.where(:event_id => event_id, :party_id => self.id)
   end
 
+  def avg_top_tracks_info
+    partyTrackInfo   = {}
+    partyTrackInfo["danceability"]       = 0
+    partyTrackInfo["energy"]             = 0
+    partyTrackInfo["loudness"]           = 0
+    partyTrackInfo["speechiness"]        = 0
+    partyTrackInfo["acousticness"]       = 0
+    partyTrackInfo["instrumentalness"]   = 0
+    partyTrackInfo["liveness"]           = 0
+    partyTrackInfo["valence"]            = 0
+    partyTrackInfo["tempo"]              = 0
+
+    count = 1
+    users.each do |user|
+      trackInfo = user.get_avg_trop_tracks_info
+      if trackInfo != nil
+        count++
+        partyTrackInfo["danceability"]     += trackInfo["danceability"]
+        partyTrackInfo["energy"]           += trackInfo["energy"]
+        partyTrackInfo["loudness"]         += trackInfo["loudness"]
+        partyTrackInfo["speechiness"]      += trackInfo["speechiness"]
+        partyTrackInfo["acousticness"]     += trackInfo["acousticness"]
+        partyTrackInfo["instrumentalness"] += trackInfo["instrumentalness"]
+        partyTrackInfo["liveness"]         += trackInfo["liveness"]
+        partyTrackInfo["valence"]          += trackInfo["valence"]
+        partyTrackInfo["tempo"]            += trackInfo["tempo"]
+      end
+    end
+
+    partyTrackInfo["danceability"]      /= count
+    partyTrackInfo["energy"]            /= count
+    partyTrackInfo["loudness"]          /= count
+    partyTrackInfo["speechiness"]       /= count
+    partyTrackInfo["acousticness"]      /= count
+    partyTrackInfo["instrumentalness"]  /= count
+    partyTrackInfo["liveness"]          /= count
+    partyTrackInfo["valence"]           /= count
+    partyTrackInfo["tempo"]             /= count
+
+    return partyTrackInfo
+  end
+
+  def related_favorite_artists
+    artists = Array.new
+    users.each do |user|
+      user_artists = user.get_related_favorite_artists
+      if user_artists.nil? == false
+        artists += user_artists
+      end
+    end
+    return artists
+  end
+
+  def overlapping_related_artists_with_count
+    result = Hash.new
+    artists = self.related_favorite_artists
+    artists.uniq.map{ |e| [e, artists.count(e)] }.select{ |_,c| c > 1 }.each{ |e,c| result[e] = c }
+    return result
+  end
+
   def favorite_artists
     artists = Array.new
     users.each do |user|

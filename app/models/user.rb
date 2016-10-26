@@ -128,6 +128,22 @@ class User < ActiveRecord::Base
     return count
   end
 
+  def get_avg_trop_tracks_info
+    info = nil
+    if favorite_info.nil? == false && favorite_info.average_track_info.blank? == false
+      info = JSON.parse(favorite_info.average_track_info)
+    end
+    return info
+  end
+
+  def get_related_favorite_artists
+    artists = nil
+    if favorite_info.nil? == false && favorite_info.related_top_artists.blank? == false
+      artists = JSON.parse(favorite_info.related_top_artists)
+    end
+    return artists
+  end
+
   def get_favorite_artists
     artists = nil
     if favorite_info.nil? == false && favorite_info.top_artists.blank? == false
@@ -184,6 +200,22 @@ class User < ActiveRecord::Base
     how_long_ago = "Unknown"
     if (last_seen.blank? == false)
       delta = (Time.now - last_seen).to_i
+      days  = delta / (60*60*24);
+      delta = delta % (60*60*24);
+      hours = delta / (60*60);
+
+      how_long_ago = "#{days} day(s),  #{hours} hour(s) ago"
+    end
+
+    return how_long_ago
+  end
+
+  def time_since_last_spotify_sync
+    last_sync = self.last_spotify_sync
+
+    how_long_ago = "Unknown"
+    if (last_sync.blank? == false)
+      delta = (Time.now - last_sync).to_i
       days  = delta / (60*60*24);
       delta = delta % (60*60*24);
       hours = delta / (60*60);

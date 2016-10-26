@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161007034028) do
+ActiveRecord::Schema.define(version: 20161025213113) do
 
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
@@ -44,8 +44,10 @@ ActiveRecord::Schema.define(version: 20161007034028) do
     t.text     "top_songs"
     t.text     "top_genre"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.text     "average_track_info"
+    t.text     "related_top_artists"
   end
 
   add_index "favorite_infos", ["user_id"], name: "index_favorite_infos_on_user_id"
@@ -219,6 +221,7 @@ ActiveRecord::Schema.define(version: 20161007034028) do
     t.text     "description",         default: ""
     t.datetime "last_seen"
     t.integer  "permissions",         default: 0
+    t.datetime "last_spotify_sync"
   end
 
 end

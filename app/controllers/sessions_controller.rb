@@ -7,6 +7,20 @@ module Spotify
         def me_top_tracks
             run(:get, '/v1/me/top/tracks', [200])
         end
+
+        def me_track_info(id)
+            str = '/v1/audio-features/%s' % [id]
+            data = run(:get, str, [200])
+            return data
+        end
+
+        def me_related_artists(id, artistsArray)
+            str = '/v1/artists/%s/related-artists' % [id]
+            data = run(:get, str, [200])
+            data["artists"].each_with_index do |artist, index|
+                artistsArray.push( artist["name"] )
+            end
+        end
     end
 end
 
@@ -101,10 +115,15 @@ class SessionsController < ApplicationController
         
         topArtistsHash = {}
         topGenresArray = []
+        relatedTopArtistsArray = []
         topArtistsSpotifyData["items"].each_with_index do |spotifyArtistData, index|
             # create artist hash for database
             artistHash = {}
             artistHash["rank"] = index
+            if((index == 0) || (index == 1))#for top artist, look for related artists.
+                client.me_related_artists(spotifyArtistData["id"], relatedTopArtistsArray)
+            end
+
             artistHash["spotify_id"] = spotifyArtistData["id"]
             artistHash["name"] = spotifyArtistData["name"]
             artistHash["genres"] = spotifyArtistData["genres"]
@@ -124,11 +143,36 @@ class SessionsController < ApplicationController
         #grab top tracks
         topTracksSpotifyData = client.me_top_tracks
         topTracksHash = {}
+
+        #start accumulating the average track info for user
+        danceability     = 0
+        energy           = 0
+        loudness         = 0
+        speechiness      = 0
+        acousticness     = 0
+        instrumentalness = 0
+        liveness         = 0
+        valence          = 0
+        tempo            = 0
+
         topTracksSpotifyData["items"].each_with_index do |spotifyTrackData, index|
             # create track hash for database
             trackHash = {}
             trackHash["rank"] = index
             trackHash["spotify_id"] = spotifyTrackData["id"]
+
+            trackInfo = client.me_track_info(spotifyTrackData["id"])
+            danceability     += trackInfo["danceability"]
+            energy           += trackInfo["energy"]
+            loudness         += trackInfo["loudness"]
+            speechiness      += trackInfo["speechiness"]
+            acousticness     += trackInfo["acousticness"]
+            instrumentalness += trackInfo["instrumentalness"]
+            liveness         += trackInfo["liveness"]
+            valence          += trackInfo["valence"]
+            tempo            += trackInfo["tempo"]
+
+
             trackHash["name"] = spotifyTrackData["name"]
             trackHash["album_name"] = spotifyTrackData["album"]["name"]
             trackHash["artist"] = spotifyTrackData["artists"][0]["name"]
@@ -136,16 +180,47 @@ class SessionsController < ApplicationController
             topTracksHash[index] = trackHash
         end
 
+        # Compute the average
+        count = topTracksSpotifyData["items"].count
+        danceability      /= count
+        energy            /= count
+        loudness          /= count
+        speechiness       /= count
+        acousticness      /= count
+        instrumentalness  /= count
+        liveness          /= count
+        valence           /= count
+        tempo             /= count
+
+        averageTrackInfoHash = {}
+        averageTrackInfoHash["danceability"]      = danceability
+        averageTrackInfoHash["energy"]            = energy
+        averageTrackInfoHash["loudness"]          = loudness
+        averageTrackInfoHash["speechiness"]       = speechiness
+        averageTrackInfoHash["acousticness"]      = acousticness
+        averageTrackInfoHash["instrumentalness"]  = instrumentalness
+        averageTrackInfoHash["liveness"]          = liveness
+        averageTrackInfoHash["valence"]           = valence
+        averageTrackInfoHash["tempo"]             = tempo
+
         # grab top genres
         # convert topArtists to a hash to save to the database
         #topArtistsHash = JSON.parse( topArtists["items"].to_s[1...-1] )
         #topArtistsHash = JSON.parse( topArtists )
         user = User.find( session[:user_id] )
-        user.favorite_info.top_artists = topArtistsHash.to_json.to_s
-        user.favorite_info.top_songs = topTracksHash.to_json.to_s
-        user.favorite_info.top_genre = topGenresArray.to_json.to_s
+        user.favorite_info.top_artists         = topArtistsHash.to_json.to_s
+        user.favorite_info.top_songs           = topTracksHash.to_json.to_s
+        user.favorite_info.top_genre           = topGenresArray.to_json.to_s
+        user.favorite_info.average_track_info  = averageTrackInfoHash.to_json.to_s
+        #remove duplicates
+        relatedTopArtistsArray = relatedTopArtistsArray.uniq
+        user.favorite_info.related_top_artists = relatedTopArtistsArray.to_json.to_s
 
         user.favorite_info.save
+
+        #save time since sync
+        user.last_spotify_sync = Time.now
+        user.save
 
         # take player back to their home page
         redirect_to controller: 'new_account', action: 'home', from_handle_spotify_auth: true
