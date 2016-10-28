@@ -1,6 +1,19 @@
+class QuestionAnswerValidator < ActiveModel::Validator
+  def validate(record)
+    question_type = Question.find(record.question_id).question_type
+
+    if (question_type == Question.multiple_choice)
+      if (record.answer_integer.nil?)
+        record.errors[:answer_integer] << "Answer must be non-nil"
+      end
+    end
+  end
+end
+
 class QuestionAnswer < ActiveRecord::Base
   belongs_to :question
   belongs_to :user
+  validates_with QuestionAnswerValidator
   
   def get_answer()
     question = Question.find(self.question_id)

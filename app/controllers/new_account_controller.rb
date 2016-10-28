@@ -150,7 +150,7 @@ class NewAccountController < ApplicationController
             questionAnswer.answer_integer = params[:answer_integer]
             questionAnswer.answer_text = params[:answer_text]
 
-            questionAnswer.save
+            questionAnswer.save!
         end
 
         action.destroy

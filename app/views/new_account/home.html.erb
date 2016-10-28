@@ -42,16 +42,16 @@
 						<%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
 
 							<% if (cur_question.question.get_subtype_name() == "Multiple Choice") %>
-								<%= radio_button_tag :answer_integer, '0' %>
+								<%= radio_button_tag(:answer_integer, '0', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
-								<%= radio_button_tag :answer_integer, '1' %>
+								<%= radio_button_tag(:answer_integer, '1', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
 								<% if cur_question.question.metadata_three.blank? == false %>
-									<%= radio_button_tag :answer_integer, '2' %>
+									<%= radio_button_tag(:answer_integer, '2', false, class: "multiple-choice-answer") %>
 									<%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
 								<% end %>
 								<% if cur_question.question.metadata_four.blank? == false %>
-									<%= radio_button_tag :answer_integer, '3' %>
+									<%= radio_button_tag(:answer_integer, '3', false, class: "multiple-choice-answer") %>
 									<%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
 								<% end %>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
@@ -75,7 +75,7 @@
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<%= submit_tag "Submit",  :class => 'btn btn-primary question_submit' %>
+							<%= submit_tag "Submit",  :class => 'btn btn-primary question_submit disabled' %>
 							<%= submit_tag "Dismiss", :class => 'btn btn-primary question_dismiss', name: 'dismiss_button'  %>
 
 						<% end %>
@@ -216,9 +216,14 @@ $(document).ready(function(){
     notification_form.modal({backdrop: 'static',keyboard: false});
 	<% end %>
 
+
 	mixpanel.track_links('.spotify-link-click', 'Spotify: Start Sync');
 	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
 	mixpanel.track_links('.youtube-link-click', 'YouTube Video: Play')
+
+	$(".multiple-choice-answer").click(function() {
+		$(this).siblings(".question_submit").removeClass("disabled");
+	});
 });
 
 $(document).bind('page:load', function() {
