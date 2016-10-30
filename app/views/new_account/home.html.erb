@@ -66,7 +66,7 @@
 							<% end %>
 
 							<% if (cur_question.question.get_subtype_name() == "Rating") %>
-								<%= number_field_tag( :answer_integer, nil, min: 0, max: 10 )%><br><br>
+								<%= number_field_tag( :answer_integer, nil, min: 0, max: 10, class: "number-input" )%><br><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
@@ -221,8 +221,30 @@ $(document).ready(function(){
 	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
 	mixpanel.track_links('.youtube-link-click', 'YouTube Video: Play')
 
+	// For multiple choice questions, only enable the submit button when an option is selected
 	$(".multiple-choice-answer").click(function() {
 		$(this).siblings(".question_submit").removeClass("disabled");
+	});
+
+	// For rating questions, only enable the submit button when a valid value has been entered
+	$(".number-input").bind('keyup input', function() {
+
+		var inputVal = parseInt($(this).val());
+		var minVal = parseInt($(this).attr("min"));
+		var maxVal = parseInt($(this).attr("max"));
+		var submitButton = $(this).siblings(".question_submit");
+
+		if ((inputVal >= minVal) && (inputVal <= maxVal))
+		{
+			submitButton.removeClass("disabled");
+		}
+		else
+		{
+			if (!submitButton.hasClass("disabled"))
+			{
+				submitButton.addClass("disabled");
+			}
+		}
 	});
 });
 
