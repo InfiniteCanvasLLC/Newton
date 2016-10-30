@@ -246,6 +246,14 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	// Disable enter input.  Otherwise users could submit an invalid values by pressing enter and bypassing validation.
+	// The server would reject the invalid answer, but this would be confusing behavior for the user.
+	//
+	// This idea borrowed from: http://stackoverflow.com/questions/895171/prevent-users-from-submitting-form-by-hitting-enter
+	$(document).on("keypress", "form", function(event) { 
+    	return event.keyCode != 13;
+	});
 });
 
 $(document).bind('page:load', function() {
