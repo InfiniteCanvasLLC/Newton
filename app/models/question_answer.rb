@@ -11,7 +11,12 @@ class QuestionAnswerValidator < ActiveModel::Validator
       if (record.answer_integer < 0) || (record.answer_integer > 10 )
         record.errors[:answer_integer] << "Answer must be between 0 and 10"
       end
+    elsif (question_type == Question.text)
+      if (record.answer_text.length() <= 0)
+        record.errors[:answer_integer] << "Answer must be at least 1 character"
+      end
     end
+
   end
 
 end
