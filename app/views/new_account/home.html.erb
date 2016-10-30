@@ -71,7 +71,7 @@
 							<% end %>
 
 							<% if (cur_question.question.get_subtype_name() == "Text") %>
-								<%= text_field_tag( :answer_text, nil )%><br><br>
+								<%= text_field_tag( :answer_text, nil, class: "text-input" )%><br><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
@@ -235,6 +235,23 @@ $(document).ready(function(){
 		var submitButton = $(this).siblings(".question_submit");
 
 		if ((inputVal >= minVal) && (inputVal <= maxVal))
+		{
+			submitButton.removeClass("disabled");
+		}
+		else
+		{
+			if (!submitButton.hasClass("disabled"))
+			{
+				submitButton.addClass("disabled");
+			}
+		}
+	});
+
+	$(".text-input").bind('keyup input', function() {
+		var textLength = $(this).val().length;
+		var submitButton = $(this).siblings(".question_submit");
+
+		if (textLength > 0)
 		{
 			submitButton.removeClass("disabled");
 		}
