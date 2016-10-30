@@ -1,13 +1,19 @@
 class QuestionAnswerValidator < ActiveModel::Validator
+
   def validate(record)
     question_type = Question.find(record.question_id).question_type
 
-    if (question_type == Question.multiple_choice)
+    if (question_type == Question.multiple_choice) || (question_type == Question.yes_no)
       if (record.answer_integer.nil?)
         record.errors[:answer_integer] << "Answer must be non-nil"
       end
+    elsif (question_type == Question.rating)
+      if (record.answer_integer < 0) || (record.answer_integer > 10 )
+        record.errors[:answer_integer] << "Answer must be between 0 and 10"
+      end
     end
   end
+
 end
 
 class QuestionAnswer < ActiveRecord::Base

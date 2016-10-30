@@ -58,9 +58,9 @@
 							<% end %>
 
 							<% if (cur_question.question.get_subtype_name() == "Yes/No") %>
-								<%= radio_button_tag :answer_integer, '0' %>
+								<%= radio_button_tag(:answer_integer, '0', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_yes, "Yes") %><br>
-								<%= radio_button_tag :answer_integer, '1' %>
+								<%= radio_button_tag(:answer_integer, '1', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_no, "No") %><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
