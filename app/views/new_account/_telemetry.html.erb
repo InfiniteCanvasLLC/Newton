@@ -1,0 +1,10 @@
+<script>
+
+local_init = function()
+{
+    mixpanel.track('<%= @current_action %>');
+}
+
+$(document).ready(local_init);
+
+</script>
