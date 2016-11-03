@@ -42,40 +42,40 @@
 						<%= form_tag( { action: "enter_answer", method: "post" }, { class: "question_form", action_id: cur_question.action_id.to_s, remote: true } ) do %>
 
 							<% if (cur_question.question.get_subtype_name() == "Multiple Choice") %>
-								<%= radio_button_tag :answer_integer, '0' %>
+								<%= radio_button_tag(:answer_integer, '0', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_0, cur_question.question.metadata_one) %><br>
-								<%= radio_button_tag :answer_integer, '1' %>
+								<%= radio_button_tag(:answer_integer, '1', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_1, cur_question.question.metadata_two) %><br>
 								<% if cur_question.question.metadata_three.blank? == false %>
-									<%= radio_button_tag :answer_integer, '2' %>
+									<%= radio_button_tag(:answer_integer, '2', false, class: "multiple-choice-answer") %>
 									<%= label_tag(:answer_integer_2, cur_question.question.metadata_three) %><br>
 								<% end %>
 								<% if cur_question.question.metadata_four.blank? == false %>
-									<%= radio_button_tag :answer_integer, '3' %>
+									<%= radio_button_tag(:answer_integer, '3', false, class: "multiple-choice-answer") %>
 									<%= label_tag(:answer_integer_3, cur_question.question.metadata_four) %><br>
 								<% end %>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
 							<% if (cur_question.question.get_subtype_name() == "Yes/No") %>
-								<%= radio_button_tag :answer_integer, '0' %>
+								<%= radio_button_tag(:answer_integer, '0', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_yes, "Yes") %><br>
-								<%= radio_button_tag :answer_integer, '1' %>
+								<%= radio_button_tag(:answer_integer, '1', false, class: "multiple-choice-answer") %>
 								<%= label_tag(:answer_integer_no, "No") %><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
 							<% if (cur_question.question.get_subtype_name() == "Rating") %>
-								<%= number_field_tag( :answer_integer, nil, min: 0, max: 10 )%><br><br>
+								<%= number_field_tag( :answer_integer, nil, min: 0, max: 10, class: "number-input" )%><br><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
 							<% if (cur_question.question.get_subtype_name() == "Text") %>
-								<%= text_field_tag( :answer_text, nil )%><br><br>
+								<%= text_field_tag( :answer_text, nil, class: "text-input" )%><br><br>
 								<%= hidden_field_tag(:action_id, cur_question.action_id) %>
 							<% end %>
 
-							<%= submit_tag "Submit",  :class => 'btn btn-primary question_submit' %>
+							<%= submit_tag "Submit",  :class => 'btn btn-primary question_submit disabled' %>
 							<%= submit_tag "Dismiss", :class => 'btn btn-primary question_dismiss', name: 'dismiss_button'  %>
 
 						<% end %>
@@ -216,9 +216,61 @@ $(document).ready(function(){
     notification_form.modal({backdrop: 'static',keyboard: false});
 	<% end %>
 
+
 	mixpanel.track_links('.spotify-link-click', 'Spotify: Start Sync');
 	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
 	mixpanel.track_links('.youtube-link-click', 'YouTube Video: Play')
+
+	// For multiple choice questions, only enable the submit button when an option is selected
+	$(".multiple-choice-answer").click(function() {
+		$(this).siblings(".question_submit").removeClass("disabled");
+	});
+
+	// For rating questions, only enable the submit button when a valid value has been entered
+	$(".number-input").bind('keyup input', function() {
+
+		var inputVal = parseInt($(this).val());
+		var minVal = parseInt($(this).attr("min"));
+		var maxVal = parseInt($(this).attr("max"));
+		var submitButton = $(this).siblings(".question_submit");
+
+		if ((inputVal >= minVal) && (inputVal <= maxVal))
+		{
+			submitButton.removeClass("disabled");
+		}
+		else
+		{
+			if (!submitButton.hasClass("disabled"))
+			{
+				submitButton.addClass("disabled");
+			}
+		}
+	});
+
+	$(".text-input").bind('keyup input', function() {
+		var textLength = $(this).val().length;
+		var submitButton = $(this).siblings(".question_submit");
+
+		if (textLength > 0)
+		{
+			submitButton.removeClass("disabled");
+		}
+		else
+		{
+			if (!submitButton.hasClass("disabled"))
+			{
+				submitButton.addClass("disabled");
+			}
+		}
+	});
+
+	// Disable enter input.  Otherwise users could submit an invalid values by pressing enter and bypassing validation.
+	// The server would reject the invalid answer, but this would be confusing behavior for the user.
+	//
+	// This idea borrowed from: http://stackoverflow.com/questions/895171/prevent-users-from-submitting-form-by-hitting-enter
+	$(document).on("keypress", "form", function(event) { 
+    	return event.keyCode != 13;
+	});
 });
 
 $(document).bind('page:load', function() {
