@@ -12,7 +12,6 @@ end
 class NewAccountController < ApplicationController
 
     before_action :update_user_last_seen
-    before_action :update_action
 
     def initialize
         super
@@ -510,8 +509,4 @@ class NewAccountController < ApplicationController
       @current_user_party = get_user_current_party(@user)
     end
 
-    def update_action
-      @current_action = action_name[0].upcase + action_name[1...action_name.length]
-      puts "Current action is #{@current_action}"
-    end
 end

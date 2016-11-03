@@ -2,7 +2,7 @@
 
 local_init = function()
 {
-    mixpanel.track('<%= @current_action %>');
+    mixpanel.track('<%= "#{controller_name}\##{action_name}" %>');
 }
 
 $(document).ready(local_init);
