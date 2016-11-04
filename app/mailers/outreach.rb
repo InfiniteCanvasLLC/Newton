@@ -11,16 +11,16 @@ class Outreach < ApplicationMailer
 
   def event_registration(party)
       self.mail_to_party_id(party.id, "Event registration",
-      "We have found an event your party " + party.name + " might be interested in. You can find it on your calendar.\nCheck it out on Audicy.us")
+      "Audicy found an event that your party " + party.name + " might be interested in. You can find it on your 'Music Events' page.\nCheck it out on Audicy.us")
   end
 
   def action_assigned(user_action)
     if user_action.is_question() == true
       self.mail_to_user_id(user_action.user_id, "Quick question",
-      "We have assigned you a small question. You can find it on your home page. Please take the time to answer it as it will improve our recommendation.\nCheck it out on Audicy.us")
+      "Audicy has a quick question waiting for you on your 'Home' page. Stop by and give your answer. Each new answer helps improve Audicy's recommendations.\nCheck it out on Audicy.us")
     elsif user_action.is_linkto() == true
       self.mail_to_user_id(user_action.user_id, "Check it out",
-      "We have found something you might be interested in. You can find it on your home page.\nCheck it out on Audicy.us")
+      "Audicy found something you might be interested in. You can find it on your 'Home' page.\nCheck it out on Audicy.us")
     end
   end
 
@@ -31,7 +31,7 @@ class Outreach < ApplicationMailer
     end
 
     @header_message = "Hi " + dest_name
-    @message = "Your friend " + src_user.name + " would like to invite you to their party " + party.name + "!\n\n"
+    @message = "Your friend " + src_user.name + " has invited you to join their party " + party.name + "!\n\n"
     @link = link
     @footer_message = "Your friends at Audicy :) "
     mail to: dest_email
@@ -60,7 +60,7 @@ class Outreach < ApplicationMailer
     if (user.opted_out?)
       return
     end
-    
+
     mail_to(user.email, email_subject, "Hi " + user.name, email_body)
   end
 
@@ -74,7 +74,7 @@ class Outreach < ApplicationMailer
   def notify_stale_parties(admin, stale_parties)
     @admin = admin
     @parties = stale_parties
-    
+
     mail to: admin.email, subject: "Stale Parties", template_name: "stale_party_notification"
   end
 
@@ -127,10 +127,10 @@ class Outreach < ApplicationMailer
   end
 
   def quick_tip_invite_friend(email_address)
-    @message1 = "Remember to grow your party by inviting friends!"
+    @message1 = "Remember to build your party by inviting friends!"
     @image_url1 = ActionController::Base.helpers.image_url('QuickTips/InviteAFriend/Invite_a_friend_1.png')
 
-    @message2 = "At the top of your Party page you will find the Invite button."
+    @message2 = "At the top of your 'Party' page you will find the 'Invite' button."
     @image_url2 = ActionController::Base.helpers.image_url('QuickTips/InviteAFriend/Invite_a_friend_2.png')
 
     @message3 = "Fill out the quick form, and your friend will get notified."
@@ -139,48 +139,48 @@ class Outreach < ApplicationMailer
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   def quick_tip_answer_question(email_address)
-    @message1 = "We will periodically ask you a few questions about your musical tastes. Remember to answer them, it helps us improve our recommendations!"
+    @message1 = "Audicy will periodically ask you questions about your musical tastes. Each answer you give helps Audicy improve its recommendations!"
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/AnswerAQuestion/question.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   def quick_tip_checkout_song(email_address)
-    @message1 = "We will periodically assign to you artists and songs to check out! Don't forget to take a listen. Just press play!"
+    @message1 = "Audicy will periodically have artist and song recommendations for you! Don't forget to stop in and check them out. Just press play and listen!"
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/CheckoutSong/checkout_song.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
   def quick_tip_sync_spotify(email_address)
-    @message1 = "We use Spotify to learn more about your musical tastes, what genre you like, what are your top artists."
+    @message1 = "Audicy uses Spotify to learn more about your favorite musical genres, artists and songs."
     @image_url1 = ActionController::Base.helpers.asset_path('spotify.jpg')
-    @message2 = "If you grant us access to this information we can dramatically improve our recommendations!"
+    @message2 = "This information helps improve Audicy's recommendations for you!"
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/SynSpotify/pull_spotify_info.png')
 
-    @message3 = "Remember to periodically click 'pull' to make sure we have your latest Spotify information!"
+    @message3 = "Remember to periodically click 'pull' to make sure Audicy is up to date with your latest favorites!"
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
 
   def quick_tip_profile(email_address)
-    @message1 = "We need to know a little bit about you in order to give you relevant concert recommendations. You can edit that information from the profile menu"
+    @message1 = "Audicy needs to know a little bit about you in order to give you the best concert recommendations. You can edit your information from the profile menu"
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_1.png')
-    @message2 = "Any information you which to share is very useful to us. For instance by knowing the region where you live, we can lookup the specific concerts in your area."
+    @message2 = "Any information you share helps Audicy work for you. For example, knowing the region where you live let's Audicy find concerts in your area."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Profile/profile_2.png')
-    @message3 = "We can also use information like your secondary email address to make sure your friends can easily find you, and send you requests."
+    @message3 = "Information like a secondary email address helps friends find and join your party."
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
 
   def quick_tip_events(email_address)
-    @message1 = "When we find an event we think your whole party will enjoy we will assign it to you. Check out the Music Events page to see events currently assigned to your party."
+    @message1 = "When Audicy finds an event it thinks your party will enjoy it will assign it to you. Check out the 'Music Events' page to see events currently assigned to your party."
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_page.png')
-    @message2 = "The artist, venue and date are already displayed on the event, but for more information, or to purchase tickets click on the 'Tickets' button."
+    @message2 = "The artist, venue and date are displayed on the event. For more information or to purchase tickets click on the 'Tickets' button."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_tickets.png')
-    @message3 = "At all time you can check out your friends' level of interest to the even. You can also update yours to let your party know how you feeel about this particular event. Just click on the icon on the right to cycle through the tree levels of interest: 'Going', 'Unsure' or 'Not Going'."
+    @message3 = "You can easily see which of your friends are going to the event and let them know your interest. Just click on the icon on the right to change your status to 'Going', 'Unsure' or 'Not Going'."
     @image_url3 = ActionController::Base.helpers.asset_path('QuickTips/Events/event_interest.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
   end
 
   def quick_tip_switch_party(email_address)
-    @message1 = "At any time you can switch between the various parties you are part of."
+    @message1 = "At any time you can switch between the your parties from the 'Home' page."
     @image_url1 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/switch_party.png')
-    @message2 = "Remember that your Event page and Chat page are linked to the party you have currently selected. Any time you switch party, the information on these pages change as well."
+    @message2 = "Remember that the 'Music Events' and 'Chat' pages are linked to you currently selected party. Any time you switch parties the information on these pages update to match."
     @image_url2 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/event.png')
     @image_url3 = ActionController::Base.helpers.asset_path('QuickTips/SwitchParty/chat.png')
     mail to: email_address, subject: "Audicy Quick Tip", template_name: "email_tip"
