@@ -121,7 +121,11 @@ class User < ActiveRecord::Base
     last_party_conversation = parties[current_party_index].party_conversations.last
 
     count = 0
-    if last_seen.nil? == false && last_party_conversation.nil? == false
+
+    #there are not messages seen by the user, the all the messages are missed
+    if last_seen.nil? == true
+      count = parties[current_party_index].party_conversations.count
+    elsif last_party_conversation.nil? == false
       count = (last_party_conversation.id - last_seen.party_conversation_id)
     end
 
@@ -235,6 +239,7 @@ class User < ActiveRecord::Base
     current_location = Geokit::LatLng.new(source[0].to_f, source[1].to_f)
     destination = self.zip_code.to_s.to_latlon
 
+    puts self.zip_code.to_i
     return current_location.distance_to(destination)
   end
 
