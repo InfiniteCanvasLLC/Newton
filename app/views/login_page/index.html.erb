@@ -58,7 +58,7 @@
 
     <section id="services">
         <div class="container">
-            <div class="row">
+            <div id="header-row" class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">How Does It Work?</h2>
                     <hr class="primary">
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
+            <div id="first-row" class="row">
                 <div class="col-lg-4 col-md-6 text-center">
                     <div class="service-box">
                         <i class="fa fa-4x fa-cloud text-primary"></i>
@@ -121,8 +121,29 @@
 
 <script>
 
+var sentHowDoesItWork = false;
+
+$(window).scroll(function() {
+    // If the bottom of the first-row is on screen, then consider it as the user as seen "How does it work"
+    var firstRowBottom = $("#first-row").offset().top + $("#first-row").height();
+    var windowBottom = $(window).scrollTop() + $(window).height();
+
+    if (windowBottom > firstRowBottom)
+    {
+        if (!sentHowDoesItWork)
+        {
+            mixpanel.track("How Does It Work");
+            sentHowDoesItWork = true;
+        }
+    }
+});
+
 $("#how-does-it-work").click(function() {
-    mixpanel.track("How Does It Work");
+    if (!sentHowDoesItWork)
+    {
+        mixpanel.track("How Does It Work");
+        sentHowDoesItWork = true;
+    }
 });
 
 mixpanel.track_links("#sign-in", "Sign In");

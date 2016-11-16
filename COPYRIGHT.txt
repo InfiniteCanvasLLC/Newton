@@ -1,0 +1,5 @@
+/* Copyright (C) Neon Games LLC - All Rights Reserved
+ * Unauthorized copying of any file in this application, via any medium is strictly prohibited
+ * Proprietary and confidential
+ * Written by Neon Games LLC, March 2016
+ */

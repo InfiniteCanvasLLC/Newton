@@ -115,21 +115,21 @@ class User < ActiveRecord::Base
     return is_assigned
   end
 
-  def get_missed_messages_count
-    #for a given party and a given user, there should only be one last seen message
-    last_seen = last_seen_party_conversations.where(:party_id => parties[current_party_index].id).first
-    last_party_conversation = parties[current_party_index].party_conversations.last
+  def get_missed_messages_count     
+   #for a given party and a given user, there should only be one last seen message
+   last_seen = last_seen_party_conversations.where(:party_id => parties[current_party_index].id).first
+   last_party_conversation = parties[current_party_index].party_conversations.last
 
-    count = 0
+   count = 0
 
-    #there are not messages seen by the user, the all the messages are missed
-    if last_seen.nil? == true
-      count = parties[current_party_index].party_conversations.count
-    elsif last_party_conversation.nil? == false
-      count = (last_party_conversation.id - last_seen.party_conversation_id)
-    end
+   #there are not messages seen by the user, the all the messages are missed
+   if last_seen.nil? == true
+     count = parties[current_party_index].party_conversations.count
+   elsif last_party_conversation.nil? == false
+     count = (last_party_conversation.id - last_seen.party_conversation_id)
+   end
 
-    return count
+   return count
   end
 
   def get_avg_trop_tracks_info
