@@ -1,7 +1,7 @@
 // By Chris Coyier & tweaked by Mathias Bynens
 
-$(function() {
-
+function InitYouTubeResize()
+{
     // Find all YouTube videos
     var $allVideos = $("iframe[src^='https://www.youtube.com']"),
 
@@ -39,4 +39,4 @@ $(function() {
     // Kick off one resize to fix all videos on page load
     }).resize();
 
-});
+}

@@ -42,8 +42,8 @@
                 <hr>
 
                 <div id="video-container">
-                    <iframe width="840" height="480" src="https://www.youtube.com/embed/1vTCXfX5ivY?autoplay=1&" style="width=100%">
-                    </iframe>
+                    <div id="video-source" width="840" height="480" style="width=100%">
+                    </div>
                 </div>
 
                 <h4>Customized concerts and music recommendations for you and your friends.</h4>
@@ -132,6 +132,35 @@
 var player, playing = false;
 function onYouTubeIframeAPIReady() {
     console.log("iFrame API is ready");
+
+    videoId = "1vTCXfX5ivY";
+    videoDivId = "video-source";
+
+    player = new YT.Player(videoDivId, {
+        height: 480,
+        width: 840,
+        videoId: videoId,
+        playerVars: { 'autoplay' : 1 },
+        events: {
+            'onReady' : onPlayerReady,
+            'onStateChange': onPlayerStateChange(videoId)
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    console.log("Player is ready");
+    player.mute();
+    InitYouTubeResize();
+}
+
+function onPlayerStateChange(inVideoId) {
+    return function(inEvent) {
+        if (inEvent.data == YT.PlayerState.PLAYING)
+        {
+            
+        }
+    }
 }
 
 var sentHowDoesItWork = false;
