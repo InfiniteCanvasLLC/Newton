@@ -40,8 +40,10 @@ h6 {
     @include sans-serif-font;
 }
 
-h4 { 
-    margin-bottom: 30px; 
+h4 {
+    @media (min-width: 768px) {
+        margin-bottom: 30px; 
+    }
 }
 
 p {
@@ -73,6 +75,14 @@ aside {
 
 .no-padding {
     padding: 0;
+}
+
+#mainNav {
+    display: none;
+
+    @media (min-width: 768px) {
+        display: block;
+    }
 }
 
 .navbar-default {
@@ -171,7 +181,12 @@ header {
     .header-content {
         position: relative;
         text-align: center;
-        padding: 100px 15px;
+        padding: 10px 15px;
+
+        @media (min-width: 768px) {
+            padding: 100px 15px;
+        }
+
         width: 100%;
         .header-content-inner {
             h1 {
@@ -180,8 +195,10 @@ header {
                 margin-top: 0;
                 margin-bottom: 0;
             }
-            hr {
-                margin: 30px auto;
+            @media (min-width: 768px) {
+                hr {
+                    margin: 30px auto;
+                }
             }
             p {
                 font-weight: 300;

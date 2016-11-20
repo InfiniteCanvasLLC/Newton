@@ -11,3 +11,4 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w( creative/manifest.js creative/manifest.css )
 Rails.application.config.assets.precompile += %w( administrator.js administrator.scss )
+Rails.application.config.assets.precompile += %w( youtube_resize.js )

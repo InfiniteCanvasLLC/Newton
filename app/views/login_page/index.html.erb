@@ -4,7 +4,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
     <body id="page-top">
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -41,9 +41,10 @@
                 <h1>Audicy</h1>
                 <hr>
 
-                <iframe width="640" height="480"
-                    src="https://www.youtube.com/embed/1vTCXfX5ivY?autoplay=1&">
-                </iframe>
+                <div id="video-container">
+                    <iframe width="840" height="480" src="https://www.youtube.com/embed/1vTCXfX5ivY?autoplay=1&" style="width=100%">
+                    </iframe>
+                </div>
 
                 <h4>Customized concerts and music recommendations for you and your friends.</h4>
                 <div class="">
@@ -124,7 +125,14 @@
     <%= render 'feedback_dialog' %>
 </body>
 
+<%= javascript_include_tag 'youtube_resize.js' %>
+
 <script>
+
+var player, playing = false;
+function onYouTubeIframeAPIReady() {
+    console.log("iFrame API is ready");
+}
 
 var sentHowDoesItWork = false;
 
