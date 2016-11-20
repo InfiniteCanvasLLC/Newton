@@ -137,29 +137,42 @@ function onYouTubeIframeAPIReady() {
     videoDivId = "video-source";
 
     player = new YT.Player(videoDivId, {
-        height: 480,
-        width: 840,
+        height: 100,
+        width: 175,
         videoId: videoId,
         playerVars: { 'autoplay' : 1 },
         events: {
             'onReady' : onPlayerReady,
-            'onStateChange': onPlayerStateChange(videoId)
+            'onStateChange': onPlayerStateChange
         }
     });
 }
 
 function onPlayerReady(event) {
-    console.log("Player is ready");
     player.mute();
     InitYouTubeResize();
 }
 
-function onPlayerStateChange(inVideoId) {
-    return function(inEvent) {
-        if (inEvent.data == YT.PlayerState.PLAYING)
-        {
-            
-        }
+var intervalId = 0;
+var nextPlayTime = 5;
+var playTimeStep = 5;
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING)
+    {
+        mixpanel.track('Intro Video: Play');
+        intervalId = setInterval(function() {
+            var curTime = player.getCurrentTime();
+            if (curTime > nextPlayTime)
+            {
+                mixpanel.track('Intro Video: Play Duration', { "playback_time" : nextPlayTime });
+                nextPlayTime += playTimeStep;
+            }
+        }, 1000);
+    }
+    else
+    {
+        clearInterval(intervalId);
     }
 }
 
