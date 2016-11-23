@@ -36,26 +36,30 @@
 
 
     <header class="header-dark">
-        <div class="header-content">
+        <div class="header-content-dark">
             <div class="header-content-inner">
-                <h1>Audicy</h1>
+                <h2>Audicy</h2>
                 <h4>Customized concerts and music recommendations for you and your friends.</h4>
                 <hr>
-                <h2>We have to learn some information about you to get started</h2>
+                <h2>We have to learn some information about you to give you your first recommendation</h2>
 
-                
+                <div id="question-container">
+                    <p>1. Where do you listen to most of your music</p>
 
-                <div class="">
-                    <br />
-                    <div class="text-center row-btn">
-                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block" id="how-does-it-work">How Does It Work?</a>
+                    <div id="answer-group">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">Option 1</label>
+                        </div>
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">Option 2</label>
+                        </div>
+                        <div class="radio disabled">
+                          <label><input type="radio" name="optradio" disabled>Option 3</label>
+                        </div>
                     </div>
-                    <br />
-                    <div class="text-center row-btn">
-                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
-                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
-                    </div>
+
                 </div>
+
             </div>
         </div>
     </header>
