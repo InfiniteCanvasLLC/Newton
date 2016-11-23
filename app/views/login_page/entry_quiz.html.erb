@@ -1,0 +1,107 @@
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Audicy</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+                <h1>Audicy</h1>
+                <hr>
+
+                <h4>Customized concerts and music recommendations for you and your friends.</h4>
+                <div class="">
+                    <br />
+                    <div class="text-center row-btn">
+                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block" id="how-does-it-work">How Does It Work?</a>
+                    </div>
+                    <br />
+                    <div class="text-center row-btn">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="contact" class="bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Contact</h2>
+                    <hr class="light">
+                    <p>Have a question or comment? We'd love to hear from you.</p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <a class="btn btn-default btn-xl" data-toggle="modal" data-target="#feedback_modal">Send Feedback</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%= render 'signup_dialog' %>
+    <%= render 'feedback_dialog' %>
+</body>
+
+<script>
+
+var sentHowDoesItWork = false;
+
+$(window).scroll(function() {
+    // If the bottom of the first-row is on screen, then consider it as the user as seen "How does it work"
+    var firstRowBottom = $("#first-row").offset().top + $("#first-row").height();
+    var windowBottom = $(window).scrollTop() + $(window).height();
+
+    if (windowBottom > firstRowBottom)
+    {
+        if (!sentHowDoesItWork)
+        {
+            mixpanel.track("How Does It Work");
+            sentHowDoesItWork = true;
+        }
+    }
+});
+
+$("#how-does-it-work").click(function() {
+    if (!sentHowDoesItWork)
+    {
+        mixpanel.track("How Does It Work");
+        sentHowDoesItWork = true;
+    }
+});
+
+mixpanel.track_links("#sign-in", "Sign In");
+
+</script>
