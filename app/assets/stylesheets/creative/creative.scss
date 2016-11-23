@@ -232,6 +232,14 @@ header {
     }
 }
 
+.header-dark {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.5)
+    ), asset-url('Header3.jpg');
+}
+
+
 // Sections
 
 .section-heading {
