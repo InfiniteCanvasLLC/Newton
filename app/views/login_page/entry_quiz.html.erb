@@ -39,26 +39,23 @@
         <div class="header-content-dark">
             <div class="header-content-inner">
                 <h3>Audicy</h3>
-                <h5>Concert and music recommendations for you and your friends.</h5>
+                <h5>Customized concert and music recommendations for you and your friends.</h5>
                 <hr>
                 <div data-bind="if: showIntro">
                     <h3 id="explanation">We have to learn some information about you to give you your first recommendation</h2>
 
-                    <button type="button" class="btn btn-success">Get Started</button>
+                    <button type="button" class="btn btn-success" data-bind="click: getStarted">Get Started</button>
                 </div>
 
                 <div id="question-container" data-bind="ifnot: showIntro">
-                    <p data-bind="text: questionText" style="white-space: nowrap"></p>
+                    <p id="question-text" data-bind="text: questionText"></p>
 
-                    <div id="answer-group">
+                    <div id="answer-group" data-bind="foreach: questionReplies">
                         <div class="radio">
-                          <label><input type="radio" name="optradio">Option 1</label>
-                        </div>
-                        <div class="radio">
-                          <label><input type="radio" name="optradio">Option 2</label>
-                        </div>
-                        <div class="radio disabled">
-                          <label><input type="radio" name="optradio" disabled>Option 3</label>
+                            <label>
+                                <input type="radio" name="optradio">
+                                <!--ko text: $data--><!--/ko-->
+                            </label>
                         </div>
                     </div>
 

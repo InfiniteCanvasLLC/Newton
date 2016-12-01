@@ -299,6 +299,16 @@ header {
     text-align: left;
     width: 50%;
 
+    @media (max-width: 768px) {
+            width: 75%;
+        }
+
+    #question-text {
+        @media (min-width: 768px) {
+            white-space: nowrap;
+        }
+    }
+
     p {
         margin-left: 0px;
     }
