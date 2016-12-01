@@ -38,13 +38,17 @@
     <header class="header-dark">
         <div class="header-content-dark">
             <div class="header-content-inner">
-                <h2>Audicy</h2>
-                <h4>Customized concerts and music recommendations for you and your friends.</h4>
+                <h3>Audicy</h3>
+                <h5>Concert and music recommendations for you and your friends.</h5>
                 <hr>
-                <h2>We have to learn some information about you to give you your first recommendation</h2>
+                <div data-bind="if: showIntro">
+                    <h3 id="explanation">We have to learn some information about you to give you your first recommendation</h2>
 
-                <div id="question-container">
-                    <p>1. Where do you listen to most of your music?</p>
+                    <button type="button" class="btn btn-success">Get Started</button>
+                </div>
+
+                <div id="question-container" data-bind="ifnot: showIntro">
+                    <p data-bind="text: questionText" style="white-space: nowrap"></p>
 
                     <div id="answer-group">
                         <div class="radio">
@@ -81,3 +85,6 @@
     <%= render 'signup_dialog' %>
     <%= render 'feedback_dialog' %>
 </body>
+
+    <%= javascript_include_tag 'entry_quiz.js' %>
+
