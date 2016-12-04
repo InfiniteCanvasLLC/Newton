@@ -22,6 +22,13 @@ function EntryQuizViewModel()
     self.getStarted = function() {
         self.showIntro(false);
     }
+
+    self.radioButtonClicked = function() {
+        $("#next-button").addClass("active");
+        $("#next-button").removeClass("disabled");
+
+        return true;
+    }
 }
 
 ko.applyBindings(new EntryQuizViewModel());

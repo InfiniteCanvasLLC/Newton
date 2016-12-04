@@ -38,11 +38,11 @@
     <header class="header-dark">
         <div class="header-content-dark">
             <div class="header-content-inner">
-                <h3>Audicy</h3>
-                <h5>Customized concert and music recommendations for you and your friends.</h5>
+                <h2>Audicy</h2>
+                <h4>Customized concert and music recommendations for you and your friends.</h4>
                 <hr>
                 <div data-bind="if: showIntro">
-                    <h3 id="explanation">We have to learn some information about you to give you your first recommendation</h2>
+                    <h3 id="explanation">Tell us a bit about yourself so we can find you music you’ll love</h2>
 
                     <button type="button" class="btn btn-success" data-bind="click: getStarted">Get Started</button>
                 </div>
@@ -53,11 +53,13 @@
                     <div id="answer-group" data-bind="foreach: questionReplies">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="optradio">
+                                <input type="radio" name="optradio" data-bind="click: $root.radioButtonClicked">
                                 <!--ko text: $data--><!--/ko-->
                             </label>
                         </div>
                     </div>
+
+                    <button id="next-button" type="button" class="btn btn-success disabled" data-bind="">Next</button>
 
                 </div>
 
