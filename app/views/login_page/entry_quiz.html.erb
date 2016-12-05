@@ -50,8 +50,8 @@
                 <div id="question-container" data-bind="ifnot: showIntro, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%' }">
                     <p id="question-text" data-bind="text: questionText"></p>
 
-                    <div id="video-group" data-bind="foreach: questionVideos" class="container">
-                        <div data-bind="attr: { id: 'video-' + $index() }" class="col-md-6">
+                    <div id="video-container" data-bind="foreach: questionVideos" class="container">
+                        <div data-bind="attr: { id: 'video-' + $index() }" class="col-md-6 quiz-video">
                         </div>
                     </div>
 
@@ -92,3 +92,4 @@
 
     <%= javascript_include_tag 'entry_quiz.js' %>
     <%= javascript_include_tag 'https://www.youtube.com/iframe_api' %>
+

@@ -15,7 +15,7 @@ var questions = [
     {
         text: "Which one of these songs do you like better?",
         videos: [ "GKSRyLdjsPA", "oRrq6zXFUKg" ],
-        replies: [ "Left", "Right" ]
+        replies: [ "Sia - The Greatest", "Pegboard Nerds - Blackout" ]
     }
 ]
 
@@ -26,6 +26,12 @@ var INVALID_INDEX = -1;
 var answer_index = INVALID_INDEX;
 var cur_question = 0;
 var iFrameAPIReady = false;
+var videosLoaded = 0;
+
+function onPlayerStateChange(param)
+{
+    console.log($(param.target.a).attr("id"));
+}
 
 function evaluateVideos()
 {
@@ -35,6 +41,8 @@ function evaluateVideos()
     }
     else
     {
+        videosLoaded = 0;
+
         for (var curVideo in questions[cur_question].videos)
         {
             videoId = questions[cur_question].videos[curVideo];
@@ -42,8 +50,11 @@ function evaluateVideos()
 
             player = new YT.Player(videoDivId, {
                 height: 300,
-                width: 300,
-                videoId: videoId
+                width: 540,
+                videoId: videoId,
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
             });
         }
     }

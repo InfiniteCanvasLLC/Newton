@@ -499,3 +499,9 @@ input.sentiment[type="radio"] {
 .full-width {
     width: 100%;
 }
+
+.quiz-video {
+    @media (max-width: 768px) {
+        width: 300px;
+    }
+}
