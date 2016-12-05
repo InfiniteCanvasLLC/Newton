@@ -52,6 +52,11 @@
                 <div id="question-container" data-bind="ifnot: showIntro">
                     <p id="question-text" data-bind="text: questionText"></p>
 
+                    <div id="video-group" data-bind="foreach: questionVideos">
+                        <div data-bind="attr: { id: 'video-' + $index() }">
+                        </div>
+                    </div>
+
                     <div id="answer-group" data-bind="foreach: questionReplies">
                         <div class="radio">
                             <label>

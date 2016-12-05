@@ -25,6 +25,29 @@ var INVALID_INDEX = -1;
 
 var answer_index = INVALID_INDEX;
 var cur_question = 0;
+var iFrameAPIReady = false;
+
+function evaluateVideos()
+{
+    if (!iFrameAPIReady)
+    {
+        window.setTimeout(evaluateVideos, 200);
+    }
+    else
+    {
+        for (var curVideo in questions[cur_question].videos)
+        {
+            videoId = questions[cur_question].videos[curVideo];
+            videoDivId = "video-" + curVideo;
+
+            player = new YT.Player(videoDivId, {
+                height: 300,
+                width: 300,
+                videoId: videoId
+            });
+        }
+    }
+}
 
 function EntryQuizViewModel()
 {
@@ -32,6 +55,7 @@ function EntryQuizViewModel()
 
     self.questionText = ko.observable(questions[cur_question].text);
     self.questionReplies = ko.observableArray(questions[cur_question].replies);
+    self.questionVideos = ko.observableArray(questions[cur_question].videos);
 
     self.showIntro = ko.observable(true);
 
@@ -54,9 +78,12 @@ function EntryQuizViewModel()
 
         self.questionText(questions[cur_question].text);
         self.questionReplies(questions[cur_question].replies);
+        self.questionVideos(questions[cur_question].videos);
 
         $("#next-button").addClass("disabled");
         $("#next-button").removeClass("active");
+
+        evaluateVideos();
     }
 }
 
@@ -66,20 +93,5 @@ var player, playing = false;
 
 function onYouTubeIframeAPIReady()
 {
-    console.log("iFrame API is ready");
-/*
-    videoId = "1vTCXfX5ivY";
-    videoDivId = "video-source";
-
-    player = new YT.Player(videoDivId, {
-        height: 100,
-        width: 175,
-        videoId: videoId,
-        playerVars: { 'autoplay' : 1 },
-        events: {
-            'onReady' : onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-*/
+    iFrameAPIReady = true;
 }
