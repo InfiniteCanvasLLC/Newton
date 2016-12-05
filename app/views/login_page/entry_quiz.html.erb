@@ -5,8 +5,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <%= javascript_include_tag 'https://www.youtube.com/iframe_api' %>
-
     <body id="page-top">
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
@@ -49,11 +47,11 @@
                     <button type="button" class="btn btn-success" data-bind="click: getStarted">Get Started</button>
                 </div>
 
-                <div id="question-container" data-bind="ifnot: showIntro">
+                <div id="question-container" data-bind="ifnot: showIntro, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%' }">
                     <p id="question-text" data-bind="text: questionText"></p>
 
-                    <div id="video-group" data-bind="foreach: questionVideos">
-                        <div data-bind="attr: { id: 'video-' + $index() }">
+                    <div id="video-group" data-bind="foreach: questionVideos" class="container">
+                        <div data-bind="attr: { id: 'video-' + $index() }" class="col-md-6">
                         </div>
                     </div>
 
@@ -93,4 +91,4 @@
 </body>
 
     <%= javascript_include_tag 'entry_quiz.js' %>
-
+    <%= javascript_include_tag 'https://www.youtube.com/iframe_api' %>
