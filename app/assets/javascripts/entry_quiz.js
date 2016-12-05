@@ -10,6 +10,12 @@ var questions = [
     {
         text: "Where do you listen to most of your music?",
         replies: [ "While travelling (eg: car, plane, train, etc)", "At work", "At the club", "At the gym"]
+    },
+// Third question
+    {
+        text: "Which one of these songs do you like better?",
+        videos: [ "GKSRyLdjsPA", "oRrq6zXFUKg" ],
+        replies: [ "Left", "Right" ]
     }
 ]
 
@@ -48,7 +54,32 @@ function EntryQuizViewModel()
 
         self.questionText(questions[cur_question].text);
         self.questionReplies(questions[cur_question].replies);
+
+        $("#next-button").addClass("disabled");
+        $("#next-button").removeClass("active");
     }
 }
 
 ko.applyBindings(new EntryQuizViewModel());
+
+var player, playing = false;
+
+function onYouTubeIframeAPIReady()
+{
+    console.log("iFrame API is ready");
+/*
+    videoId = "1vTCXfX5ivY";
+    videoDivId = "video-source";
+
+    player = new YT.Player(videoDivId, {
+        height: 100,
+        width: 175,
+        videoId: videoId,
+        playerVars: { 'autoplay' : 1 },
+        events: {
+            'onReady' : onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+*/
+}
