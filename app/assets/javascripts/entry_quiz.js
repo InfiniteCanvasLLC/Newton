@@ -102,7 +102,7 @@ function EntryQuizViewModel()
                     console.log("haha");
                 },
                 data: { 
-                    'message': "foobar"
+                    'answers': answers
                 }
             });
 

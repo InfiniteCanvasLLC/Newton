@@ -40,10 +40,8 @@ class LoginPageController < ApplicationController
   end
 
   def set_entry_quiz_result
-    puts "Set entry quiz result"
-    puts params.inspect
-
-    render json: {"foobar": true}
+    session[:answers] = params["answers"].to_json
+    render json: {"success": true}
   end
 
 

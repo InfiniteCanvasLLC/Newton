@@ -26,6 +26,10 @@ class NewAccountController < ApplicationController
             params[:from_handle_spotify_auth] = false # until next time
         end
 
+        if (session.has_key?[:answers])
+          self.generate_recommendation_from_quiz(JSON.parse(session[:answers]))
+        end
+
         @num_actions = actions.count
 
         self.manage_actions_dynamically
@@ -64,6 +68,24 @@ class NewAccountController < ApplicationController
             invite.dst_user_id ==  @user.id #if this is a new user, invited by a firend, their id is ivalid (-1)
             invite.save #Don't forget to save!
         end
+    end
+
+    def generate_recommendation_from_quiz(answers)
+      # In the quiz, we ignore question 2.  We use Question 1 to determine an era of music, and Question 3 to determine how fast paced it should be.
+      # Harcoded for now.
+
+      ## TODO: Have to modify the 'populate_db.rake' to add our hardcoded recommendations to the database.
+      ## Then we can 
+
+      # Modern music
+      if (answers[0] == '0')
+        # Modern chill music
+        if (answers[2] == '0')
+        # Modern fast paced music
+        elsif (answers[2] == '1')
+        end
+      end
+
     end
 
     #based on user state (are we missing some information)
