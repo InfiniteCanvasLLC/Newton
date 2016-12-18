@@ -9,7 +9,7 @@ var questions = [
 // Second question
     {
         text: "Where do you listen to most of your music?",
-        replies: [ "While travelling (eg: car, plane, train, etc)", "At work", "At the club", "At the gym"]
+        replies: [ "While travelling (eg: car, plane, train, etc)", "At home", "At work", "At the club", "At the gym"]
     },
 // Third question
     {
