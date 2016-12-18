@@ -69,9 +69,12 @@ function EntryQuizViewModel()
     self.questionVideos = ko.observableArray(questions[cur_question].videos);
 
     self.showIntro = ko.observable(true);
+    self.showQuestions = ko.observable(false);
+    self.showFacebook = ko.observable(false);
 
     self.getStarted = function() {
         self.showIntro(false);
+        self.showQuestions(true);
     }
 
     self.radioButtonClicked = function(radioButton, event) {
@@ -86,6 +89,25 @@ function EntryQuizViewModel()
     self.nextButtonClicked = function() {
         answers[cur_question] = parseInt(answer_index);
         cur_question++;
+
+        if (cur_question == questions.length)
+        {
+            self.showQuestions(false);
+            self.showFacebook(true);
+
+            $.ajax({
+                type: "POST",
+                url: "set_entry_quiz_result",
+                success: function(data) {
+                    console.log("haha");
+                },
+                data: { 
+                    'message': "foobar"
+                }
+            });
+
+            return;
+        }
 
         self.questionText(questions[cur_question].text);
         self.questionReplies(questions[cur_question].replies);

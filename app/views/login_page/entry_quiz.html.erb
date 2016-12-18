@@ -47,7 +47,7 @@
                     <button type="button" class="btn btn-success" data-bind="click: getStarted">Get Started</button>
                 </div>
 
-                <div id="question-container" data-bind="ifnot: showIntro, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%' }">
+                <div id="question-container" data-bind="if: showQuestions, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%' }">
                     <p id="question-text" data-bind="text: questionText"></p>
 
                     <div id="video-container" data-bind="foreach: questionVideos" class="container">
@@ -66,6 +66,11 @@
 
                     <button id="next-button" type="button" class="btn btn-success disabled" data-bind="click: nextButtonClicked">Next</button>
 
+                </div>
+
+                <div data-bind="if: showFacebook">
+                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                    <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>    
                 </div>
 
             </div>

@@ -38,4 +38,13 @@ class LoginPageController < ApplicationController
     
     render nothing: true
   end
+
+  def set_entry_quiz_result
+    puts "Set entry quiz result"
+    puts params.inspect
+
+    render json: {"foobar": true}
+  end
+
+
 end
