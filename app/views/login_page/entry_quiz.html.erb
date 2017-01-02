@@ -68,9 +68,27 @@
 
                 </div>
 
+
+                <div data-bind="if: showProgressIndicator">
+                    <div style="padding-bottom: 48px">
+                        Analyzing your answers...
+                    </div>
+
+                    <div class="cssload-container">
+                        <div class="cssload-whirlpool"></div>
+                    </div>
+                </div>
+
                 <div data-bind="if: showFacebook">
-                    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
-                    <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>    
+                    <p>Done! We have generated your first music recommendation.</p>
+
+                    <div class="text-center row-btn">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                    </div>
+
+                    <h5>Sign-in so you can see it, and so you can come back to view future recommendations as we learn about your tastes.</h5>
+
                 </div>
 
             </div>

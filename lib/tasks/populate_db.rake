@@ -90,6 +90,14 @@ namespace :populate_db do
   end
 
   def assign_quiz_recommendation(linkto, question_one, question_three)
+
+    quiz_recommendation = QuizRecommendation.where(question_one_answer: question_one, question_three_answer: question_three)
+
+    if (!quiz_recommendation.empty?)
+      puts "Found pre-existing quiz recommendation"
+      return quiz_recommendation.first
+    end
+
     quiz_recommendation = QuizRecommendation.new
 
     quiz_recommendation.question_one_answer = question_one

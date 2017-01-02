@@ -70,6 +70,7 @@ function EntryQuizViewModel()
 
     self.showIntro = ko.observable(true);
     self.showQuestions = ko.observable(false);
+    self.showProgressIndicator = ko.observable(false);
     self.showFacebook = ko.observable(false);
 
     self.getStarted = function() {
@@ -93,13 +94,16 @@ function EntryQuizViewModel()
         if (cur_question == questions.length)
         {
             self.showQuestions(false);
-            self.showFacebook(true);
+            self.showProgressIndicator(true);
 
             $.ajax({
                 type: "POST",
                 url: "set_entry_quiz_result",
                 success: function(data) {
-                    console.log("haha");
+                    setTimeout(function() {
+                        self.showProgressIndicator(false);
+                        self.showFacebook(true);
+                    }, 2000);
                 },
                 data: { 
                     'answers': answers
