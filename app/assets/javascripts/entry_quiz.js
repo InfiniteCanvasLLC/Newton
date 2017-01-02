@@ -91,6 +91,10 @@ function EntryQuizViewModel()
         answers[cur_question] = parseInt(answer_index);
         cur_question++;
 
+        $('html,body').animate({
+           scrollTop: 0
+        });
+
         if (cur_question == questions.length)
         {
             self.showQuestions(false);
