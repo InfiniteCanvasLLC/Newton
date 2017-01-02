@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  QuestionOneAnswer: 1
+  QuestionThreeAnswer: 1
+  LinkTo_id: 
+
+two:
+  QuestionOneAnswer: 1
+  QuestionThreeAnswer: 1
+  LinkTo_id: 

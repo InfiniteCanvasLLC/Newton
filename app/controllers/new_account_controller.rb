@@ -26,7 +26,7 @@ class NewAccountController < ApplicationController
             params[:from_handle_spotify_auth] = false # until next time
         end
 
-        if (session.has_key?[:answers])
+        if (session.has_key?(:answers))
           self.generate_recommendation_from_quiz(JSON.parse(session[:answers]))
         end
 

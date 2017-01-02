@@ -65,6 +65,75 @@ namespace :populate_db do
       partyJoinRequestLinkTo.save
     end
 
+  end
+
+  def create_linkto_for_youtube(title, youtube_url)
+
+    linkto = LinkTo.where(title: title, url: youtube_url)
+
+    if (!linkto.empty?)
+      return linkto.first
+    end
+
+    linkto = LinkTo.new
+
+    linkto.title = title
+    linkto.url = youtube_url
+    linkto.link_text = "Watch"
+    linkto.icon_style = "fa-youtube"
+    linkto.panel_style = "panel-red"
+    linkto.type_id = LinkTo.standard_type
+
+    linkto.save
+
+    return linkto
+  end
+
+  def assign_quiz_recommendation(linkto, question_one, question_three)
+    quiz_recommendation = QuizRecommendation.new
+
+    quiz_recommendation.question_one_answer = question_one
+    quiz_recommendation.question_three_answer = question_three
+    quiz_recommendation.link_to_id = linkto.id
+
+    quiz_recommendation.save
+  end
+
+  task :create_quiz_recommendations => :environment do
+
+    # Q1 = 0, Q3 = 0.  This corresponds to 2000s chill music
+    linkto = create_linkto_for_youtube("Sia - Cheap Thrills", "https://www.youtube.com/embed/31crA53Dgu0")
+    assign_quiz_recommendation(linkto, 0, 0)
+
+    # Q1 = 0, Q3 = 1.  This corresponds to 90s chill.
+    linkto = create_linkto_for_youtube("Santana - Smooth ft. Rob Thomas", "https://www.youtube.com/embed/6Whgn_iE5uc")
+    assign_quiz_recommendation(linkto, 1, 0)
+
+    # Q1 = 0, Q3 = 2.  This corresponds to 80s chill.
+    linkto = create_linkto_for_youtube("a-ha - Take On Me", "https://www.youtube.com/embed/djV11Xbc914")
+    assign_quiz_recommendation(linkto, 2, 0)
+
+    # Q1 = 0, Q3 = 3.  This corresponds to 70s chill.
+    linkto = create_linkto_for_youtube("Carole King - It's Too Late", "https://www.youtube.com/embed/VkKxmnrRVHo")
+    assign_quiz_recommendation(linkto, 3, 0)
+
+    
+    # Q1 = 1, Q3 = 0.  This corresponds to modern EDM
+    linkto = create_linkto_for_youtube("Tiesto & Mike Williams - I Want You", "https://www.youtube.com/embed/OkAPoah5MTI")
+    assign_quiz_recommendation(linkto, 0, 1)
+
+    # Q1 = 1, Q3 = 1.  This corresponds to 90s fast paced music
+    linkto = create_linkto_for_youtube("Rage Against The Machine - Killing In The Name", "https://www.youtube.com/embed/bWXazVhlyxQ")
+    assign_quiz_recommendation(linkto, 1, 1)
+
+    # Q1 = 1, Q3 = 2.  80s fast paced.
+    linkto = create_linkto_for_youtube("Living Color - Cult of Personality", "https://www.youtube.com/embed/7xxgRUyzgs0")
+    assign_quiz_recommendation(linkto, 1, 2)
+
+    # Q1 = 1. Q3 = 3.  70s fast paced.
+    linkto = create_linkto_for_youtube("Aerosmith - Walk This Way", "https://www.youtube.com/embed/bKttENbsoyk")
+    assign_quiz_recommendation(linkto, 1, 2)
 
   end
+
 end
