@@ -41,6 +41,10 @@ class LoginPageController < ApplicationController
 
   def set_entry_quiz_result
     session[:answers] = params["answers"].to_json
+
+    puts "Setting quiz answers"
+    puts "#{session[:answers]}"
+    
     render json: {"success": true}
   end
 
