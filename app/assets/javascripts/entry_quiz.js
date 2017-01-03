@@ -137,6 +137,7 @@ var player, playing = false;
 
 function onYouTubeIframeAPIReady()
 {
+    console.log("YouTube iFrame API is ready")
     iFrameAPIReady = true;
 }
 

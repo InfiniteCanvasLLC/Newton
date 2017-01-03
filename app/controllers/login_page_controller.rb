@@ -1,6 +1,8 @@
 class LoginPageController < ApplicationController
 
   layout "creative"
+
+  protect_from_forgery unless: -> { request.format.json? }
   
   def submit_user_feedback
     user_feedback = UserFeedback.new
@@ -44,7 +46,7 @@ class LoginPageController < ApplicationController
 
     puts "Setting quiz answers"
     puts "#{session[:answers]}"
-    
+
     render json: {"success": true}
   end
 

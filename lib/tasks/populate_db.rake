@@ -113,34 +113,34 @@ namespace :populate_db do
     linkto = create_linkto_for_youtube("Sia - Cheap Thrills", "https://www.youtube.com/embed/31crA53Dgu0")
     assign_quiz_recommendation(linkto, 0, 0)
 
-    # Q1 = 0, Q3 = 1.  This corresponds to 90s chill.
+    # Q1 = 1, Q3 = 0.  This corresponds to 90s chill.
     linkto = create_linkto_for_youtube("Santana - Smooth ft. Rob Thomas", "https://www.youtube.com/embed/6Whgn_iE5uc")
     assign_quiz_recommendation(linkto, 1, 0)
 
-    # Q1 = 0, Q3 = 2.  This corresponds to 80s chill.
+    # Q1 = 2, Q3 = 0.  This corresponds to 80s chill.
     linkto = create_linkto_for_youtube("a-ha - Take On Me", "https://www.youtube.com/embed/djV11Xbc914")
     assign_quiz_recommendation(linkto, 2, 0)
 
-    # Q1 = 0, Q3 = 3.  This corresponds to 70s chill.
+    # Q1 = 3, Q3 = 0.  This corresponds to 70s chill.
     linkto = create_linkto_for_youtube("Carole King - It's Too Late", "https://www.youtube.com/embed/VkKxmnrRVHo")
     assign_quiz_recommendation(linkto, 3, 0)
 
     
-    # Q1 = 1, Q3 = 0.  This corresponds to modern EDM
+    # Q1 = 0, Q3 = 1.  This corresponds to modern EDM
     linkto = create_linkto_for_youtube("Tiesto & Mike Williams - I Want You", "https://www.youtube.com/embed/OkAPoah5MTI")
-    assign_quiz_recommendation(linkto, 1, 0)
+    assign_quiz_recommendation(linkto, 0, 1)
 
     # Q1 = 1, Q3 = 1.  This corresponds to 90s fast paced music
     linkto = create_linkto_for_youtube("Rage Against The Machine - Killing In The Name", "https://www.youtube.com/embed/bWXazVhlyxQ")
     assign_quiz_recommendation(linkto, 1, 1)
 
-    # Q1 = 1, Q3 = 2.  80s fast paced.
+    # Q1 = 2, Q3 = 1.  80s fast paced.
     linkto = create_linkto_for_youtube("Living Color - Cult of Personality", "https://www.youtube.com/embed/7xxgRUyzgs0")
-    assign_quiz_recommendation(linkto, 1, 2)
+    assign_quiz_recommendation(linkto, 2, 1)
 
-    # Q1 = 1. Q3 = 3.  70s fast paced.
+    # Q1 = 3. Q3 = 1.  70s fast paced.
     linkto = create_linkto_for_youtube("Aerosmith - Walk This Way", "https://www.youtube.com/embed/bKttENbsoyk")
-    assign_quiz_recommendation(linkto, 1, 3)
+    assign_quiz_recommendation(linkto, 3, 1)
 
   end
 
