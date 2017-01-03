@@ -1,5 +1,3 @@
-
-
 var questions = [
 // First question
     {
@@ -37,16 +35,21 @@ function evaluateVideos()
 {
     if (!iFrameAPIReady)
     {
+        console.log("Attempting to load iFrame API")
         window.setTimeout(evaluateVideos, 200);
     }
     else
     {
+        console.log("Attempting to load videos...");
+
         videosLoaded = 0;
 
         for (var curVideo in questions[cur_question].videos)
         {
             videoId = questions[cur_question].videos[curVideo];
             videoDivId = "video-" + curVideo;
+
+            console.log("Attempting to load " + videoId + " into div " + videoDivId)
 
             player = new YT.Player(videoDivId, {
                 height: 300,
@@ -136,3 +139,9 @@ function onYouTubeIframeAPIReady()
 {
     iFrameAPIReady = true;
 }
+
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);

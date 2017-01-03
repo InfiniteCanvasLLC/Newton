@@ -47,7 +47,7 @@
                     <button type="button" class="btn btn-success" data-bind="click: getStarted">Get Started</button>
                 </div>
 
-                <div id="question-container" data-bind="if: showQuestions, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%' }">
+                <div id="question-container" class="quiz-hide" data-bind="if: showQuestions, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%', display: 'block' };" style="display: none">
                     <p id="question-text" data-bind="text: questionText"></p>
 
                     <div id="video-container" data-bind="foreach: questionVideos" class="container">
@@ -69,7 +69,7 @@
                 </div>
 
 
-                <div data-bind="if: showProgressIndicator">
+                <div data-bind="if: showProgressIndicator, style: { display: 'block' } " style="display: none">
                     <div style="padding-bottom: 48px">
                         Analyzing your answers...
                     </div>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
 
-                <div data-bind="if: showFacebook">
+                <div data-bind="if: showFacebook, style: { display: 'block' } " style="display: none">
                     <p>Done! We have generated your first music recommendation.</p>
 
                     <div class="text-center row-btn">
@@ -114,5 +114,4 @@
 </body>
 
     <%= javascript_include_tag 'entry_quiz.js' %>
-    <%= javascript_include_tag 'https://www.youtube.com/iframe_api' %>
 
