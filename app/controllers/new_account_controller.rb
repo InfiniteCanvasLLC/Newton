@@ -74,16 +74,18 @@ class NewAccountController < ApplicationController
       # In the quiz, we ignore question 2.  We use Question 1 to determine an era of music, and Question 3 to determine how fast paced it should be.
       # Harcoded for now.
 
-      ## TODO: Have to modify the 'populate_db.rake' to add our hardcoded recommendations to the database.
-      ## Then we can 
+      session.delete(:answers)
 
-      # Modern music
-      if (answers[0] == '0')
-        # Modern chill music
-        if (answers[2] == '0')
-        # Modern fast paced music
-        elsif (answers[2] == '1')
-        end
+      # Get the quiz recommendation based on the quiz answers
+      quiz_recommendation = QuizRecommendation.where(question_one_answer: answers[0].to_i, question_three_answer: answers[2]).first
+
+      if (!quiz_recommendation.nil?)
+        user_action = UserAction.new
+        user_action.user_id = session[:user_id]
+        user_action.action_type = UserAction.linkto_type
+        user_action.action_id = quiz_recommendation.link_to_id
+
+        user_action.save
       end
 
     end
