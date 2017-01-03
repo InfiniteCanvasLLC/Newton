@@ -26,9 +26,14 @@ var cur_question = 0;
 var iFrameAPIReady = false;
 var videosLoaded = 0;
 
-function onPlayerStateChange(param)
+mixpanel.track('Quiz: Initial Load')
+
+function onPlayerStateChange(event)
 {
-    console.log($(param.target.a).attr("id"));
+    if (event.data == YT.PlayerState.PLAYING)
+    {
+        mixpanel.track("Quiz: Video Played", { 'video_id': $(event.target.a).attr("id") });
+    }
 }
 
 function evaluateVideos()
@@ -79,6 +84,8 @@ function EntryQuizViewModel()
     self.getStarted = function() {
         self.showIntro(false);
         self.showQuestions(true);
+
+        mixpanel.track('Quiz: Get Started')
     }
 
     self.radioButtonClicked = function(radioButton, event) {
@@ -87,11 +94,17 @@ function EntryQuizViewModel()
 
         answer_index = $(event.target).attr("answerindex");
 
+        mixpanel.track('Quiz: Radio Button Clicked', { 'question': cur_question });
+
         return true;
     }
 
     self.nextButtonClicked = function() {
         answers[cur_question] = parseInt(answer_index);
+
+        mixpanel.track('Quiz: Next Button Clicked', { 'question': cur_question, 'answer': answers[cur_question] })
+
+
         cur_question++;
 
         $('html,body').animate({
@@ -103,6 +116,8 @@ function EntryQuizViewModel()
             self.showQuestions(false);
             self.showProgressIndicator(true);
 
+            mixpanel.track('Quiz: Finished Questions')
+
             $.ajax({
                 type: "POST",
                 url: "set_entry_quiz_result",
@@ -110,6 +125,10 @@ function EntryQuizViewModel()
                     setTimeout(function() {
                         self.showProgressIndicator(false);
                         self.showFacebook(true);
+
+                        mixpanel.track('Quiz: At Facebook Login')
+                        mixpanel.track_links("#sign-in", "Quiz: Sign In");
+
                     }, 2000);
                 },
                 data: { 
