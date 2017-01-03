@@ -128,7 +128,7 @@ namespace :populate_db do
     
     # Q1 = 1, Q3 = 0.  This corresponds to modern EDM
     linkto = create_linkto_for_youtube("Tiesto & Mike Williams - I Want You", "https://www.youtube.com/embed/OkAPoah5MTI")
-    assign_quiz_recommendation(linkto, 0, 1)
+    assign_quiz_recommendation(linkto, 1, 0)
 
     # Q1 = 1, Q3 = 1.  This corresponds to 90s fast paced music
     linkto = create_linkto_for_youtube("Rage Against The Machine - Killing In The Name", "https://www.youtube.com/embed/bWXazVhlyxQ")
@@ -140,7 +140,7 @@ namespace :populate_db do
 
     # Q1 = 1. Q3 = 3.  70s fast paced.
     linkto = create_linkto_for_youtube("Aerosmith - Walk This Way", "https://www.youtube.com/embed/bKttENbsoyk")
-    assign_quiz_recommendation(linkto, 1, 2)
+    assign_quiz_recommendation(linkto, 1, 3)
 
   end
 
