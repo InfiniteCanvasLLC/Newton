@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025213113) do
+ActiveRecord::Schema.define(version: 20161218230024) do
 
   create_table "event_registrations", force: :cascade do |t|
     t.integer  "party_id"
@@ -164,6 +164,16 @@ ActiveRecord::Schema.define(version: 20161025213113) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
+
+  create_table "quiz_recommendations", force: :cascade do |t|
+    t.integer  "question_one_answer"
+    t.integer  "question_three_answer"
+    t.integer  "link_to_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "quiz_recommendations", ["link_to_id"], name: "index_quiz_recommendations_on_link_to_id"
 
   create_table "user_actions", force: :cascade do |t|
     t.integer  "user_id"

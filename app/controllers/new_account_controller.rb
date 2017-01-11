@@ -26,6 +26,13 @@ class NewAccountController < ApplicationController
             params[:from_handle_spotify_auth] = false # until next time
         end
 
+        puts "Checking for answers..."
+        puts "Session Key is #{session[:answers]}"
+
+        if (session.has_key?(:answers))
+          self.generate_recommendation_from_quiz(JSON.parse(session[:answers]))
+        end
+
         @num_actions = actions.count
 
         self.manage_actions_dynamically
@@ -64,6 +71,26 @@ class NewAccountController < ApplicationController
             invite.dst_user_id ==  @user.id #if this is a new user, invited by a firend, their id is ivalid (-1)
             invite.save #Don't forget to save!
         end
+    end
+
+    def generate_recommendation_from_quiz(answers)
+      # In the quiz, we ignore question 2.  We use Question 1 to determine an era of music, and Question 3 to determine how fast paced it should be.
+      # Harcoded for now.
+
+      session.delete(:answers)
+
+      # Get the quiz recommendation based on the quiz answers
+      quiz_recommendation = QuizRecommendation.where(question_one_answer: answers[0].to_i, question_three_answer: answers[2]).first
+
+      if (!quiz_recommendation.nil?)
+        user_action = UserAction.new
+        user_action.user_id = session[:user_id]
+        user_action.action_type = UserAction.linkto_type
+        user_action.action_id = quiz_recommendation.link_to_id
+
+        user_action.save
+      end
+
     end
 
     #based on user state (are we missing some information)

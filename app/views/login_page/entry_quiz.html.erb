@@ -1,0 +1,117 @@
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Audicy</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+
+    <header class="header-dark">
+        <div class="header-content-dark">
+            <div class="header-content-inner">
+                <h2>Audicy</h2>
+                <h4>Customized concert and music recommendations for you and your friends.</h4>
+                <hr>
+                <div data-bind="if: showIntro">
+                    <h3 id="explanation">Tell us a bit about yourself so we can find you music you’ll love</h2>
+
+                    <button type="button" class="btn btn-success" data-bind="click: getStarted">Get Started</button>
+                </div>
+
+                <div id="question-container" class="quiz-hide" data-bind="if: showQuestions, style: { width: (questionVideos() && questionVideos().length > 0) ? '100%' : '50%', display: 'block' };" style="display: none">
+                    <p id="question-text" data-bind="text: questionText"></p>
+
+                    <div id="video-container" data-bind="foreach: questionVideos" class="container">
+                        <div data-bind="attr: { id: 'video-' + $index() }" class="col-md-6 quiz-video">
+                        </div>
+                    </div>
+
+                    <div id="answer-group" data-bind="foreach: questionReplies">
+                        <div class="radio">
+                            <label>
+                                <input class="answer-radio" type="radio" name="optradio" data-bind="click: $root.radioButtonClicked, attr: { answerindex: $index() }" >
+                                <!--ko text: $data--><!--/ko-->
+                            </label>
+                        </div>
+                    </div>
+
+                    <button id="next-button" type="button" class="btn btn-success disabled" data-bind="click: nextButtonClicked">Next</button>
+
+                </div>
+
+
+                <div data-bind="if: showProgressIndicator, style: { display: 'block' } " style="display: none">
+                    <div style="padding-bottom: 48px">
+                        Analyzing your answers...
+                    </div>
+
+                    <div class="cssload-container">
+                        <div class="cssload-whirlpool"></div>
+                    </div>
+                </div>
+
+                <div data-bind="if: showFacebook, style: { display: 'block' } " style="display: none">
+                    <p>Done! We have generated your first music recommendation.</p>
+
+                    <div class="text-center row-btn">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                    </div>
+
+                    <h5>Sign-in so you can see it, and so you can come back to view future recommendations as we learn about your tastes.</h5>
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <section id="contact" class="bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Contact</h2>
+                    <hr class="light">
+                    <p>Have a question or comment? We'd love to hear from you.</p>
+                </div>
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <a class="btn btn-default btn-xl" data-toggle="modal" data-target="#feedback_modal">Send Feedback</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <%= render 'signup_dialog' %>
+    <%= render 'feedback_dialog' %>
+</body>
+
+    <%= javascript_include_tag 'entry_quiz.js' %>
+

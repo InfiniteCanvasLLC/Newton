@@ -6,7 +6,7 @@ GIT
       omniauth-oauth2 (~> 1.1)
 
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     actionmailer (4.2.5.1)
       actionpack (= 4.2.5.1)
@@ -92,6 +92,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.1)
+    knockoutjs-rails (3.4.0.1)
+      railties (>= 3.1, < 6)
     koala (2.4.0)
       addressable
       faraday
@@ -226,6 +228,7 @@ DEPENDENCIES
   geokit
   jbuilder (~> 2.0)
   jquery-rails
+  knockoutjs-rails
   koala
   mailkick
   momentjs-rails
