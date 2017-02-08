@@ -1,8 +1,6 @@
 # Newton
 ## The social music recommendation system
 
-If you can see this, you have been invited to this private repo.  Please do not invite anyone else to this repo without checking with the team first.  While every effort has been made to keep sensitive information out of the codebase, there is still the potential for API secrets and so forth, to exist in old commits.
-
 ### Installation
 You must first install Rails.  Follow the instructions at [http://installrails.com/](http://installrails.com/) to install a local copy
 
