@@ -45,17 +45,19 @@
                     <div id="video-source" width="840" height="480" style="width=100%">
                     </div>
                 </div>
-
-                <h4>Customized concerts and music recommendations for you and your friends.</h4>
-                <div class="">
-                    <br />
-                    <div class="text-center row-btn">
-                        <a href="#services" class="btn btn-primary btn-xl page-scroll center-block" id="how-does-it-work">How Does It Work?</a>
-                    </div>
-                    <br />
-                    <div class="text-center row-btn">
-                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
-                        <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+    
+                <div id="video-caption">
+                    <h4>Customized concerts and music recommendations for you and your friends.</h4>
+                    <div class="">
+                        <br />
+                        <div class="text-center row-btn">
+                            <a href="#services" class="btn btn-primary btn-xl page-scroll center-block" id="how-does-it-work">How Does It Work?</a>
+                        </div>
+                        <br />
+                        <div class="text-center row-btn">
+                            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"> </fb:login-button>
+                            <a href="<%= signin_path %>" class="btn btn-primary btn-xl btn-social btn-facebook center-block" id="sign-in"><span class="fa fa-facebook"></span> Sign in with Facebook</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -150,7 +152,21 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady(event) {
     player.mute();
-    InitYouTubeResize();
+    InitYouTubeResize(function() {
+
+        if ($(window).width() > 768)
+        {
+            headerHeight = $("header").height();
+            videoCaptionHeight = $("#video-caption").height();
+            videoTop = $("#video-container").position().top;
+
+            return headerHeight - videoCaptionHeight - videoTop - 60;
+        }
+        else
+        {
+            return Number.MAX_SAFE_INTEGER;
+        }
+    });
 }
 
 var intervalId = 0;

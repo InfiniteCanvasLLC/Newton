@@ -46,8 +46,8 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'login_page#index'
-  get 'entry_quiz' => 'login_page#entry_quiz'
+  #root 'login_page#index'
+  root 'login_page#entry_quiz'
   post 'set_entry_quiz_result' => 'login_page#set_entry_quiz_result'
 
   post 'login_page/submit_user_signup'

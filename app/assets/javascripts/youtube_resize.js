@@ -1,6 +1,6 @@
 // By Chris Coyier & tweaked by Mathias Bynens
 
-function InitYouTubeResize()
+function InitYouTubeResize(maxHeightEvaluator)
 {
     // Find all YouTube videos
     var $allVideos = $("iframe[src^='https://www.youtube.com']"),
@@ -30,9 +30,19 @@ function InitYouTubeResize()
         $allVideos.each(function() {
 
             var $el = $(this);
+
+            var newHeight = $el.data('aspectRatio') * newWidth;
+            var maxHeight = maxHeightEvaluator();
+
+            if (newHeight > maxHeight)
+            {
+                newHeight = maxHeight;
+                newWidth = newHeight / $el.data('aspectRatio')
+            }
+
             $el
                 .width(newWidth)
-                .height(newWidth * $el.data('aspectRatio'));
+                .height(newHeight);
 
         });
 
