@@ -34,10 +34,15 @@ class SessionsController < ApplicationController
         
         auth = request.env["omniauth.auth"]
         user = User.where(  :provider => auth['provider'], :uid => auth['uid']).first
+
+        new_account = 0
+
         if( user.nil?)
             user = User.create_with_omniauth(auth)
             # new user, send a welcome message
             Outreach.welcome(user).deliver_now
+
+            new_account = 1
         end
 
         if user.current_party_index.nil?
@@ -83,7 +88,7 @@ class SessionsController < ApplicationController
         end
         user.save
 
-        redirect_to controller: 'new_account', action: 'home'
+        redirect_to controller: 'new_account', action: 'home', new_account: new_account
     end
 
     def destroy

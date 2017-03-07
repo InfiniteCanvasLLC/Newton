@@ -217,6 +217,10 @@ $(document).ready(function(){
     notification_form.modal({backdrop: 'static',keyboard: false});
 	<% end %>
 
+	<% if @new_account == 1 %>
+		fbq('track', 'CompleteRegistration');
+	<% end %>
+
 
 	mixpanel.track_links('.spotify-link-click', 'Spotify: Start Sync');
 	mixpanel.track_links('.linkto-click', 'LinkTo: Click');
