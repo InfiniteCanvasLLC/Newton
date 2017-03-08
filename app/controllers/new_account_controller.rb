@@ -42,6 +42,14 @@ class NewAccountController < ApplicationController
         @questions = Array.new
         @link_tos  = Array.new
         @current_nav_selection = "nav_home"
+        
+        new_account_param = params[:new_account]
+
+        @new_account = 0
+
+        if (!new_account_param.nil?)
+          @new_account = new_account_param.to_i
+        end
 
         #if current user id invalid (party deleted for instance)
         @current_user_party_name = @current_user_party.name;
