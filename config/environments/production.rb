@@ -98,6 +98,6 @@ Rails.application.configure do
   end
 
   # Force SSL in production
-  config.force_ssl = true
+  config.force_ssl = false
   
 end
